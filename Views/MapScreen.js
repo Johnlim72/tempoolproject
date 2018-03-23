@@ -1,84 +1,73 @@
 import React from "react";
-import {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  TextInput,
-  ListView,
-  View
-} from "react-native";
+import { View, Image, Text } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
-const adresses = [
-  {
-    street: "1 Martin Place",
-    city: "Sydney",
-    country: "Australia"
-  },
-  {
-    street: "1 Martin Street",
-    city: "Sydney",
-    country: "Australia"
-  }
-];
-
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+const homePlace = {
+  description: "Home",
+  geometry: { location: { lat:39.98126269999999, lng: -75.16248430000002 } }
+};
+const workPlace = {
+  description: "Work",
+  geometry: { location: { lat: 39.9811935, lng: -75.15535119999998 } }
+};
 
 export default class MapScreen extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchedAdresses: []
-    };
-  }
-
-  searchedAdresses = searchedText => {
-    var searchedAdresses = adresses.filter(function(adress) {
-      return (
-        adress.street.toLowerCase().indexOf(searchedText.toLowerCase()) > -1
-      );
-    });
-    this.setState({ searchedAdresses: searchedAdresses });
-  };
-
-  renderAdress = adress => {
-    return (
-      <View>
-        <Text>
-          {adress.street}, {adress.city}, {adress.country}
-        </Text>
-      </View>
-    );
-  };
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textinput}
-          onChangeText={this.searchedAdresses}
-          placeholder="Type your adress here"
-        />
-        <ListView
-          dataSource={ds.cloneWithRows(this.state.searchedAdresses)}
-          renderRow={this.renderAdress}
-        />
-      </View>
+      <GooglePlacesAutocomplete
+        placeholder="Search"
+        minLength={2} // minimum length of text to search
+        autoFocus={false}
+        returnKeyType={"search"} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+        listViewDisplayed="auto" // true/false/undefined
+        fetchDetails={true}
+        renderDescription={row => row.description || row.vicinity} // custom description render
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+        }}
+        getDefaultValue={() => ""}
+        query={{
+          // available options: https://developers.google.com/places/web-service/autocomplete
+          key: "AIzaSyBc_Lzr0bU6n30DEFm9JfhQQG86-hGLvuI",
+          language: "en", // language of the results
+          types: "address" // default: 'geocode'
+        }}
+        styles={{
+          textInputContainer: {
+            width: "100%"
+          },
+          description: {
+            fontWeight: "bold"
+          },
+          predefinedPlacesDescription: {
+            color: "#1faadb"
+          }
+        }}
+        currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+        currentLocationLabel="Current location"
+        nearbyPlacesAPI="None" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+        GoogleReverseGeocodingQuery={
+          {
+            rankby: "distance",
+            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+          }
+        }
+        GooglePlacesSearchQuery={{
+          // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+          rankby: "distance",
+
+        }}
+        filterReverseGeocodingByTypes={[
+          "locality",
+          "administrative_area_level_3",
+          "address"
+        ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+        predefinedPlaces={[homePlace, workPlace]}
+        debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+        renderLeftButton={() => <Text> </Text>}
+        renderRightButton={() => <Text> </Text>}
+      />
     );
   }
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF"
-  },
-  textinput: {
-    marginTop: 30,
-    backgroundColor: "#DDDDDD",
-    height: 40,
-    width: 200
-  }
-});

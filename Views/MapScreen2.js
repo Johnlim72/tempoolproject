@@ -5,8 +5,8 @@ import MapViewDirections from 'react-native-maps-directions';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.771707;
-const LONGITUDE = -122.4053769;
+const LATITUDE = 39.98126269999999;
+const LONGITUDE = -75.16248430000002
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
@@ -21,12 +21,12 @@ export default class MapScreen extends React.Component {
     this.state = {
       coordinates: [
         {
-          latitude: 37.3317876,
-          longitude: -122.0054812,
+          latitude: 39.98126269999999,
+          longitude: -75.16248430000002
         },
         {
-          latitude: 37.771707,
-          longitude: -122.4053769,
+          latitude: 39.9811935,
+          longitude: -75.15535119999998
         },
       ],
     };
