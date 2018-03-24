@@ -21,6 +21,9 @@ const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
 export default class SignupScreen extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
 
   constructor(props) {
     super(props);
@@ -50,7 +53,7 @@ export default class SignupScreen extends React.Component {
     const { TextPassword } = this.state;
     const { TextInputPhoneNumber } = this.state;
 
-    fetch("https://tempool.000webhostapp.com/php/submit_user_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

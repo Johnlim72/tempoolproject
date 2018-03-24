@@ -39,7 +39,7 @@ export default class InitialScreen extends React.Component {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
-    fetch("https://tempool.000webhostapp.com/php/login.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -104,7 +104,7 @@ export default class InitialScreen extends React.Component {
               <TextInput
                 placeholder="TU E-mail"
                 placeholderTextColor="#b3b3b3"
-                autoCapitalize= "none"
+                autoCapitalize="none"
                 onChangeText={TextInputEmail =>
                   this.setState({ TextInputEmail })
                 }

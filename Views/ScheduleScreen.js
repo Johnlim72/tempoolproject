@@ -40,7 +40,7 @@ export default class ScheduleScreen extends React.Component {
     const { Date } = this.state;
     const { Time } = this.state;
 
-    fetch("https://tempool.000webhostapp.com/php/update_user_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -39,7 +39,7 @@ export default class ProfileScreen extends React.Component {
     const { TextPassword } = "";
     const { TextInputPhoneNumber } = "";
 
-    fetch("https://tempool.000webhostapp.com/php/prepopulate.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/prepopulate.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -78,7 +78,7 @@ export default class ProfileScreen extends React.Component {
     const { TextPassword } = this.state;
     const { TextInputPhoneNumber } = this.state;
 
-    fetch("https://tempool.000webhostapp.com/php/update_user_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

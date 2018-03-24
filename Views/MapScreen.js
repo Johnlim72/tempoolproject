@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TextInput } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import styles from "./style";
 
 const homePlace = {
   description: "Home",
-  geometry: { location: { lat:39.98126269999999, lng: -75.16248430000002 } }
+  geometry: { location: { lat: 39.98126269999999, lng: -75.16248430000002 } }
 };
 const workPlace = {
   description: "Work",
@@ -12,6 +13,18 @@ const workPlace = {
 };
 
 export default class MapScreen extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      TextInputAddress: "",
+    };
+  }
+
   render() {
     return (
       <GooglePlacesAutocomplete
@@ -47,16 +60,9 @@ export default class MapScreen extends React.Component {
         currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
         currentLocationLabel="Current location"
         nearbyPlacesAPI="None" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-        GoogleReverseGeocodingQuery={
-          {
-            rankby: "distance",
-            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-          }
-        }
-        GooglePlacesSearchQuery={{
-          // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-          rankby: "distance",
-
+        GoogleReverseGeocodingQuery={{
+          rankby: "distance"
+          // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
         }}
         filterReverseGeocodingByTypes={[
           "locality",
@@ -64,10 +70,8 @@ export default class MapScreen extends React.Component {
           "address"
         ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
         predefinedPlaces={[homePlace, workPlace]}
-        debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
-        renderLeftButton={() => <Text> </Text>}
-        renderRightButton={() => <Text> </Text>}
-      />
+        debounce={200}
+      /> // debounce the requests in ms. Set to 0 to remove debounce. By
     );
   }
 }
