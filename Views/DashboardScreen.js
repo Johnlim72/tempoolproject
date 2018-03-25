@@ -117,7 +117,7 @@ export default class DashboardScreen extends React.Component {
             <View style={styles.buttonContainer}>
               <Button
                 title="Schedule a Ride"
-                onPress={() => this.props.navigation.navigate("Map")}
+                onPress={() => this.props.navigation.navigate("Schedule")}
                 color="darkred"
                 disabled={this.state.disabled}
               />

@@ -39,7 +39,7 @@ export default class InitialScreen extends React.Component {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
-    fetch("https://cis-linux2.temple.edu/~tuf70921/php/login.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

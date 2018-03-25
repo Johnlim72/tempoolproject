@@ -43,7 +43,7 @@ const RootStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Initial"
+    initialRouteName: "Map"
   }
 );
 
