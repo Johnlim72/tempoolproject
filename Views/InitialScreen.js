@@ -39,7 +39,6 @@ export default class InitialScreen extends React.Component {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
-
     if(TextInputEmail != ""
       && TextPassword != "") {
         var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
