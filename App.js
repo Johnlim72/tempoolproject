@@ -16,6 +16,8 @@ import DashboardScreen from "./Views/DashboardScreen";
 import ProfileScreen from "./Views/ProfileScreen";
 import ScheduleScreen from "./Views/ScheduleScreen";
 import LocationScreen from "./Views/LocationScreen";
+import RideListScreen from "./Views/RideListScreen";
+import FindRideScreen from "./Views/FindRideScreen";
 import styles from "./Views/style";
 
 const RootStack = StackNavigator(
@@ -38,12 +40,18 @@ const RootStack = StackNavigator(
     Schedule: {
       screen: ScheduleScreen
     },
+    RideList: {
+      screen: RideListScreen
+    },
+    FindRide: {
+      screen: FindRideScreen
+    },
     Location: {
       screen: LocationScreen
     }
   },
   {
-    initialRouteName: "Location"
+    initialRouteName: "Initial"
   }
 );
 
