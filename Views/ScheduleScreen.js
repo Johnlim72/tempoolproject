@@ -13,6 +13,7 @@ import {
 } from "react-native";
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
+import DatePicker from "react-native-datepicker";
 import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
@@ -27,18 +28,18 @@ export default class ScheduleScreen extends React.Component {
     super(props);
 
     this.state = {
-      Address: "",
-      Location: "",
-      Date: "",
-      Time: ""
+      TextAddress: "",
+      TextLocation: "",
+      TextDate: "03-25-2018",
+      TextTime: ""
     };
   }
 
   InsertRideToServer = () => {
-    const { Address } = this.state;
-    const { Location } = this.state;
-    const { Date } = this.state;
-    const { Time } = this.state;
+    const { TextAddress } = this.state;
+    const { TextLocation } = this.state;
+    const { TextDate } = this.state;
+    const { TextTime } = this.state;
 
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
       method: "POST",
@@ -47,10 +48,10 @@ export default class ScheduleScreen extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        address: Address,
-        location: Location,
-        date: Date,
-        time: Time
+        address: TextAddress,
+        location: TextLocation,
+        date: TextDate,
+        time: TextTime
       })
     })
       .then(response => response.json())
@@ -66,7 +67,7 @@ export default class ScheduleScreen extends React.Component {
                 text: "OK",
                 onPress: () =>
                   this.props.navigation.navigate("Dashboard", {
-                    Email: TextInputEmail
+                    TextAddress: this.props.navigation.state.params.Email
                   })
               }
             ],
@@ -104,7 +105,6 @@ export default class ScheduleScreen extends React.Component {
               alignItems: "center"
             }}
           >
-
             <Text
               style={{
                 color: "white",
@@ -118,124 +118,133 @@ export default class ScheduleScreen extends React.Component {
               Schedule a Ride
             </Text>
           </View>
-          <View style={{ flex: 5 }}>
-            <View
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+              borderRadius: 10,
+              padding: 20,
+              margin: 10,
+              flex: 5
+            }}
+          >
+            <Text
               style={{
-                flex: 1,
-                backgroundColor: "white",
-                borderRadius: 10,
-                padding: 20,
-                margin: 10
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline"
               }}
             >
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                First Name:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="First Name"
-                  defaultValue={this.state.TextInputFirstName}
-                  onChangeText={TextInputFirstName =>
-                    this.setState({ TextInputFirstName })
-                  }
-                  style={[styles.input, { color: "black" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                Last Name:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Last Name"
-                  defaultValue={this.state.TextInputLastName}
-                  onChangeText={TextInputLastName =>
-                    this.setState({ TextInputLastName })
-                  }
-                  style={[styles.input, { color: "black" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                TU E-mail:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholder="TU E-mail"
-                  placeholderTextColor="#b3b3b3"
-                  defaultValue={this.state.TextInputEmail}
-                  editable={false}
-                  onChangeText={TextInputEmail =>
-                    this.setState({ TextInputEmail })
-                  }
-                  style={[styles.input, { color: "#a6a6a6" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                Password:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Password"
-                  defaultValue={this.state.TextPassword}
-                  onChangeText={TextPassword => this.setState({ TextPassword })}
-                  style={[styles.input, { color: "black" }]}
-                  secureTextEntry
-                />
-              </View>
-
-              <TouchableOpacity
-                onPress={this.InsertRideToServer}
-                activeOpacity={0.5}
-              >
-                <View
-                  style={{
-                    backgroundColor: "darkred",
-                    borderRadius: 10,
-                    height: 60,
-                    marginTop: 10,
-                    padding: 10,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <Button
-                    title="Save"
-                    onPress={this.InsertRideToServer}
-                    color="darkred"
-                  />
-                </View>
-              </TouchableOpacity>
+              Address:
+            </Text>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Address: "
+                defaultValue={this.state.TextAddress}
+                onChangeText={TextAddress => this.setState({ TextAddress })}
+                style={[styles.input, { color: "black" }]}
+              />
             </View>
+            <Text
+              style={{
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline"
+              }}
+            >
+              Location:
+            </Text>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Location"
+                defaultValue={this.state.TextLocation}
+                onChangeText={TextLocation => this.setState({ TextLocation })}
+                style={[styles.input, { color: "black" }]}
+              />
+            </View>
+            <Text
+              style={{
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline"
+              }}
+            >
+              Date:
+            </Text>
+            <DatePicker
+              style={{ width: 200 }}
+              date={this.state.TextDate}
+              mode="datetime"
+              placeholder="select date"
+              format="MM-DD-YYYY, h:mm a"
+              minDate="01-01-2018"
+              maxDate="12-31-2100"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: "absolute",
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={TextDate => {
+                this.setState({ TextDate: TextDate });
+              }}
+            />
+            <Text
+              style={{
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline"
+              }}
+            >
+              Time:
+            </Text>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholder="Time"
+                placeholderTextColor="#b3b3b3"
+                defaultValue={this.state.TextTime}
+                editable={false}
+                onChangeText={TextTime => this.setState({ TextTime })}
+                style={[styles.input, { color: "#a6a6a6" }]}
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={this.InsertRideToServer}
+              activeOpacity={0.5}
+            >
+              <View
+                style={{
+                  backgroundColor: "darkred",
+                  borderRadius: 10,
+                  height: 60,
+                  marginTop: 10,
+                  padding: 10,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Button
+                  title="Save"
+                  onPress={this.InsertRideToServer}
+                  color="darkred"
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
