@@ -39,6 +39,7 @@ export default class InitialScreen extends React.Component {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
+
     if(TextInputEmail != ""
       && TextPassword != "") {
         var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
@@ -70,6 +71,7 @@ export default class InitialScreen extends React.Component {
             .catch(error => {
               console.error(error);
             });
+
         } else {
           Alert.alert("Are you sure the email is correct? It needs to be a temple.edu email");
         }
