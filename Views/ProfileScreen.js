@@ -30,7 +30,8 @@ export default class ProfileScreen extends React.Component {
       TextInputLastName: "",
       TextInputEmail: "",
       TextPassword: "",
-      TextInputPhoneNumber: ""
+      TextInputPhoneNumber: "",
+      TextPasswordConfirm: ""
     };
 
     const { TextInputFirstName } = "";
@@ -59,7 +60,8 @@ export default class ProfileScreen extends React.Component {
           TextInputFirstName: responseJson.firstName,
           TextInputLastName: responseJson.lastName,
           TextInputEmail: responseJson.email,
-          TextPassword: responseJson.password,
+          TextPassword: "",
+          TextPasswordConfirm: "",
           TextInputPhoneNumber: responseJson.phoneNumber
         });
 
@@ -76,49 +78,70 @@ export default class ProfileScreen extends React.Component {
     const { TextInputLastName } = this.state;
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
+    const { TextPasswordConfirm } = this.state;
     const { TextInputPhoneNumber } = this.state;
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        firstName: TextInputFirstName,
-        lastName: TextInputLastName,
-        email: TextInputEmail,
-        password: TextPassword,
-        phoneNumber: TextInputPhoneNumber
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson === "User successfully updated.") {
-          //Then open Profile activity and send user email to profile activity.
+    if(TextInputFirstName != ""
+      && TextInputLastName != ""
+      && TextInputEmail != ""
+      && TextPassword != ""
+      && TextInputPhoneNumber != ""
+      && TextPasswordConfirm != "") {
 
-          Alert.alert(
-            "Success!",
-            "User updated",
-            [
-              {
-                text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    Email: TextInputEmail
-                  })
+      if(TextPassword === TextPasswordConfirm) {
+        var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
+
+        if(emailDomain === "temple.edu"){
+          fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              firstName: TextInputFirstName,
+              lastName: TextInputLastName,
+              email: TextInputEmail,
+              password: TextPassword,
+              phoneNumber: TextInputPhoneNumber
+            })
+          })
+            .then(response => response.json())
+            .then(responseJson => {
+              if (responseJson === "User successfully updated.") {
+                //Then open Profile activity and send user email to profile activity.
+
+                Alert.alert(
+                  "Success!",
+                  "User updated",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () =>
+                        this.props.navigation.navigate("Dashboard", {
+                          Email: TextInputEmail
+                        })
+                    }
+                  ],
+                  { cancelable: false }
+                );
+                console.log(responseJson);
+              } else {
+                Alert.alert(responseJson);
               }
-            ],
-            { cancelable: false }
-          );
-          console.log(responseJson);
+            })
+            .catch(error => {
+              console.error(error);
+            });
         } else {
-          Alert.alert(responseJson);
+          Alert.alert("Please use a temple.edu email");
         }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      } else {
+        Alert.alert("Passwords don't match");
+      }
+    } else {
+      Alert.alert("Please fill in all fields");
+    }
   };
 
   render() {
@@ -264,7 +287,8 @@ export default class ProfileScreen extends React.Component {
                 <TextInput
                   placeholderTextColor="#b3b3b3"
                   placeholder="Confirm Password"
-                  defaultValue={this.state.TextPassword}
+                  defaultValue={this.state.TextPasswordConfirm}
+                  onChangeText={TextPasswordConfirm => this.setState({ TextPasswordConfirm })}
                   style={[styles.input, { color: "black" }]}
                   secureTextEntry
                 />
