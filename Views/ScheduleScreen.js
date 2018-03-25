@@ -166,16 +166,7 @@ export default class ScheduleScreen extends React.Component {
                 style={[styles.input, { color: "black" }]}
               />
             </View>
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 18,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline"
-              }}
-            >
-              Date:
-            </Text>
+
             <DatePicker
               style={{ width: 200 }}
               date={this.state.TextDate}
@@ -202,26 +193,6 @@ export default class ScheduleScreen extends React.Component {
                 this.setState({ TextDate: TextDate });
               }}
             />
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 18,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline"
-              }}
-            >
-              Time:
-            </Text>
-            <View style={styles.inputWrap}>
-              <TextInput
-                placeholder="Time"
-                placeholderTextColor="#b3b3b3"
-                defaultValue={this.state.TextTime}
-                editable={false}
-                onChangeText={TextTime => this.setState({ TextTime })}
-                style={[styles.input, { color: "#a6a6a6" }]}
-              />
-            </View>
 
             <TouchableOpacity
               onPress={this.InsertRideToServer}
