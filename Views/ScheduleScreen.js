@@ -146,18 +146,39 @@ export default class ScheduleScreen extends React.Component {
                 color: "darkred",
                 fontSize: 18,
                 paddingHorizontal: 10,
-                textDecorationLine: "underline"
+                textDecorationLine: "underline",
+                marginTop: 20
               }}
             >
               Address:
             </Text>
-            <View style={styles.inputWrap}>
+            <View style={styles.inputWrapAddress}>
               <TextInput
                 placeholderTextColor="#b3b3b3"
                 placeholder="Address: "s
                 defaultValue={this.props.navigation.state.params.TextAddress}
-                editable={false}
+                multiline={true}
+                editable={true}
                 onChangeText={TextAddress => this.setState({ TextAddress })}
+                style={[styles.inputAddress, { color: "black"}]}
+              />
+            </View>
+            <Text
+              style={{
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline"
+              }}
+            >
+              Latitude:
+            </Text>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Latitude"
+                defaultValue={this.props.navigation.state.params.TextLatitude}
+                onChangeText={TextLatitude => this.setState({ TextLatitude })}
                 style={[styles.input, { color: "black" }]}
               />
             </View>
@@ -169,18 +190,28 @@ export default class ScheduleScreen extends React.Component {
                 textDecorationLine: "underline"
               }}
             >
-              Location:
+              Longitude
             </Text>
             <View style={styles.inputWrap}>
               <TextInput
                 placeholderTextColor="#b3b3b3"
-                placeholder="Location"
-                defaultValue={this.props.navigation.state.params.TextLatitude}
-                onChangeText={TextLocation => this.setState({ TextLocation })}
+                placeholder="Longitude"
+                defaultValue={this.props.navigation.state.params.TextLongitude}
+                onChangeText={TextLongitude => this.setState({ TextLongitude })}
                 style={[styles.input, { color: "black" }]}
               />
             </View>
-
+            <Text
+              style={{
+                color: "darkred",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                textDecorationLine: "underline",
+                marginTop: 20
+              }}
+            >
+              Date:
+            </Text>
             <DatePicker
               style={{ width: 200 }}
               date={this.state.TextDate}
