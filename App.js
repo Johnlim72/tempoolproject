@@ -15,7 +15,7 @@ import SignupScreen from "./Views/SignupScreen";
 import DashboardScreen from "./Views/DashboardScreen";
 import ProfileScreen from "./Views/ProfileScreen";
 import ScheduleScreen from "./Views/ScheduleScreen";
-import MapScreen from "./Views/MapScreen";
+import LocationScreen from "./Views/LocationScreen";
 import styles from "./Views/style";
 
 const RootStack = StackNavigator(
@@ -38,12 +38,12 @@ const RootStack = StackNavigator(
     Schedule: {
       screen: ScheduleScreen
     },
-    Map: {
-      screen: MapScreen
+    Location: {
+      screen: LocationScreen
     }
   },
   {
-    initialRouteName: "Map"
+    initialRouteName: "Location"
   }
 );
 

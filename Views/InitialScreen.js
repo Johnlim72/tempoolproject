@@ -39,41 +39,44 @@ export default class InitialScreen extends React.Component {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
-    if(TextInputEmail != ""
-      && TextPassword != "") {
-        var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
-        if(emailDomain === "temple.edu"){
-          fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              email: TextInputEmail,
-              password: TextPassword
-            })
+    if (TextInputEmail != "" && TextPassword != "") {
+      var emailDomain = TextInputEmail.substr(
+        TextInputEmail.length - 10,
+        TextInputEmail.length
+      );
+      if (emailDomain === "temple.edu") {
+        fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: TextInputEmail,
+            password: TextPassword
           })
-            .then(response => response.json())
-            .then(responseJson => {
-              // If server response message same as Data Matched
-              if (responseJson === "Data Matched") {
-                //Then open Profile activity and send user email to profile activity.
-                this.props.navigation.navigate("Dashboard", {
-                  Email: TextInputEmail
-                });
-                console.log(responseJson);
-              } else {
-                Alert.alert(responseJson);
-              }
-            })
-            .catch(error => {
-              console.error(error);
-            });
-
-        } else {
-          Alert.alert("Are you sure the email is correct? It needs to be a temple.edu email");
-        }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            // If server response message same as Data Matched
+            if (responseJson === "Data Matched") {
+              //Then open Profile activity and send user email to profile activity.
+              this.props.navigation.navigate("Dashboard", {
+                Email: TextInputEmail
+              });
+              console.log(responseJson);
+            } else {
+              Alert.alert(responseJson);
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      } else {
+        Alert.alert(
+          "Are you sure the email is correct? It needs to be a temple.edu email"
+        );
+      }
     } else {
       Alert.alert("Please fill in all fields");
     }
