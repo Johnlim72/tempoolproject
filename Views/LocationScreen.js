@@ -18,6 +18,14 @@ export default class MapScreen extends React.Component {
     };
   }
 
+  SaveLocation = () => {
+    this.props.navigation.navigate("Schedule", {
+      TextAddress: this.state.TextAddress,
+      TextLatitude: this.state.TextLatitude,
+      TextLongitude: this.state.TextLongitude
+    });
+  };
+
   render() {
     return (
       <GooglePlacesAutocomplete
@@ -78,7 +86,9 @@ export default class MapScreen extends React.Component {
         }}
         filterReverseGeocodingByTypes={["street_address"]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
         debounce={200}
-        renderRightButton={() => <Button title="Save" color="darkred" />}
+        renderRightButton={() => (
+          <Button title="Save" color="darkred" onPress={this.SaveLocation} />
+        )}
       /> // debounce the requests in ms. Set to 0 to remove debounce. By
     );
   }

@@ -131,5 +131,10 @@ export default StyleSheet.create({
   signupLinkText: {
     color: "#FFF",
     marginLeft: 5
+  },
+  signUpButton: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    marginLeft: 5
   }
 });

@@ -29,7 +29,8 @@ export default class ScheduleScreen extends React.Component {
 
     this.state = {
       TextAddress: "",
-      TextLocation: "",
+      TextLatitude: "",
+      TextLongitude: "",
       TextDate: "03-25-2018",
       TextTime: ""
     };
@@ -37,7 +38,8 @@ export default class ScheduleScreen extends React.Component {
 
   InsertRideToServer = () => {
     const { TextAddress } = this.state;
-    const { TextLocation } = this.state;
+    const { TextLatitude } = this.state;
+    const { TextLongitude } = this.state;
     const { TextDate } = this.state;
     const { TextTime } = this.state;
 
@@ -49,7 +51,8 @@ export default class ScheduleScreen extends React.Component {
       },
       body: JSON.stringify({
         address: TextAddress,
-        location: TextLocation,
+        latitude: TextLatitude,
+        longitude: TextLongitude,
         date: TextDate,
         time: TextTime
       })
@@ -65,10 +68,7 @@ export default class ScheduleScreen extends React.Component {
             [
               {
                 text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextAddress: this.props.navigation.state.params.Email
-                  })
+                onPress: () => this.props.navigation.navigate("Dashboard")
               }
             ],
             { cancelable: false }
@@ -81,6 +81,14 @@ export default class ScheduleScreen extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  };
+
+  PickLocation = () => {
+    this.props.navigation.navigate("Location", {
+      TextAddress: this.state.TextAddress,
+      TextLatitude: this.state.TextLatitude,
+      TextLongitude: this.state.TextLongitude
+    });
   };
 
   render() {
@@ -128,6 +136,11 @@ export default class ScheduleScreen extends React.Component {
               flex: 5
             }}
           >
+            <Button
+              title="Pick Location"
+              onPress={this.PickLocation}
+              color="darkred"
+            />
             <Text
               style={{
                 color: "darkred",
@@ -141,8 +154,9 @@ export default class ScheduleScreen extends React.Component {
             <View style={styles.inputWrap}>
               <TextInput
                 placeholderTextColor="#b3b3b3"
-                placeholder="Address: "
-                defaultValue={this.state.TextAddress}
+                placeholder="Address: "s
+                defaultValue={this.props.navigation.state.params.TextAddress}
+                editable={false}
                 onChangeText={TextAddress => this.setState({ TextAddress })}
                 style={[styles.input, { color: "black" }]}
               />
@@ -161,7 +175,7 @@ export default class ScheduleScreen extends React.Component {
               <TextInput
                 placeholderTextColor="#b3b3b3"
                 placeholder="Location"
-                defaultValue={this.state.TextLocation}
+                defaultValue={this.props.navigation.state.params.TextLatitude}
                 onChangeText={TextLocation => this.setState({ TextLocation })}
                 style={[styles.input, { color: "black" }]}
               />

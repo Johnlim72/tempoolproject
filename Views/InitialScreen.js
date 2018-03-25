@@ -163,7 +163,7 @@ export default class InitialScreen extends React.Component {
             <View style={styles.signupWrap}>
               <Text style={styles.accountText}>Don&#39;t have an account?</Text>
               <TouchableOpacity activeOpacity={0.5}>
-                <View style={{backgroundColor: "white"}}>
+                <View style={styles.signUpButton}>
                   <Button
                     title="Sign up"
                     onPress={() => this.props.navigation.navigate("Signup")}
