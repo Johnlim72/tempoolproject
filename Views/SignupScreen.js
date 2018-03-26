@@ -140,7 +140,7 @@ export default class SignupScreen extends React.Component {
       >
         <ImageBackground
           source={background}
-          style={styles.background}
+          style={[styles.background, {padding: 50}]}
           resizeMode="cover"
         >
           <View style={styles.inputWrap}>

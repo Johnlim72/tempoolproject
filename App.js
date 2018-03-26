@@ -16,7 +16,9 @@ import SignupScreen from "./Views/SignupScreen";
 import DashboardScreen from "./Views/DashboardScreen";
 import ProfileScreen from "./Views/ProfileScreen";
 import ScheduleScreen from "./Views/ScheduleScreen";
-import MapScreen from "./Views/MapScreen";
+import LocationScreen from "./Views/LocationScreen";
+import RideListScreen from "./Views/RideListScreen";
+import FindRideScreen from "./Views/FindRideScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = 'accessToken';
@@ -41,8 +43,14 @@ const RootStack = StackNavigator(
     Schedule: {
       screen: ScheduleScreen
     },
-    Map: {
-      screen: MapScreen
+    RideList: {
+      screen: RideListScreen
+    },
+    FindRide: {
+      screen: FindRideScreen
+    },
+    Location: {
+      screen: LocationScreen
     }
   },
   {

@@ -35,7 +35,6 @@ export default StyleSheet.create({
     padding: 20
   },
 
-
   textInput: {
     //
     height: 30, //
@@ -79,6 +78,13 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#CCC"
   },
+  inputWrapAddress: {
+    flexDirection: "row",
+    marginBottom: 10,
+    height: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: "#CCC"
+  },
   iconWrap: {
     paddingHorizontal: 7,
     alignItems: "center",
@@ -92,6 +98,12 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 18,
     paddingHorizontal: 10
+  },
+  inputAddress: {
+    flex: 1,
+    fontSize: 18,
+    paddingHorizontal: 10,
+    height: 80
   },
   button: {
     backgroundColor: "white",

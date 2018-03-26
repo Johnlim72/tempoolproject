@@ -254,7 +254,7 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextInputEmail =>
                     this.setState({ TextInputEmail })
                   }
-                  style={[styles.input, { color: "#a6a6a6" }]}
+                  style={[styles.input, { color: "black" }]}
                 />
               </View>
               <Text
