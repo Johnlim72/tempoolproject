@@ -23,7 +23,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     ...Platform.select({
         ios: {
-          backgroundColor: 'darkred',
+          backgroundColor: 'white',
         },
         android: {
           backgroundColor: 'darkred',
@@ -97,7 +97,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     ...Platform.select({
         ios: {
-          backgroundColor: 'darkred',
+          backgroundColor: 'white',
         },
         android: {
           backgroundColor: 'darkred',
@@ -106,7 +106,9 @@ export default StyleSheet.create({
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30
+    marginTop: 30,
+    borderRadius: 10,
+    marginHorizontal: 5
   },
   buttonText: {
     color: "#FFF",

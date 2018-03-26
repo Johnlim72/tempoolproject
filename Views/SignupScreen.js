@@ -2,6 +2,7 @@ import React from "react";
 import {
   AppRegistry,
   Alert,
+  AsyncStorage,
   StyleSheet,
   Dimensions,
   Image,
@@ -19,6 +20,9 @@ const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
+
+const ACCESS_TOKEN = "accessToken";
+const EMAIL = "email";
 
 export default class SignupScreen extends React.Component {
   static navigationOptions = {
@@ -38,7 +42,17 @@ export default class SignupScreen extends React.Component {
     };
   }
 
-  InsertDataToServer = () => {
+  async storeToken(accessToken, email) {
+    try {
+      await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
+      await AsyncStorage.setItem(EMAIL, email);
+      console.log("Token was stored successfully");
+    } catch (error) {
+      console.log("Error storing token: " + error);
+    }
+  }
+
+  async InsertDataToServer() {
     const { TextInputFirstName } = this.state;
     const { TextInputLastName } = this.state;
     const { TextInputEmail } = this.state;
@@ -47,6 +61,7 @@ export default class SignupScreen extends React.Component {
     const { TextInputPhoneNumber } = this.state;
 
     // Check that all fields have been entered
+
     if(TextInputFirstName != ""
       && TextInputLastName != ""
       && TextInputEmail != ""
@@ -57,47 +72,52 @@ export default class SignupScreen extends React.Component {
         if(TextPassword === TextPasswordConfirm) {
           var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
 
-          if(emailDomain === "temple.edu"){
-            fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                firstName: TextInputFirstName,
-                lastName: TextInputLastName,
-                email: TextInputEmail,
-                password: TextPassword,
-                phoneNumber: TextInputPhoneNumber
-              })
-            })
-              .then(response => response.json())
-              .then(responseJson => {
-                if (responseJson === "User successfully created.") {
-                  //Then open Profile activity and send user email to profile activity.
-                  Alert.alert(
-                    "Success!",
-                    "User created",
-                    [
-                      {
-                        text: "OK",
-                        onPress: () =>
-                          this.props.navigation.navigate("Dashboard", {
-                            Email: TextInputEmail
-                          })
-                      }
-                    ],
-                    { cancelable: false }
-                  );
-                  console.log(responseJson);
-                } else {
-                  Alert.alert(responseJson);
-                }
-              })
-              .catch(error => {
-                console.error(error);
+          if(emailDomain.toLowerCase() === "temple.edu"){
+            try {
+              let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  firstName: TextInputFirstName,
+                  lastName: TextInputLastName,
+                  email: TextInputEmail,
+                  password: TextPassword,
+                  phoneNumber: TextInputPhoneNumber
+                })
               });
+
+              let responseText = await response.text();
+
+              if(response.status >= 200 && response.status < 300) {
+                let accessToken = responseText;
+                this.storeToken(accessToken, TextInputEmail);
+
+                Alert.alert(
+                  "Success!",
+                  "User created",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () =>
+                        this.props.navigation.navigate("Dashboard", {
+                          Email: TextInputEmail,
+                          accessToken: accessToken
+                        })
+                    }
+                  ],
+                  { cancelable: false }
+                );
+
+              } else {
+                let error = responseText;
+                throw error;
+              }
+            } catch(error) {
+              Alert.alert(error);
+            }
           } else {
             Alert.alert("Please use a temple.edu email");
           }
@@ -107,7 +127,7 @@ export default class SignupScreen extends React.Component {
     } else {
       Alert.alert("Please fill in all fields");
     }
-  };
+  }
 
   render() {
     return (
@@ -183,7 +203,7 @@ export default class SignupScreen extends React.Component {
           <View style={styles.buttonContainer}>
             <Button
               title="Sign Up"
-              onPress={this.InsertDataToServer}
+              onPress={this.InsertDataToServer.bind(this)}
               color="darkred"
             />
           </View>

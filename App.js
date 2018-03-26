@@ -6,7 +6,8 @@ import {
   Button,
   View,
   Text,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import InitialScreen from "./Views/InitialScreen";
@@ -17,6 +18,8 @@ import ProfileScreen from "./Views/ProfileScreen";
 import ScheduleScreen from "./Views/ScheduleScreen";
 import MapScreen from "./Views/MapScreen";
 import styles from "./Views/style";
+
+const ACCESS_TOKEN = 'accessToken';
 
 const RootStack = StackNavigator(
   {
@@ -43,11 +46,15 @@ const RootStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Map"
+    initialRouteName: "Initial"
   }
 );
 
 export default class App extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
   render() {
     return <RootStack />;
   }
