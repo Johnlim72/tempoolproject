@@ -93,12 +93,19 @@ export default class InitialScreen extends React.Component {
             let responseText = await response.text();
 
             if(response.status >= 200 && response.status < 300) {
-              let accessToken = responseText;
-              this.storeToken(accessToken, TextInputEmail);
-              this.props.navigation.navigate("Dashboard", {
-                Email: TextInputEmail,
-                accessToken: accessToken
-              });
+              //Alert.alert(responseText);
+              if(responseText != "error") {
+                //Alert.alert("Inside if message not equal to error");
+                let accessToken = responseText;
+                this.storeToken(accessToken, TextInputEmail);
+                this.props.navigation.navigate("Dashboard", {
+                  Email: TextInputEmail,
+                  accessToken: accessToken
+                });
+              } else {
+                //Alert.alert("Inside error");
+                throw "Invalid credentials";
+              }
             } else {
               let error = responseText;
               throw error;
