@@ -10,12 +10,16 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
+
+const ACCESS_TOKEN = "accessToken";
+const EMAIL = "email";
 
 const background = require("./login3_bg.jpg");
 const lockIcon = require("./login1_lock.png");
@@ -35,48 +39,76 @@ export default class InitialScreen extends React.Component {
     };
   }
 
-  UserLoginFunction = () => {
+  componentWillMount() {
+    this.getToken();
+  }
+
+  async getToken() {
+    try {
+      let accessToken = await AsyncStorage.getItem(ACCESS_TOKEN);
+      let email = await AsyncStorage.getItem(EMAIL);
+      if(accessToken) {
+        this.props.navigation.navigate("Dashboard", {
+          accessToken: accessToken,
+          Email: email
+        });
+      }
+    } catch(error) {
+        console.log("Something went wrong");
+        Alert.alert("An Error occurred: " + error);
+    }
+  }
+
+  async storeToken(accessToken, email) {
+    try {
+      await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
+      await AsyncStorage.setItem(EMAIL, email);
+      console.log("Token was stored successfully");
+    } catch (error) {
+      console.log("Error storing token: " + error);
+    }
+  }
+
+  async UserLoginFunction() {
     const { TextInputEmail } = this.state;
     const { TextPassword } = this.state;
 
-    if (TextInputEmail != "" && TextPassword != "") {
-      var emailDomain = TextInputEmail.substr(
-        TextInputEmail.length - 10,
-        TextInputEmail.length
-      );
-      if (emailDomain === "temple.edu") {
-        fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: TextInputEmail,
-            password: TextPassword
-          })
-        })
-          .then(response => response.json())
-          .then(responseJson => {
-            // If server response message same as Data Matched
-            if (responseJson === "Data Matched") {
-              //Then open Profile activity and send user email to profile activity.
+    if(TextInputEmail != ""
+      && TextPassword != "") {
+        var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
+        if(emailDomain === "temple.edu"){
+          try {
+            let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                email: TextInputEmail,
+                password: TextPassword
+              })
+            });
+
+            let responseText = await response.text();
+
+            if(response.status >= 200 && response.status < 300) {
+              let accessToken = responseText;
+              this.storeToken(accessToken, TextInputEmail);
               this.props.navigation.navigate("Dashboard", {
-                Email: TextInputEmail
+                Email: TextInputEmail,
+                accessToken: accessToken
               });
-              console.log(responseJson);
             } else {
-              Alert.alert(responseJson);
+              let error = responseText;
+              throw error;
             }
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      } else {
-        Alert.alert(
-          "Are you sure the email is correct? It needs to be a temple.edu email"
-        );
-      }
+          } catch(error) {
+            Alert.alert("An error occurred: " + error);
+          }
+        } else {
+          Alert.alert("Are you sure the email is correct? It needs to be a temple.edu email");
+        }
     } else {
       Alert.alert("Please fill in all fields");
     }
@@ -147,14 +179,14 @@ export default class InitialScreen extends React.Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={this.UserLoginFunction}
+              onPress={this.UserLoginFunction.bind(this)}
               activeOpacity={0.5}
             >
               <View style={styles.button}>
                 <Button
                   title="Sign in"
-                  onPress={this.UserLoginFunction}
-                  color="darkred"
+                  onPress={this.UserLoginFunction.bind(this)}
+                  color="black"
                 />
               </View>
             </TouchableOpacity>

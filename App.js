@@ -6,7 +6,8 @@ import {
   Button,
   View,
   Text,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import InitialScreen from "./Views/InitialScreen";
@@ -19,6 +20,8 @@ import LocationScreen from "./Views/LocationScreen";
 import RideListScreen from "./Views/RideListScreen";
 import FindRideScreen from "./Views/FindRideScreen";
 import styles from "./Views/style";
+
+const ACCESS_TOKEN = 'accessToken';
 
 const RootStack = StackNavigator(
   {
@@ -56,6 +59,10 @@ const RootStack = StackNavigator(
 );
 
 export default class App extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
   render() {
     return <RootStack />;
   }

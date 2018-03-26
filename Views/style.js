@@ -22,13 +22,13 @@ export default StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     ...Platform.select({
-      ios: {
-        backgroundColor: "darkred"
-      },
-      android: {
-        backgroundColor: "darkred"
-      }
-    }),
+        ios: {
+          backgroundColor: 'white',
+        },
+        android: {
+          backgroundColor: 'darkred',
+        },
+      }),
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
@@ -108,17 +108,19 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "white",
     ...Platform.select({
-      ios: {
-        backgroundColor: "darkred"
-      },
-      android: {
-        backgroundColor: "darkred"
-      }
-    }),
+        ios: {
+          backgroundColor: 'white',
+        },
+        android: {
+          backgroundColor: 'darkred',
+        },
+      }),
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30
+    marginTop: 30,
+    borderRadius: 10,
+    marginHorizontal: 5
   },
   buttonText: {
     color: "#FFF",
