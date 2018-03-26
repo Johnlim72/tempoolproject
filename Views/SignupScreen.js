@@ -143,7 +143,7 @@ export default class SignupScreen extends React.Component {
           style={[styles.background, {padding: 50}]}
           resizeMode="cover"
         >
-          <View style={styles.inputWrap}>
+          <View style={[styles.inputWrap, {marginTop: 120}]}>
             <TextInput
               placeholderTextColor="#b3b3b3"
               placeholder="First Name"
