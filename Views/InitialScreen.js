@@ -78,7 +78,7 @@ export default class InitialScreen extends React.Component {
         var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
         if(emailDomain === "temple.edu"){
           try {
-            let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
+            let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/login.php", {
               method: "POST",
               headers: {
                 Accept: "application/json",
@@ -93,12 +93,19 @@ export default class InitialScreen extends React.Component {
             let responseText = await response.text();
 
             if(response.status >= 200 && response.status < 300) {
-              let accessToken = responseText;
-              this.storeToken(accessToken, TextInputEmail);
-              this.props.navigation.navigate("Dashboard", {
-                Email: TextInputEmail,
-                accessToken: accessToken
-              });
+              //Alert.alert(responseText);
+              if(responseText != "error") {
+                //Alert.alert("Inside if message not equal to error");
+                let accessToken = responseText;
+                this.storeToken(accessToken, TextInputEmail);
+                this.props.navigation.navigate("Dashboard", {
+                  Email: TextInputEmail,
+                  accessToken: accessToken
+                });
+              } else {
+                //Alert.alert("Inside error");
+                throw "Invalid credentials";
+              }
             } else {
               let error = responseText;
               throw error;
