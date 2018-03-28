@@ -28,12 +28,11 @@ export default class ScheduleScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextEmail: this.props.navigation.state.params.Email,
-      TextAddress: "",
-      TextLatitude: "",
-      TextLongitude: "",
-      TextDate: "03-25-2018",
-      TextTime: ""
+      TextEmail: this.props.navigation.state.params.TextEmail.toString(),
+      TextAddress: this.props.navigation.state.params.TextAddress.toString(),
+      TextLatitude: this.props.navigation.state.params.TextLatitude.toString(),
+      TextLongitude: this.props.navigation.state.params.TextLongitude.toString(),
+      TextDate: "03-25-2018"
     };
   }
 
@@ -43,43 +42,49 @@ export default class ScheduleScreen extends React.Component {
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
-    const { TextTime } = this.state;
+    console.log(
+      "TextEmail: " +
+        TextEmail +
+        "\nTextAddress: " +
+        TextAddress +
+        "\nTextLongitude: " +
+        TextLongitude +
+        "\nTextLatitude: " +
+        TextLatitude +
+        "\nTextDate: " +
+        TextDate
+    );
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_ride_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_ride_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email: TextEmail,
-        address: TextAddress,
-        latitude: TextLatitude,
-        longitude: TextLongitude,
-        date: TextDate,
-        time: TextTime
+        rider_email: TextEmail.toString(),
+        start_address: TextAddress.toString(),
+        start_latitude: TextLatitude.toString(),
+        start_longitude: TextLongitude.toString(),
+        date: TextDate.toString()
       })
     })
-      .then(response => response.json())
+      .then(response => console.log(response))
       .then(responseJson => {
-        if (responseJson === "Ride successfully inserted.") {
-          //Then open Profile activity and send user email to profile activity.
+        //Then open Profile activity and send user email to profile activity.
 
-          Alert.alert(
-            "Success!",
-            "Ride inserted",
-            [
-              {
-                text: "OK",
-                onPress: () => this.props.navigation.navigate("Dashboard")
-              }
-            ],
-            { cancelable: false }
-          );
-          console.log(responseJson);
-        } else {
-          Alert.alert(responseJson);
-        }
+        console.log(responseJson);
+        // Alert.alert(
+        //   "Success!",
+        //   "Ride inserted",
+        //   [
+        //     {
+        //       text: "OK",
+        //       onPress: () => this.props.navigation.navigate("Dashboard")
+        //     }
+        //   ],
+        //   { cancelable: false }
+        // );
       })
       .catch(error => {
         console.error(error);
@@ -91,7 +96,7 @@ export default class ScheduleScreen extends React.Component {
       TextAddress: this.state.TextAddress,
       TextLatitude: this.state.TextLatitude,
       TextLongitude: this.state.TextLongitude,
-      Email: this.props.navigation.state.params.Email
+      TextEmail: this.props.navigation.state.params.Email
     });
   };
 
@@ -159,12 +164,13 @@ export default class ScheduleScreen extends React.Component {
             <View style={styles.inputWrapAddress}>
               <TextInput
                 placeholderTextColor="#b3b3b3"
-                placeholder="Address: "s
+                placeholder="Address: "
+                s
                 defaultValue={this.props.navigation.state.params.TextAddress}
                 multiline={true}
                 editable={true}
                 onChangeText={TextAddress => this.setState({ TextAddress })}
-                style={[styles.inputAddress, { color: "black"}]}
+                style={[styles.inputAddress, { color: "black" }]}
               />
             </View>
             <Text

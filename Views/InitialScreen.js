@@ -78,7 +78,7 @@ export default class InitialScreen extends React.Component {
         var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
         if(emailDomain === "temple.edu"){
           try {
-            let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
+            let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/login.php", {
               method: "POST",
               headers: {
                 Accept: "application/json",
