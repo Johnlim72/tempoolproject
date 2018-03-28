@@ -28,6 +28,7 @@ export default class ScheduleScreen extends React.Component {
     super(props);
 
     this.state = {
+      TextEmail: this.props.navigation.state.params.Email,
       TextAddress: "",
       TextLatitude: "",
       TextLongitude: "",
@@ -37,19 +38,21 @@ export default class ScheduleScreen extends React.Component {
   }
 
   InsertRideToServer = () => {
+    const { TextEmail } = this.state;
     const { TextAddress } = this.state;
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
     const { TextTime } = this.state;
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_ride_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        email: TextEmail,
         address: TextAddress,
         latitude: TextLatitude,
         longitude: TextLongitude,
@@ -87,7 +90,8 @@ export default class ScheduleScreen extends React.Component {
     this.props.navigation.navigate("Location", {
       TextAddress: this.state.TextAddress,
       TextLatitude: this.state.TextLatitude,
-      TextLongitude: this.state.TextLongitude
+      TextLongitude: this.state.TextLongitude,
+      Email: this.props.navigation.state.params.Email
     });
   };
 

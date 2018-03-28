@@ -30,6 +30,7 @@ export default class DashboardScreen extends React.Component {
     super(props);
 
     this.state = {
+      Email: this.props.navigation.state.params.Email,
       SwitchOnValueHolder: true,
       disabled: false
     };
@@ -37,10 +38,10 @@ export default class DashboardScreen extends React.Component {
 
   async deleteToken() {
     try {
-        await AsyncStorage.removeItem(ACCESS_TOKEN)
-        this.props.navigation.navigate("Initial");
-    } catch(error) {
-        Alert.alert("An error occurred: " + error);
+      await AsyncStorage.removeItem(ACCESS_TOKEN);
+      this.props.navigation.navigate("Initial");
+    } catch (error) {
+      Alert.alert("An error occurred: " + error);
     }
   }
 
@@ -97,8 +98,14 @@ export default class DashboardScreen extends React.Component {
               >
                 Dashboard
               </Text>
-              <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
-                <Text style={{marginRight: 10}}>Rider</Text>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "row"
+                }}
+              >
+                <Text style={{ marginRight: 10 }}>Rider</Text>
                 <Switch
                   onValueChange={value => this.ShowAlert(value)}
                   activeText={""}
@@ -114,7 +121,7 @@ export default class DashboardScreen extends React.Component {
                   style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
                   value={this.state.SwitchOnValueHolder}
                 />
-                <Text style={{marginLeft: 10}}>Driver</Text>
+                <Text style={{ marginLeft: 10 }}>Driver</Text>
               </View>
             </View>
           </View>
@@ -131,7 +138,11 @@ export default class DashboardScreen extends React.Component {
             <View style={styles.buttonContainer}>
               <Button
                 title="Schedule a Ride"
-                onPress={() => this.props.navigation.navigate("Location")}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    Email: this.props.navigation.state.params.Email
+                  })
+                }
                 color="darkred"
                 disabled={this.state.disabled}
               />
@@ -142,7 +153,7 @@ export default class DashboardScreen extends React.Component {
                 title="Profile"
                 onPress={() =>
                   this.props.navigation.navigate("Profile", {
-                    Email: this.props.navigation.state.params.Email,
+                    Email: this.props.navigation.state.params.Email
                   })
                 }
                 color="darkred"
@@ -150,10 +161,7 @@ export default class DashboardScreen extends React.Component {
             </View>
 
             <View style={styles.buttonContainer}>
-              <Button
-                title="Logout"
-                onPress={this.deleteToken.bind(this)}
-              />
+              <Button title="Logout" onPress={this.deleteToken.bind(this)} />
             </View>
           </View>
         </ImageBackground>

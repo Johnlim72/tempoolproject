@@ -12,6 +12,7 @@ export default class MapScreen extends React.Component {
     super(props);
 
     this.state = {
+      Email: this.props.navigation.state.params.Email,
       TextAddress: "",
       TextLatitude: "",
       TextLongitude: ""
@@ -22,7 +23,8 @@ export default class MapScreen extends React.Component {
     this.props.navigation.navigate("Schedule", {
       TextAddress: this.state.TextAddress,
       TextLatitude: this.state.TextLatitude,
-      TextLongitude: this.state.TextLongitude
+      TextLongitude: this.state.TextLongitude,
+      Email: this.props.navigation.state.params.Email
     });
   };
 
