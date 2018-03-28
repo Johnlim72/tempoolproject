@@ -125,17 +125,21 @@ export default class DashboardScreen extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{ flex: 5, marginTop: 20 }}>
-            <View style={styles.buttonContainer}>
+          <View style={{ flex: 5, marginTop: 10 }}>
+            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
               <Button
                 title="Find a Ride"
-                onPress={() => this.props.navigation.navigate("RideList", {TextEmail: this.props.navigation.state.params.TextEmail})}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    TextEmail: this.props.navigation.state.params.TextEmail
+                  })
+                }
                 color="darkred"
                 disabled={this.state.disabled}
               />
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
               <Button
                 title="Schedule a Ride"
                 onPress={() =>
@@ -148,7 +152,20 @@ export default class DashboardScreen extends React.Component {
               />
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+              <Button
+                title="List of Rides"
+                onPress={() =>
+                  this.props.navigation.navigate("RideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail
+                  })
+                }
+                color="darkred"
+                disabled={!this.state.disabled}
+              />
+            </View>
+
+            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
               <Button
                 title="Profile"
                 onPress={() =>
@@ -160,7 +177,7 @@ export default class DashboardScreen extends React.Component {
               />
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
               <Button title="Logout" onPress={this.deleteToken.bind(this)} />
             </View>
           </View>
