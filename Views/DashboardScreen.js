@@ -105,7 +105,7 @@ export default class DashboardScreen extends React.Component {
                   flexDirection: "row"
                 }}
               >
-                <Text style={{ marginRight: 10 }}>Rider</Text>
+                <Text style={{ marginRight: 10 }}>Driver</Text>
                 <Switch
                   onValueChange={value => this.ShowAlert(value)}
                   activeText={""}
@@ -121,7 +121,7 @@ export default class DashboardScreen extends React.Component {
                   style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
                   value={this.state.SwitchOnValueHolder}
                 />
-                <Text style={{ marginLeft: 10 }}>Driver</Text>
+                <Text style={{ marginLeft: 10 }}>Rider</Text>
               </View>
             </View>
           </View>
