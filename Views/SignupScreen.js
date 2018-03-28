@@ -74,7 +74,7 @@ export default class SignupScreen extends React.Component {
 
           if(emailDomain.toLowerCase() === "temple.edu"){
             try {
-              let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
+              let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_user_info.php", {
                 method: "POST",
                 headers: {
                   Accept: "application/json",
