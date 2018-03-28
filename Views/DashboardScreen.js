@@ -30,7 +30,7 @@ export default class DashboardScreen extends React.Component {
     super(props);
 
     this.state = {
-      Email: this.props.navigation.state.params.Email,
+      TextEmail: this.props.navigation.state.params.TextEmail,
       SwitchOnValueHolder: true,
       disabled: false
     };
@@ -129,7 +129,7 @@ export default class DashboardScreen extends React.Component {
             <View style={styles.buttonContainer}>
               <Button
                 title="Find a Ride"
-                onPress={() => this.props.navigation.navigate("RideList")}
+                onPress={() => this.props.navigation.navigate("RideList", {TextEmail: this.props.navigation.state.params.TextEmail})}
                 color="darkred"
                 disabled={this.state.disabled}
               />
@@ -140,7 +140,7 @@ export default class DashboardScreen extends React.Component {
                 title="Schedule a Ride"
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
-                    Email: this.props.navigation.state.params.Email
+                    TextEmail: this.props.navigation.state.params.TextEmail
                   })
                 }
                 color="darkred"
@@ -153,7 +153,7 @@ export default class DashboardScreen extends React.Component {
                 title="Profile"
                 onPress={() =>
                   this.props.navigation.navigate("Profile", {
-                    Email: this.props.navigation.state.params.Email
+                    TextEmail: this.props.navigation.state.params.TextEmail
                   })
                 }
                 color="darkred"

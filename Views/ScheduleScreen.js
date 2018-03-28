@@ -42,6 +42,7 @@ export default class ScheduleScreen extends React.Component {
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
+
     console.log(
       "TextEmail: " +
         TextEmail +
@@ -69,22 +70,25 @@ export default class ScheduleScreen extends React.Component {
         date: TextDate.toString()
       })
     })
-      .then(response => console.log(response))
+      .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-
-        console.log(responseJson);
-        // Alert.alert(
-        //   "Success!",
-        //   "Ride inserted",
-        //   [
-        //     {
-        //       text: "OK",
-        //       onPress: () => this.props.navigation.navigate("Dashboard")
-        //     }
-        //   ],
-        //   { cancelable: false }
-        // );
+        if (responseJson == "Ride successfully inserted.") {
+          Alert.alert(
+            "Success!",
+            "Ride inserted",
+            [
+              {
+                text: "OK",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        }
       })
       .catch(error => {
         console.error(error);

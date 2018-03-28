@@ -151,5 +151,24 @@ export default StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 5,
     marginLeft: 5
-  }
+  },
+  MainContainer:
+ {
+    justifyContent: 'center',
+    flex:1,
+    margin: 10
+
+ },
+ rowViewContainer: {
+    fontSize: 20,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+  }, 
+  textViewContainer: {
+
+    padding:5,
+    fontSize: 20,
+    color: '#000',
+   }
 });

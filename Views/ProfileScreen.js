@@ -53,7 +53,7 @@ export default class ProfileScreen extends React.Component {
       body: JSON.stringify({
         firstName: TextInputFirstName,
         lastName: TextInputLastName,
-        email: this.props.navigation.state.params.Email,
+        email: this.props.navigation.state.params.TextEmail,
         password: TextPassword,
         phoneNumber: TextInputPhoneNumber
       })
@@ -123,7 +123,7 @@ export default class ProfileScreen extends React.Component {
                       text: "OK",
                       onPress: () =>
                         this.props.navigation.navigate("Dashboard", {
-                          Email: TextInputEmail
+                          TextEmail: TextInputEmail
                         })
                     }
                   ],

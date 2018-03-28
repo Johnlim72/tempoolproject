@@ -50,7 +50,7 @@ export default class InitialScreen extends React.Component {
       if(accessToken) {
         this.props.navigation.navigate("Dashboard", {
           accessToken: accessToken,
-          Email: email
+          TextEmail: email
         });
       }
     } catch(error) {
@@ -99,7 +99,7 @@ export default class InitialScreen extends React.Component {
                 let accessToken = responseText;
                 this.storeToken(accessToken, TextInputEmail);
                 this.props.navigation.navigate("Dashboard", {
-                  Email: TextInputEmail,
+                  TextEmail: TextInputEmail,
                   accessToken: accessToken
                 });
               } else {

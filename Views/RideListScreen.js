@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
+  ListView,
   Dimensions,
+  ActivityIndicator,
   TextInput
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
@@ -17,7 +19,7 @@ import styles from "./style";
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
-export default class RideScreen extends React.Component {
+export default class RideListScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -26,184 +28,81 @@ export default class RideScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextInputRide_ID: "",
-      TextInputRiderName: "",
-      TextInputStartTime: "",
-      TextInputLocation: ""
+      TextEmail: this.props.navigation.state.params.TextEmail,
+      TextRiderName: "",
+      TextDate: "",
+      TextLocation: "",
+      isLoading: true
     };
+  }
 
-    const { TextInputRide_ID } = "";
-    const { TextInputRiderName } = "";
-    const { TextInputStartTime } = "";
-    const { TextInputLocation } = "";
+  OpenDetailsActivity(driver_email) {
+    this.props.navigation.navigate("RideDetails", {
+      ListViewClickItemHolder: driver_email
+    });
+  }
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/ride_info.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        rider_name: TextInputRiderName,
-        ride_ID: this.props.navigation.state.params.ride_ID,
-        start_time: TextInputStartTime,
-        address: TextInputLocation
-      })
-    })
+  componentDidMount() {
+    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php")
       .then(response => response.json())
       .then(responseJson => {
-        this.setState({
-
-          TextInputRide_ID: responseJson.ride_ID,
-          TextInputRiderName: responseJson.rider_name,
-          TextInputStartTime: responseJson.start_time,
-          TextInputLocation: response.address
+        let ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
         });
-
-        console.log(responseJson);
+        this.setState(
+          {
+            isLoading: false,
+            dataSource: ds.cloneWithRows(responseJson)
+          },
+          function() {
+            // In this block you can do something with new state.
+          }
+        );
       })
-
       .catch(error => {
         console.error(error);
       });
   }
 
-
-  render() {
+  ListViewItemSeparator = () => {
     return (
       <View
         style={{
-          flex: 1,
-          backgroundColor: "darkred",
-          justifyContent: "center",
-          alignItems: "center"
+          height: 0.5,
+          width: "100%",
+          backgroundColor: "#000"
         }}
-      >
-        <ImageBackground
-          source={background}
-          style={styles.background}
-          resizeMode="cover"
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
+      />
+    );
+  };
+
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.MainContainer}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderSeparator={this.ListViewItemSeparator}
+          renderRow={rowData => (
             <Text
-              style={{
-                color: "white",
-                fontFamily: "Futura",
-                fontSize: 30,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
+              style={styles.rowViewContainer}
+              onPress={this.OpenDetailsActivity.bind(
+                this,
+                rowData.driver_email
+              )}
             >
-              Rides
+              {" "}
+              {rowData.rider_name+"'s ride"}{" "}
             </Text>
-          </View>
-          <View style={{ flex: 5 }}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "white",
-                borderRadius: 10,
-                padding: 20,
-                margin: 10
-              }}
-            >
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                Rider Name:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Rider Name"
-                  defaultValue={this.state.TextInputRiderName}
-                  onChangeText={TextInputRiderName =>
-                    this.setState({ TextInputRiderName })
-                  }
-                  style={[styles.input, { color: "black" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                Location:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Last Name"
-                  defaultValue={this.state.TextInputLastName}
-                  onChangeText={TextInputLocation =>
-                    this.setState({ TextInputLocation })
-                  }
-                  style={[styles.input, { color: "black" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-                Time:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholder="TU E-mail"
-                  placeholderTextColor="#b3b3b3"
-                  defaultValue={this.state.TextInputEmail}
-                  editable={false}
-                  onChangeText={TextInputStartTime =>
-                    this.setState({ TextInputStartTime })
-                  }
-                  style={[styles.input, { color: "#a6a6a6" }]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline"
-                }}
-              >
-
-                Ride ID:
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Ride ID"
-                  defaultValue={this.state.TextInputRide_ID}
-                  onChangeText={TextInputRide_ID =>
-                    this.setState({ TextInputRide_ID })
-                  }
-                  style={[styles.input, { color: "black" }]}
-                />
-              </View>
-
-            </View>
-          </View>
-        </ImageBackground>
+          )}
+        />
       </View>
     );
   }
