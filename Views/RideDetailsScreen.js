@@ -85,6 +85,30 @@ export default class RideDetailsScreen extends React.Component {
             {"Location = " + this.state.TextLocation}{" "}
           </Text>
         </View>
+        <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+          <Button
+            title="Accept"
+            onPress={() =>
+              this.props.navigation.navigate("RideList", {
+                TextEmail: this.props.navigation.state.params.TextEmail
+              })
+            }
+            color="darkred"
+            disabled={this.state.disabled}
+          />
+        </View>
+        <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+          <Button
+            title="Decline"
+            onPress={() =>
+              this.props.navigation.navigate("RideList", {
+                TextEmail: this.props.navigation.state.params.TextEmail
+              })
+            }
+            color="darkred"
+            disabled={this.state.disabled}
+          />
+        </View>
       </View>
     );
   }
