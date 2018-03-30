@@ -28,7 +28,7 @@ export default class ProfileScreen extends React.Component {
     this.state = {
       TextInputFirstName: "",
       TextInputLastName: "",
-      TextInputEmail: "",
+      TextInputEmail: this.props.navigation.state.params.TextEmail,
       TextPassword: "",
       TextInputPhoneNumber: "",
       TextPasswordConfirm: ""
@@ -44,7 +44,7 @@ export default class ProfileScreen extends React.Component {
 
     //Alert.alert("Email: " + this.props.navigation.state.params.Email);
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/prepopulate.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/prepopulate.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
