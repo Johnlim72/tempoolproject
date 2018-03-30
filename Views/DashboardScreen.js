@@ -63,8 +63,9 @@ export default class DashboardScreen extends React.Component {
           {
             text: "Yes",
             onPress: () =>
-              this.props.navigation.navigate("DriverSchedule", {
-                TextEmail: this.props.navigation.state.params.TextEmail
+              this.props.navigation.navigate("Location", {
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                Status: this.state.SwitchOnValueHolder
               })
           },
           {
@@ -122,7 +123,7 @@ export default class DashboardScreen extends React.Component {
                   flexDirection: "row"
                 }}
               >
-                <Text style={{ marginRight: 10 }}>Rider</Text>
+                <Text style={{ marginRight: 10 }}>Driver</Text>
                 <Switch
                   onValueChange={value => this.ShowAlert(value)}
                   activeText={""}
@@ -138,7 +139,7 @@ export default class DashboardScreen extends React.Component {
                   style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
                   value={this.state.SwitchOnValueHolder}
                 />
-                <Text style={{ marginLeft: 10 }}>Driver</Text>
+                <Text style={{ marginLeft: 10 }}>Rider</Text>
               </View>
             </View>
           </View>
@@ -148,7 +149,8 @@ export default class DashboardScreen extends React.Component {
                 title="Find a Ride"
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
                   })
                 }
                 color="darkred"
@@ -161,7 +163,8 @@ export default class DashboardScreen extends React.Component {
                 title="Schedule a Ride"
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
                   })
                 }
                 color="darkred"

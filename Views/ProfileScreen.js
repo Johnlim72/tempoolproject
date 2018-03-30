@@ -28,7 +28,7 @@ export default class ProfileScreen extends React.Component {
     this.state = {
       TextInputFirstName: "",
       TextInputLastName: "",
-      TextInputEmail: this.props.navigation.state.params.TextEmail,
+      TextEmail: this.props.navigation.state.params.TextEmail,
       TextPassword: "",
       TextInputPhoneNumber: "",
       TextPasswordConfirm: ""
@@ -38,7 +38,7 @@ export default class ProfileScreen extends React.Component {
 
     const { TextInputFirstName } = "";
     const { TextInputLastName } = "";
-    const { TextInputEmail } = "";
+    const { TextEmail } = this.props.navigation.state.params.TextEmail;
     const { TextPassword } = "";
     const { TextInputPhoneNumber } = "";
 
@@ -63,7 +63,7 @@ export default class ProfileScreen extends React.Component {
         this.setState({
           TextInputFirstName: responseJson.firstName,
           TextInputLastName: responseJson.lastName,
-          TextInputEmail: responseJson.email,
+          TextEmail: responseJson.email,
           TextPassword: "",
           TextPasswordConfirm: "",
           TextInputPhoneNumber: responseJson.phoneNumber
@@ -80,23 +80,23 @@ export default class ProfileScreen extends React.Component {
   UpdateDataToServer = () => {
     const { TextInputFirstName } = this.state;
     const { TextInputLastName } = this.state;
-    const { TextInputEmail } = this.state;
+    const { TextEmail } = this.state;
     const { TextPassword } = this.state;
     const { TextPasswordConfirm } = this.state;
     const { TextInputPhoneNumber } = this.state;
 
     if(TextInputFirstName != ""
       && TextInputLastName != ""
-      && TextInputEmail != ""
+      && TextEmail != ""
       && TextPassword != ""
       && TextInputPhoneNumber != ""
       && TextPasswordConfirm != "") {
 
       if(TextPassword === TextPasswordConfirm) {
-        var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
+        var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
 
         if(emailDomain === "temple.edu"){
-          fetch("http://cis-linux2.temple.edu/~tuf70921/php/update_user_info.php", {
+          fetch("http://cis-linux2.temple.edu/~tuf41055/php/update_user_info.php", {
             method: "POST",
             headers: {
               Accept: "application/json",
@@ -105,7 +105,7 @@ export default class ProfileScreen extends React.Component {
             body: JSON.stringify({
               firstName: TextInputFirstName,
               lastName: TextInputLastName,
-              email: TextInputEmail,
+              email: TextEmail,
               password: TextPassword,
               phoneNumber: TextInputPhoneNumber
             })
@@ -123,7 +123,7 @@ export default class ProfileScreen extends React.Component {
                       text: "OK",
                       onPress: () =>
                         this.props.navigation.navigate("Dashboard", {
-                          TextEmail: TextInputEmail
+                          TextEmail: this.state.TextEmail
                         })
                     }
                   ],
@@ -249,10 +249,10 @@ export default class ProfileScreen extends React.Component {
                 <TextInput
                   placeholder="TU E-mail"
                   placeholderTextColor="#b3b3b3"
-                  defaultValue={this.state.TextInputEmail}
+                  defaultValue={this.state.TextEmail}
                   editable={false}
-                  onChangeText={TextInputEmail =>
-                    this.setState({ TextInputEmail })
+                  onChangeText={TextEmail =>
+                    this.setState({ TextEmail })
                   }
                   style={[styles.input, { color: "black" }]}
                 />

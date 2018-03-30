@@ -35,7 +35,7 @@ export default class SignupScreen extends React.Component {
     this.state = {
       TextInputFirstName: "",
       TextInputLastName: "",
-      TextInputEmail: "",
+      TextEmail: "",
       TextPassword: "",
       TextInputPhoneNumber: "",
       TextPasswordConfirm: ""
@@ -55,7 +55,7 @@ export default class SignupScreen extends React.Component {
   async InsertDataToServer() {
     const { TextInputFirstName } = this.state;
     const { TextInputLastName } = this.state;
-    const { TextInputEmail } = this.state;
+    const { TextEmail } = this.state;
     const { TextPassword } = this.state;
     const { TextPasswordConfirm } = this.state;
     const { TextInputPhoneNumber } = this.state;
@@ -64,13 +64,13 @@ export default class SignupScreen extends React.Component {
 
     if(TextInputFirstName != ""
       && TextInputLastName != ""
-      && TextInputEmail != ""
+      && TextEmail != ""
       && TextPassword != ""
       && TextInputPhoneNumber != ""
       && TextPasswordConfirm != "") {
 
         if(TextPassword === TextPasswordConfirm) {
-          var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
+          var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
 
           if(emailDomain.toLowerCase() === "temple.edu"){
             try {
@@ -83,7 +83,7 @@ export default class SignupScreen extends React.Component {
                 body: JSON.stringify({
                   firstName: TextInputFirstName,
                   lastName: TextInputLastName,
-                  email: TextInputEmail,
+                  email: TextEmail,
                   password: TextPassword,
                   phoneNumber: TextInputPhoneNumber
                 })
@@ -93,7 +93,7 @@ export default class SignupScreen extends React.Component {
 
               if(response.status >= 200 && response.status < 300) {
                 let accessToken = responseText;
-                this.storeToken(accessToken, TextInputEmail);
+                this.storeToken(accessToken, TextEmail);
 
                 Alert.alert(
                   "Success!",
@@ -103,7 +103,7 @@ export default class SignupScreen extends React.Component {
                       text: "OK",
                       onPress: () =>
                         this.props.navigation.navigate("Dashboard", {
-                          Email: TextInputEmail,
+                          TextEmail: TextEmail,
                           accessToken: accessToken
                         })
                     }
@@ -167,7 +167,7 @@ export default class SignupScreen extends React.Component {
             <TextInput
               placeholder="TU E-mail"
               placeholderTextColor="#b3b3b3"
-              onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
+              onChangeText={TextEmail => this.setState({ TextEmail })}
               style={[styles.input, { color: "white" }]}
             />
           </View>

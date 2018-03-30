@@ -34,7 +34,7 @@ export default class InitialScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextInputEmail: "",
+      TextEmail: "",
       TextPassword: ""
     };
   }
@@ -70,12 +70,12 @@ export default class InitialScreen extends React.Component {
   }
 
   async UserLoginFunction() {
-    const { TextInputEmail } = this.state;
+    const { TextEmail } = this.state;
     const { TextPassword } = this.state;
 
-    if(TextInputEmail != ""
+    if(TextEmail != ""
       && TextPassword != "") {
-        var emailDomain = TextInputEmail.substr(TextInputEmail.length - 10, TextInputEmail.length);
+        var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
         if(emailDomain === "temple.edu"){
           try {
             let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/login.php", {
@@ -85,7 +85,7 @@ export default class InitialScreen extends React.Component {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                email: TextInputEmail,
+                email: TextEmail,
                 password: TextPassword
               })
             });
@@ -97,9 +97,9 @@ export default class InitialScreen extends React.Component {
               if(responseText != "error") {
                 //Alert.alert("Inside if message not equal to error");
                 let accessToken = responseText;
-                this.storeToken(accessToken, TextInputEmail);
+                this.storeToken(accessToken, TextEmail);
                 this.props.navigation.navigate("Dashboard", {
-                  TextEmail: TextInputEmail,
+                  TextEmail: TextEmail,
                   accessToken: accessToken
                 });
               } else {
@@ -158,8 +158,8 @@ export default class InitialScreen extends React.Component {
                 placeholder="TU E-mail"
                 placeholderTextColor="#b3b3b3"
                 autoCapitalize="none"
-                onChangeText={TextInputEmail =>
-                  this.setState({ TextInputEmail })
+                onChangeText={TextEmail =>
+                  this.setState({ TextEmail })
                 }
                 style={[styles.input, { color: "white" }]}
               />
