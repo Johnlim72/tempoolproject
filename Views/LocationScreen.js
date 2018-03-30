@@ -15,17 +15,29 @@ export default class MapScreen extends React.Component {
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextAddress: "",
       TextLatitude: "",
-      TextLongitude: ""
+      TextLongitude: "",
+      Status: this.props.navigation.state.params.Status
     };
   }
 
   SaveLocation = () => {
-    this.props.navigation.navigate("Schedule", {
-      TextAddress: this.state.TextAddress,
-      TextLatitude: this.state.TextLatitude,
-      TextLongitude: this.state.TextLongitude,
-      TextEmail: this.props.navigation.state.params.TextEmail
-    });
+    if (this.state.Status == true) {
+      this.props.navigation.navigate("Schedule", {
+        TextAddress: this.state.TextAddress,
+        TextLatitude: this.state.TextLatitude,
+        TextLongitude: this.state.TextLongitude,
+        TextEmail: this.props.navigation.state.params.TextEmail,
+        Status: this.props.navigation.state.params.Status
+      });
+    } else {
+      this.props.navigation.navigate("Schedule", {
+        TextAddress: this.state.TextAddress,
+        TextLatitude: this.state.TextLatitude,
+        TextLongitude: this.state.TextLongitude,
+        TextEmail: this.props.navigation.state.params.TextEmail,
+        Status: this.props.navigation.state.params.Status
+      });
+    }
   };
 
   render() {
@@ -51,14 +63,6 @@ export default class MapScreen extends React.Component {
           this.setState({
             TextAddress: details.formatted_address.toString()
           });
-          // console.log(
-          //   "states: " +
-          //     this.state.TextLatitude +
-          //     " " +
-          //     this.state.TextLongitude +
-          //     " " +
-          //     this.state.TextAddress
-          // );
         }}
         getDefaultValue={() => ""}
         query={{

@@ -32,11 +32,20 @@ export default class ScheduleScreen extends React.Component {
       TextAddress: this.props.navigation.state.params.TextAddress.toString(),
       TextLatitude: this.props.navigation.state.params.TextLatitude.toString(),
       TextLongitude: this.props.navigation.state.params.TextLongitude.toString(),
-      TextDate: "03-25-2018"
+      TextDate: "03-25-2018",
+      Status: this.props.navigation.state.params.Status,
+      StatusText: "",
+      URL: ""
     };
+
+    if (this.state.Status == true) {
+      this.state.StatusText = "Rider";
+    } else {
+      this.state.StatusText = "Driver";
+    }
   }
 
-  InsertRideToServer = () => {
+  InsertRiderToServer = () => {
     const { TextEmail } = this.state;
     const { TextAddress } = this.state;
     const { TextLatitude } = this.state;
@@ -56,7 +65,7 @@ export default class ScheduleScreen extends React.Component {
         TextDate
     );
 
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_ride_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_rider_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -64,19 +73,19 @@ export default class ScheduleScreen extends React.Component {
       },
       body: JSON.stringify({
         rider_email: TextEmail.toString(),
-        start_address: TextAddress.toString(),
-        start_latitude: TextLatitude.toString(),
-        start_longitude: TextLongitude.toString(),
-        date: TextDate.toString()
+        rider_address: TextAddress.toString(),
+        rider_latitude: TextLatitude.toString(),
+        rider_longitude: TextLongitude.toString(),
+        rider_dateTime: TextDate.toString()
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Ride successfully inserted.") {
+        if (responseJson == "Rider successfully inserted.") {
           Alert.alert(
             "Success!",
-            "Ride inserted",
+            "Rider inserted",
             [
               {
                 text: "OK",
@@ -95,12 +104,80 @@ export default class ScheduleScreen extends React.Component {
       });
   };
 
+  InsertDriverToServer = () => {
+    const { TextEmail } = this.state;
+    const { TextAddress } = this.state;
+    const { TextLatitude } = this.state;
+    const { TextLongitude } = this.state;
+    const { TextDate } = this.state;
+
+    console.log(
+      "TextEmail: " +
+        TextEmail +
+        "\nTextAddress: " +
+        TextAddress +
+        "\nTextLongitude: " +
+        TextLongitude +
+        "\nTextLatitude: " +
+        TextLatitude +
+        "\nTextDate: " +
+        TextDate
+    );
+
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_driver_info.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        driver_email: TextEmail.toString(),
+        driver_address: TextAddress.toString(),
+        driver_latitude: TextLatitude.toString(),
+        driver_longitude: TextLongitude.toString(),
+        driver_dateTime: TextDate.toString()
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Driver successfully inserted.") {
+          Alert.alert(
+            "Success!",
+            "Driver inserted",
+            [
+              {
+                text: "OK",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  Insert = () => {
+    if (this.state.StatusText == "Rider") {
+      this.InsertRiderToServer();
+    } else {
+      this.InsertDriverToServer();
+    }
+  };
+
   PickLocation = () => {
     this.props.navigation.navigate("Location", {
       TextAddress: this.state.TextAddress,
       TextLatitude: this.state.TextLatitude,
       TextLongitude: this.state.TextLongitude,
-      TextEmail: this.props.navigation.state.params.Email
+      TextEmail: this.props.navigation.state.params.TextEmail,
+      Status: this.state.Status
     });
   };
 
@@ -137,6 +214,18 @@ export default class ScheduleScreen extends React.Component {
               }}
             >
               Schedule a Ride
+            </Text>
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Futura",
+                fontSize: 30,
+                paddingTop: 20,
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              {this.state.StatusText}
             </Text>
           </View>
           <View
@@ -253,10 +342,7 @@ export default class ScheduleScreen extends React.Component {
               }}
             />
 
-            <TouchableOpacity
-              onPress={this.InsertRideToServer}
-              activeOpacity={0.5}
-            >
+            <TouchableOpacity activeOpacity={0.5} onPress={this.Insert}>
               <View
                 style={{
                   backgroundColor: "darkred",
@@ -268,11 +354,7 @@ export default class ScheduleScreen extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Button
-                  title="Save"
-                  onPress={this.InsertRideToServer}
-                  color="darkred"
-                />
+                <Button title="Save" onPress={this.Insert} color="darkred" />
               </View>
             </TouchableOpacity>
           </View>

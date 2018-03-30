@@ -52,11 +52,29 @@ export default class DashboardScreen extends React.Component {
 
     if (value == true) {
       //Perform any task here which you want to execute on Switch ON event.
-      Alert.alert("Rider status selected.");
+      //  Alert.alert("Rider status selected.");
       this.setState({ disabled: false });
     } else {
       //Perform any task here which you want to execute on Switch OFF event.
-      Alert.alert("Driver status selected.");
+      Alert.alert(
+        "Driver Status Selected",
+        "Would you like to fill out your schedule?",
+        [
+          {
+            text: "Yes",
+            onPress: () =>
+              this.props.navigation.navigate("Location", {
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                Status: this.state.SwitchOnValueHolder
+              })
+          },
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed")
+          }
+        ],
+        { cancelable: false }
+      );
       this.setState({ disabled: true });
     }
   };
@@ -131,7 +149,8 @@ export default class DashboardScreen extends React.Component {
                 title="Find a Ride"
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
                   })
                 }
                 color="darkred"
@@ -144,7 +163,8 @@ export default class DashboardScreen extends React.Component {
                 title="Schedule a Ride"
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
                   })
                 }
                 color="darkred"
