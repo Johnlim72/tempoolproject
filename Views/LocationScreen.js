@@ -49,7 +49,6 @@ export default class MapScreen extends React.Component {
         returnKeyType={"search"} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
         listViewDisplayed="true" // true/false/undefined
         fetchDetails={true}
-        renderDescription={row => row.description || row.vicinity} // custom description render
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
           // console.log(details);

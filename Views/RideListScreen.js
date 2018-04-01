@@ -32,7 +32,8 @@ export default class RideListScreen extends React.Component {
       TextRiderName: "",
       TextDate: "",
       TextLocation: "",
-      isLoading: true
+      isLoading: true,
+      dataSource: ""
     };
   }
 
@@ -43,21 +44,57 @@ export default class RideListScreen extends React.Component {
   }
 
   componentDidMount() {
-    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php")
+    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        driver_email: this.props.navigation.state.params.TextEmail
+      })
+    })
       .then(response => response.json())
       .then(responseJson => {
-        let ds = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2
-        });
-        this.setState(
-          {
-            isLoading: false,
-            dataSource: ds.cloneWithRows(responseJson)
-          },
-          function() {
-            // In this block you can do something with new state.
-          }
-        );
+        console.log(responseJson);
+        if (responseJson == null) {
+          Alert.alert(
+            "No Rides For You Yet",
+            "Please wait for Riders to request a ride to you.",
+            [
+              {
+                text: "Ok",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
+              },
+              {
+                text: "Cancel",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        } else {
+          let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          this.setState(
+            {
+              isLoading: false,
+              dataSource: ds.cloneWithRows(responseJson)
+            },
+            function() {
+              // In this block you can do something with new state.
+            }
+          );
+        }
       })
       .catch(error => {
         console.error(error);
@@ -99,7 +136,7 @@ export default class RideListScreen extends React.Component {
               )}
             >
               {" "}
-              {rowData.rider_name+"'s ride"}{" "}
+              {rowData.rider_name + "'s ride"}{" "}
             </Text>
           )}
         />
