@@ -16,7 +16,8 @@ export default class MapScreen extends React.Component {
       TextAddress: "",
       TextLatitude: "",
       TextLongitude: "",
-      Status: this.props.navigation.state.params.Status
+      Status: this.props.navigation.state.params.Status,
+      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
     };
   }
 
@@ -27,7 +28,8 @@ export default class MapScreen extends React.Component {
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,
         TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status
+        Status: this.props.navigation.state.params.Status,
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
       });
     } else {
       this.props.navigation.navigate("Schedule", {
@@ -35,7 +37,8 @@ export default class MapScreen extends React.Component {
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,
         TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status
+        Status: this.props.navigation.state.params.Status,
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
       });
     }
   };
@@ -76,7 +79,7 @@ export default class MapScreen extends React.Component {
           },
           description: {
             fontWeight: "bold",
-            color: "blue"
+            color: "black"
           },
           predefinedPlacesDescription: {
             color: "#1faadb"

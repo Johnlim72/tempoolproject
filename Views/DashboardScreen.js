@@ -150,6 +150,7 @@ export default class DashboardScreen extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
+                    FindOrSchedule: "Find",
                     Status: this.state.SwitchOnValueHolder
                   })
                 }
@@ -164,6 +165,7 @@ export default class DashboardScreen extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
+                    FindOrSchedule: "Schedule",
                     Status: this.state.SwitchOnValueHolder
                   })
                 }
