@@ -28,6 +28,7 @@ export default class RideListScreen extends React.Component {
     super(props);
 
     this.state = {
+      TextUserID: this.props.navigation.state.params.TextUserID,
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextRiderName: "",
       TextDate: "",
@@ -35,15 +36,18 @@ export default class RideListScreen extends React.Component {
       isLoading: true,
       dataSource: ""
     };
+
+    console.log("constructor: " + this.state.TextUserID + " " + this.state.TextEmail);
   }
 
-  OpenDetailsActivity(driver_email) {
+  OpenDetailsActivity(idUser) {
     this.props.navigation.navigate("RideDetails", {
-      ListViewClickItemHolder: driver_email
+      ListViewClickItemHolder: idUser
     });
   }
 
   componentDidMount() {
+
     return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
       method: "POST",
       headers: {
@@ -51,7 +55,8 @@ export default class RideListScreen extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        driver_email: this.props.navigation.state.params.TextEmail
+        //idUser: this.state.TextUserID
+        idUser: this.props.navigation.state.params.TextUserID
       })
     })
       .then(response => response.json())
@@ -132,11 +137,11 @@ export default class RideListScreen extends React.Component {
               style={styles.rowViewContainer}
               onPress={this.OpenDetailsActivity.bind(
                 this,
-                rowData.driver_email
+                rowData.driverID
               )}
             >
               {" "}
-              {rowData.rider_name + "'s ride"}{" "}
+              {rowData.riderID + "'s ride"}{" "}
             </Text>
           )}
         />

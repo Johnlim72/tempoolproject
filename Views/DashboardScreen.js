@@ -31,6 +31,7 @@ export default class DashboardScreen extends React.Component {
 
     this.state = {
       TextEmail: this.props.navigation.state.params.TextEmail,
+      TextUserID: "",
       SwitchOnValueHolder: true,
       disabled: false
     };
@@ -84,8 +85,35 @@ export default class DashboardScreen extends React.Component {
     }
   };
 
+  getUserAndNavToList() {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/getUser.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        driver_email: this.props.navigation.state.params.TextEmail
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          TextUserID: responseJson.idUser
+        });
+
+        console.log("TextUserId: " + this.state.TextUserID);
+      })
+
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   render() {
     const { goBack } = this.props.navigation;
+
+    this.getUserAndNavToList();
     if (this.state.SwitchOnValueHolder == true) {
       return (
         <View
@@ -274,7 +302,8 @@ export default class DashboardScreen extends React.Component {
                   title="List of Rides"
                   onPress={() =>
                     this.props.navigation.navigate("RideList", {
-                      TextEmail: this.props.navigation.state.params.TextEmail
+                      TextEmail: this.props.navigation.state.params.TextEmail,
+                      TextUserID: this.state.TextUserID
                     })
                   }
                   color="darkred"
