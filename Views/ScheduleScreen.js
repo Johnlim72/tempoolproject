@@ -14,6 +14,7 @@ import {
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import DatePicker from "react-native-datepicker";
+import geolib from "geolib";
 import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
@@ -30,14 +31,19 @@ export default class ScheduleScreen extends React.Component {
     this.state = {
       TextEmail: this.props.navigation.state.params.TextEmail.toString(),
       TextAddress: this.props.navigation.state.params.TextAddress.toString(),
-      TextLatitude: this.props.navigation.state.params.TextLatitude.toString(),
-      TextLongitude: this.props.navigation.state.params.TextLongitude.toString(),
+      TextLatitude: this.props.navigation.state.params.TextLatitude,
+      TextLongitude: this.props.navigation.state.params.TextLongitude,
       TextDate: "03-25-2018",
       Status: this.props.navigation.state.params.Status,
       StatusText: "",
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
       FindOrScheduleText: "",
-      URL: ""
+      URL: "",
+      matchedTimesList: [
+        { latitude: 39.4998492, longitude: -75.1642928 },
+        { latitude: 39.9440539, longitude: -75.1687654 },
+        { latitude: 39.9782995, longitude: -75.1575448 }
+      ]
     };
 
     if (this.state.Status == true) {
@@ -268,6 +274,30 @@ export default class ScheduleScreen extends React.Component {
     });
   };
 
+  GetShortestDistance = () => {
+    var distance;
+    var min;
+    if (this.state.matchedTimesList.length > 0) {
+      for (var i = 0; i < this.state.matchedTimesList.length; i++) {
+        distance = geolib.getDistance(
+          {
+            latitude: this.state.matchedTimesList[i].latitude,
+            longitude: this.state.matchedTimesList[i].longitude
+          },
+          { latitude: 39.9811935, longitude: -75.15535119999998 }
+        );
+        console.log(distance);
+        if ( i == 0) {
+          min = distance;
+        } else if (distance < min) {
+          min = distance;
+        }
+
+      }
+      console.log("shortest distance is " + min);
+    }
+  };
+
   render() {
     return (
       <View
@@ -442,6 +472,11 @@ export default class ScheduleScreen extends React.Component {
                 }}
               >
                 <Button title="Save" onPress={this.Insert} color="darkred" />
+                <Button
+                  title="Save"
+                  onPress={this.GetShortestDistance}
+                  color="blue"
+                />
               </View>
             </TouchableOpacity>
           </View>
