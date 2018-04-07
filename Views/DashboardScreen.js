@@ -20,6 +20,8 @@ const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
 const ACCESS_TOKEN = "accessToken";
+const EMAIL = "email";
+const USERID = "userID";
 
 export default class DashboardScreen extends React.Component {
   static navigationOptions = {
@@ -39,6 +41,8 @@ export default class DashboardScreen extends React.Component {
   async deleteToken() {
     try {
       await AsyncStorage.removeItem(ACCESS_TOKEN);
+      await AsyncStorage.removeItem(USERID);
+      await AsyncStorage.removeItem(EMAIL);
       this.props.navigation.navigate("Initial");
     } catch (error) {
       Alert.alert("An error occurred: " + error);

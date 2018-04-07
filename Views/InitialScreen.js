@@ -20,6 +20,7 @@ const { width, height } = Dimensions.get("window");
 
 const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
+const USERID = "userID";
 
 const background = require("./login3_bg.jpg");
 const lockIcon = require("./login1_lock.png");
@@ -47,10 +48,12 @@ export default class InitialScreen extends React.Component {
     try {
       let accessToken = await AsyncStorage.getItem(ACCESS_TOKEN);
       let email = await AsyncStorage.getItem(EMAIL);
+      let userID = await AsyncStorage.getItem(USERID);
       if(accessToken) {
         this.props.navigation.navigate("Dashboard", {
           accessToken: accessToken,
-          TextEmail: email
+          TextEmail: email,
+          userID: userID,
         });
       }
     } catch(error) {
@@ -59,10 +62,12 @@ export default class InitialScreen extends React.Component {
     }
   }
 
-  async storeToken(accessToken, email) {
+  async storeToken(accessToken, email, userID) {
+    Alert.alert("Inside storetoken: " + accessToken + ", " + email + ", " + userID);
     try {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       await AsyncStorage.setItem(EMAIL, email);
+      await AsyncStorage.setItem(USERID, userID);
       console.log("Token was stored successfully");
     } catch (error) {
       console.log("Error storing token: " + error);
@@ -78,7 +83,7 @@ export default class InitialScreen extends React.Component {
         var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
         if(emailDomain === "temple.edu"){
           try {
-            let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/login.php", {
+            let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/login.php", {
               method: "POST",
               headers: {
                 Accept: "application/json",
@@ -93,21 +98,24 @@ export default class InitialScreen extends React.Component {
             let responseText = await response.text();
 
             if(response.status >= 200 && response.status < 300) {
+              let responseJson = JSON.parse(responseText);
               //Alert.alert(responseText);
-              if(responseText != "error") {
+              if(responseJson.error != 1) {
                 //Alert.alert("Inside if message not equal to error");
-                let accessToken = responseText;
-                this.storeToken(accessToken, TextEmail);
+                let accessToken = responseJson.token;
+                let userID = responseJson.userID;
+                this.storeToken(accessToken, TextEmail, userID);
                 this.props.navigation.navigate("Dashboard", {
                   TextEmail: TextEmail,
-                  accessToken: accessToken
+                  accessToken: accessToken,
+                  userID: userID,
                 });
               } else {
                 //Alert.alert("Inside error");
                 throw "Invalid credentials";
               }
             } else {
-              let error = responseText;
+              let error = responseJson.errorMessage;
               throw error;
             }
           } catch(error) {

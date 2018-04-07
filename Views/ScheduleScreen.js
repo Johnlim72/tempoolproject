@@ -9,20 +9,53 @@ import {
   Text,
   ImageBackground,
   Dimensions,
-  TextInput
+  TextInput,
+  AsyncStorage,
 } from "react-native";
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import DatePicker from "react-native-datepicker";
 import styles from "./style";
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
+
+const USERID = "userID";
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
+  state = {
+    isDateTimePickerVisible: false,
+    chosenDate: null,
+    userID: null,
+  };
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    this.state.chosenDate = date;
+    this._hideDateTimePicker();
+  };
+
+  async getToken() {
+    try {
+      let userID = await AsyncStorage.getItem(USERID);
+      if(userID) {
+        this.state.userID = userID;
+        this.Insert;
+      }
+    } catch(error) {
+        console.log("Something went wrong");
+        Alert.alert("An Error occurred: " + error);
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -35,6 +68,7 @@ export default class ScheduleScreen extends React.Component {
       TextDate: "03-25-2018",
       Status: this.props.navigation.state.params.Status,
       StatusText: "",
+      userID: null,
       URL: ""
     };
 
@@ -65,18 +99,18 @@ export default class ScheduleScreen extends React.Component {
         TextDate
     );
 
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_rider_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_rider_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        rider_email: TextEmail.toString(),
+        rideDateTime: this.state.chosenDate,
         rider_address: TextAddress.toString(),
         rider_latitude: TextLatitude.toString(),
         rider_longitude: TextLongitude.toString(),
-        rider_dateTime: TextDate.toString()
+        userID: this.state.userID,
       })
     })
       .then(response => response.json())
@@ -124,18 +158,18 @@ export default class ScheduleScreen extends React.Component {
         TextDate
     );
 
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_driver_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_driver_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        driver_email: TextEmail.toString(),
+        rideDateTime: this.state.chosenDate,
         driver_address: TextAddress.toString(),
         driver_latitude: TextLatitude.toString(),
         driver_longitude: TextLongitude.toString(),
-        driver_dateTime: TextDate.toString()
+        userID: this.state.userID,
       })
     })
       .then(response => response.json())
@@ -315,6 +349,19 @@ export default class ScheduleScreen extends React.Component {
             >
               Date:
             </Text>
+
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity onPress={this._showDateTimePicker}>
+                <Text>Show DatePicker</Text>
+              </TouchableOpacity>
+              <DateTimePicker
+                isVisible={this.state.isDateTimePickerVisible}
+                onConfirm={this._handleDatePicked}
+                onCancel={this._hideDateTimePicker}
+                mode="datetime"
+              />
+            </View>
+
             <DatePicker
               style={{ width: 200 }}
               date={this.state.TextDate}
@@ -354,7 +401,7 @@ export default class ScheduleScreen extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Button title="Save" onPress={this.Insert} color="darkred" />
+                <Button title="Save" onPress={this.getToken.bind(this)} color="darkred" />
               </View>
             </TouchableOpacity>
           </View>

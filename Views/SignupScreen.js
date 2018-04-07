@@ -76,7 +76,7 @@ export default class SignupScreen extends React.Component {
 
           if(emailDomain.toLowerCase() === "temple.edu"){
             try {
-              let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_user_info.php", {
+              let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
                 method: "POST",
                 headers: {
                   Accept: "application/json",
@@ -92,12 +92,12 @@ export default class SignupScreen extends React.Component {
               });
 
               let responseText = await response.text();
-
-              let responseJson = JSON.parse(responseText);
-
+              setTimeout(Alert.alert(responseText), 10000);
               if(response.status >= 200 && response.status < 300) {
+                setTimeout(Alert.alert(responseJson), 10000);
+                let responseJson = JSON.parse(responseText);
                 if(responseJson.error != 1) {
-                  let accessToken = responseJson.accessToken;
+                  let accessToken = responseJson.token;
                   let userID = responseJson.userID;
 
                   this.storeToken(accessToken, TextEmail, userID);
@@ -118,9 +118,12 @@ export default class SignupScreen extends React.Component {
                     ],
                     { cancelable: false }
                   );
+                } else {
+                  let error = responseJson.errorMessage;
+                  throw error;
                 }
               } else {
-                let error = responseText;
+                let error = responseJson.errorMessage;
                 throw error;
               }
             } catch(error) {
