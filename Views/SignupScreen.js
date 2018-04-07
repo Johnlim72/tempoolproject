@@ -23,6 +23,7 @@ const personIcon = require("./login1_person.png");
 
 const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
+const USERID = "userID";
 
 export default class SignupScreen extends React.Component {
   static navigationOptions = {
@@ -42,10 +43,11 @@ export default class SignupScreen extends React.Component {
     };
   }
 
-  async storeToken(accessToken, email) {
+  async storeToken(accessToken, email, userID) {
     try {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       await AsyncStorage.setItem(EMAIL, email);
+      await AsyncStorage.setItem(USERID, userID);
       console.log("Token was stored successfully");
     } catch (error) {
       console.log("Error storing token: " + error);
@@ -74,7 +76,7 @@ export default class SignupScreen extends React.Component {
 
           if(emailDomain.toLowerCase() === "temple.edu"){
             try {
-              let response = await fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_user_info.php", {
+              let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
                 method: "POST",
                 headers: {
                   Accept: "application/json",
@@ -90,29 +92,36 @@ export default class SignupScreen extends React.Component {
               });
 
               let responseText = await response.text();
-
               if(response.status >= 200 && response.status < 300) {
-                let accessToken = responseText;
-                this.storeToken(accessToken, TextEmail);
+                let responseJson = JSON.parse(responseText);
+                if(responseJson.error != 1) {
+                  let accessToken = responseJson.token;
+                  let userID = responseJson.userID;
 
-                Alert.alert(
-                  "Success!",
-                  "User created",
-                  [
-                    {
-                      text: "OK",
-                      onPress: () =>
-                        this.props.navigation.navigate("Dashboard", {
-                          TextEmail: TextEmail,
-                          accessToken: accessToken
-                        })
-                    }
-                  ],
-                  { cancelable: false }
-                );
+                  this.storeToken(accessToken, TextEmail, userID);
 
+                  Alert.alert(
+                    "Success!",
+                    "User created",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () =>
+                          this.props.navigation.navigate("Dashboard", {
+                            TextEmail: TextEmail,
+                            accessToken: accessToken,
+                            userID: userID,
+                          })
+                      }
+                    ],
+                    { cancelable: false }
+                  );
+                } else {
+                  let error = responseJson.errorMessage;
+                  throw error;
+                }
               } else {
-                let error = responseText;
+                let error = responseJson.errorMessage;
                 throw error;
               }
             } catch(error) {
