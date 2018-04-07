@@ -70,7 +70,6 @@ export default class ScheduleScreen extends React.Component {
       Status: this.props.navigation.state.params.Status,
       StatusText: "",
       userID: null,
-      URL: ""
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
       FindOrScheduleText: "",
       URL: "",

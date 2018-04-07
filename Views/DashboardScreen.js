@@ -184,7 +184,6 @@ export default class DashboardScreen extends React.Component {
                 </View>
               </View>
             </View>
-          </View>
           <View style={{ flex: 5, marginTop: 10 }}>
             <View style={[styles.buttonContainer, { marginTop: 0 }]}>
               <Button
