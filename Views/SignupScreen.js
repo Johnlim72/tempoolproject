@@ -23,6 +23,7 @@ const personIcon = require("./login1_person.png");
 
 const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
+const USERID = "userID";
 
 export default class SignupScreen extends React.Component {
   static navigationOptions = {
@@ -42,10 +43,11 @@ export default class SignupScreen extends React.Component {
     };
   }
 
-  async storeToken(accessToken, email) {
+  async storeToken(accessToken, email, userID) {
     try {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       await AsyncStorage.setItem(EMAIL, email);
+      await AsyncStorage.setItem(USERID, userID);
       console.log("Token was stored successfully");
     } catch (error) {
       console.log("Error storing token: " + error);
@@ -91,26 +93,32 @@ export default class SignupScreen extends React.Component {
 
               let responseText = await response.text();
 
+              let responseJson = JSON.parse(responseText);
+
               if(response.status >= 200 && response.status < 300) {
-                let accessToken = responseText;
-                this.storeToken(accessToken, TextEmail);
+                if(responseJson.error != 1) {
+                  let accessToken = responseJson.accessToken;
+                  let userID = responseJson.userID;
 
-                Alert.alert(
-                  "Success!",
-                  "User created",
-                  [
-                    {
-                      text: "OK",
-                      onPress: () =>
-                        this.props.navigation.navigate("Dashboard", {
-                          TextEmail: TextEmail,
-                          accessToken: accessToken
-                        })
-                    }
-                  ],
-                  { cancelable: false }
-                );
+                  this.storeToken(accessToken, TextEmail, userID);
 
+                  Alert.alert(
+                    "Success!",
+                    "User created",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () =>
+                          this.props.navigation.navigate("Dashboard", {
+                            TextEmail: TextEmail,
+                            accessToken: accessToken,
+                            userID: userID,
+                          })
+                      }
+                    ],
+                    { cancelable: false }
+                  );
+                }
               } else {
                 let error = responseText;
                 throw error;
