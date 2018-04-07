@@ -34,7 +34,8 @@ export default class DashboardScreen extends React.Component {
     this.state = {
       TextEmail: this.props.navigation.state.params.TextEmail,
       SwitchOnValueHolder: true,
-      disabled: false
+      disabled: false,
+      userID: this.props.navigation.state.params.userID,
     };
   }
 
@@ -154,7 +155,9 @@ export default class DashboardScreen extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID,
+                    findRideNow: true,
                   })
                 }
                 color="darkred"
@@ -168,7 +171,9 @@ export default class DashboardScreen extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID,
+                    findRideNow: false,
                   })
                 }
                 color="darkred"

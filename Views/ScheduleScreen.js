@@ -86,19 +86,6 @@ export default class ScheduleScreen extends React.Component {
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
 
-    console.log(
-      "TextEmail: " +
-        TextEmail +
-        "\nTextAddress: " +
-        TextAddress +
-        "\nTextLongitude: " +
-        TextLongitude +
-        "\nTextLatitude: " +
-        TextLatitude +
-        "\nTextDate: " +
-        TextDate
-    );
-
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_rider_info.php", {
       method: "POST",
       headers: {
@@ -144,19 +131,6 @@ export default class ScheduleScreen extends React.Component {
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
-
-    console.log(
-      "TextEmail: " +
-        TextEmail +
-        "\nTextAddress: " +
-        TextAddress +
-        "\nTextLongitude: " +
-        TextLongitude +
-        "\nTextLatitude: " +
-        TextLatitude +
-        "\nTextDate: " +
-        TextDate
-    );
 
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_driver_info.php", {
       method: "POST",

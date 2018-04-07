@@ -92,9 +92,7 @@ export default class SignupScreen extends React.Component {
               });
 
               let responseText = await response.text();
-              setTimeout(Alert.alert(responseText), 10000);
               if(response.status >= 200 && response.status < 300) {
-                setTimeout(Alert.alert(responseJson), 10000);
                 let responseJson = JSON.parse(responseText);
                 if(responseJson.error != 1) {
                   let accessToken = responseJson.token;

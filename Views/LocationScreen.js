@@ -8,6 +8,10 @@ export default class MapScreen extends React.Component {
     header: null
   };
 
+  state = {
+    loader: false,
+  }
+
   constructor(props) {
     super(props);
 
@@ -16,18 +20,18 @@ export default class MapScreen extends React.Component {
       TextAddress: "",
       TextLatitude: "",
       TextLongitude: "",
-      Status: this.props.navigation.state.params.Status
+      Status: this.props.navigation.state.params.Status,
+      findRideNow: this.props.navigation.state.params.findRideNow,
     };
   }
 
   SaveLocation = () => {
-    if (this.state.Status == true) {
-      this.props.navigation.navigate("Schedule", {
+    if (this.state.findRideNow) {
+      this.props.navigation.navigate("FindRide", {
         TextAddress: this.state.TextAddress,
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,
-        TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status
+        userID: this.props.navigation.state.params.userID,
       });
     } else {
       this.props.navigation.navigate("Schedule", {
