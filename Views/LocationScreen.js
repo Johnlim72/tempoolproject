@@ -22,6 +22,7 @@ export default class MapScreen extends React.Component {
       TextLongitude: "",
       Status: this.props.navigation.state.params.Status,
       findRideNow: this.props.navigation.state.params.findRideNow,
+      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
     };
   }
 
@@ -32,6 +33,9 @@ export default class MapScreen extends React.Component {
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,
         userID: this.props.navigation.state.params.userID,
+        TextEmail: this.props.navigation.state.params.TextEmail,
+        Status: this.props.navigation.state.params.Status,
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
       });
     } else {
       this.props.navigation.navigate("Schedule", {
@@ -39,7 +43,8 @@ export default class MapScreen extends React.Component {
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,
         TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status
+        Status: this.props.navigation.state.params.Status,
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
       });
     }
   };
@@ -80,13 +85,13 @@ export default class MapScreen extends React.Component {
           },
           description: {
             fontWeight: "bold",
-            color: "blue"
+            color: "black"
           },
           predefinedPlacesDescription: {
             color: "#1faadb"
           }
         }}
-        currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+        currentLocation={true} // Will add a 'Current location' button at the top of the predefined places l
         currentLocationLabel="Current location"
         nearbyPlacesAPI="GoogleReverseGeocoding" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
         GoogleReverseGeocodingQuery={{

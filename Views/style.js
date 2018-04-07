@@ -164,7 +164,7 @@ export default StyleSheet.create({
     paddingRight: 10,
     paddingTop: 10,
     paddingBottom: 10,
-  }, 
+  },
   textViewContainer: {
 
     padding:5,

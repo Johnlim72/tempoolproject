@@ -15,6 +15,7 @@ import {
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import DatePicker from "react-native-datepicker";
+import geolib from "geolib";
 import styles from "./style";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -63,13 +64,21 @@ export default class ScheduleScreen extends React.Component {
     this.state = {
       TextEmail: this.props.navigation.state.params.TextEmail.toString(),
       TextAddress: this.props.navigation.state.params.TextAddress.toString(),
-      TextLatitude: this.props.navigation.state.params.TextLatitude.toString(),
-      TextLongitude: this.props.navigation.state.params.TextLongitude.toString(),
+      TextLatitude: this.props.navigation.state.params.TextLatitude,
+      TextLongitude: this.props.navigation.state.params.TextLongitude,
       TextDate: "03-25-2018",
       Status: this.props.navigation.state.params.Status,
       StatusText: "",
       userID: null,
       URL: ""
+      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
+      FindOrScheduleText: "",
+      URL: "",
+      matchedTimesList: [
+        { latitude: 39.4998492, longitude: -75.1642928 },
+        { latitude: 39.9440539, longitude: -75.1687654 },
+        { latitude: 39.9782995, longitude: -75.1575448 }
+      ]
     };
 
     if (this.state.Status == true) {
@@ -77,6 +86,90 @@ export default class ScheduleScreen extends React.Component {
     } else {
       this.state.StatusText = "Driver";
     }
+
+    if (this.state.FindOrSchedule == "Find") {
+      this.state.FindOrScheduleText = "Find a Ride Now";
+    } else {
+      this.state.FindOrScheduleText = "Schedule a Ride For Later";
+    }
+  }
+
+  componentDidMount() {
+    this.Clock = setInterval(() => this.GetTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.Clock);
+  }
+
+  GetTime() {
+    // Creating variables to hold time.
+    var date, TimeType, hour, minutes, seconds, fullTime;
+
+    // Creating Date() function object.
+    date = new Date();
+
+    var date1 = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    // Getting current hour from Date object.
+    hour = date.getHours();
+
+    // Checking if the Hour is less than equals to 11 then Set the Time format as AM.
+    if (hour <= 11) {
+      TimeType = "AM";
+    } else {
+      // If the Hour is Not less than equals to 11 then Set the Time format as PM.
+      TimeType = "PM";
+    }
+
+    // IF current hour is grater than 12 then minus 12 from current hour to make it in 12 Hours Format.
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+
+    // If hour value is 0 then by default set its value to 12, because 24 means 0 in 24 hours time format.
+    if (hour == 0) {
+      hour = 12;
+    }
+
+    // Getting the current minutes from date object.
+    minutes = date.getMinutes();
+
+    // Checking if the minutes value is less then 10 then add 0 before minutes.
+    if (minutes < 10) {
+      minutes = "0" + minutes.toString();
+    }
+
+    //Getting current seconds from date object.
+    seconds = date.getSeconds();
+
+    // If seconds value is less than 10 then add 0 before seconds.
+    if (seconds < 10) {
+      seconds = "0" + seconds.toString();
+    }
+
+    // Adding all the variables in fullTime variable.
+    fullTime =
+      month +
+      "-" +
+      date1 +
+      "-" +
+      year +
+      " " +
+      hour.toString() +
+      ":" +
+      minutes.toString() +
+      ":" +
+      seconds.toString() +
+      " " +
+      TimeType.toString();
+
+    // Setting up fullTime variable in State.
+    this.setState({
+      TextDate: fullTime
+    });
   }
 
   InsertRiderToServer = () => {
@@ -185,8 +278,33 @@ export default class ScheduleScreen extends React.Component {
       TextLatitude: this.state.TextLatitude,
       TextLongitude: this.state.TextLongitude,
       TextEmail: this.props.navigation.state.params.TextEmail,
-      Status: this.state.Status
+      Status: this.state.Status,
+      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
     });
+  };
+
+  GetShortestDistance = () => {
+    var distance;
+    var min;
+    if (this.state.matchedTimesList.length > 0) {
+      for (var i = 0; i < this.state.matchedTimesList.length; i++) {
+        distance = geolib.getDistance(
+          {
+            latitude: this.state.matchedTimesList[i].latitude,
+            longitude: this.state.matchedTimesList[i].longitude
+          },
+          { latitude: 39.9811935, longitude: -75.15535119999998 }
+        );
+        console.log(distance);
+        if ( i == 0) {
+          min = distance;
+        } else if (distance < min) {
+          min = distance;
+        }
+
+      }
+      console.log("shortest distance is " + min);
+    }
   };
 
   render() {
@@ -221,7 +339,7 @@ export default class ScheduleScreen extends React.Component {
                 alignItems: "center"
               }}
             >
-              Schedule a Ride
+              {this.state.FindOrScheduleText}
             </Text>
             <Text
               style={{
@@ -376,6 +494,11 @@ export default class ScheduleScreen extends React.Component {
                 }}
               >
                 <Button title="Save" onPress={this.getToken.bind(this)} color="darkred" />
+                <Button
+                  title="Save"
+                  onPress={this.GetShortestDistance}
+                  color="blue"
+                />
               </View>
             </TouchableOpacity>
           </View>

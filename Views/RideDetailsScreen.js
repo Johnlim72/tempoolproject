@@ -24,7 +24,7 @@ export default class RideDetailsScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextEmail: "",
+      TextRiderID: "",
       TextRiderName: "",
       TextDate: "",
       TextLocation: ""
@@ -40,13 +40,13 @@ export default class RideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         // Getting the id.
-        driver_email: this.props.navigation.state.params.ListViewClickItemHolder
+        driverID: this.props.navigation.state.params.ListViewClickItemHolder
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
-          TextEmail: responseJson[0].rider_email,
+          TextEmail: responseJson[0].riderID,
           TextRiderName: responseJson[0].rider_name,
           TextDate: responseJson[0].start_time,
           TextLocation: responseJson[0].address
