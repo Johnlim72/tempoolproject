@@ -50,7 +50,7 @@ export default class ScheduleScreen extends React.Component {
       let userID = await AsyncStorage.getItem(USERID);
       if(userID) {
         this.state.userID = userID;
-        this.Insert;
+        this.Insert();
       }
     } catch(error) {
         console.log("Something went wrong");
@@ -210,6 +210,8 @@ export default class ScheduleScreen extends React.Component {
             ],
             { cancelable: false }
           );
+        } else {
+          Alert.alert(responseJson.toString());
         }
       })
       .catch(error => {
@@ -492,12 +494,7 @@ export default class ScheduleScreen extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Button title="Save" onPress={this.getToken.bind(this)} color="darkred" />
-                <Button
-                  title="Save"
-                  onPress={this.GetShortestDistance}
-                  color="blue"
-                />
+                <Button title="Save" onPress={this.getToken.bind(this)} color="white" />
               </View>
             </TouchableOpacity>
           </View>

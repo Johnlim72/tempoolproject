@@ -28,7 +28,8 @@ export default class FindRideScreen extends React.Component {
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
       list1: [],
-      loader: true
+      loader: true,
+      driverID: null,
     };
   }
 
@@ -52,12 +53,18 @@ export default class FindRideScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log("drivers: ", responseJson);
+        if (responseJson.num_rows > 0) {
+          this.setState({
+            loader: false,
+            list1: responseJson
+          });
+          this.findShortDriver();
+          this.insertRideToServer();
+        } else {
+          Alert.alert("No drivers leaving soon");
+        }
+        //Alert.alert(responseJson.toString());
 
-        this.setState({
-          loader: false,
-          list1: responseJson
-        });
-        this.findShortDriver();
       })
       .catch(error => {
         Alert.alert(error.toString());
@@ -119,6 +126,9 @@ export default class FindRideScreen extends React.Component {
           ", which is user: " +
           this.state.list1.rows[minUser].userID
       );
+      this.setState({
+        driverID: this.state.list1.rows[minUser].userID,
+      });
     }
   }
 
@@ -134,7 +144,8 @@ export default class FindRideScreen extends React.Component {
         rider_address: this.state.address,
         rider_loc_lat: this.state.latitude,
         rider_loc_long: this.state.longitude,
-        riderID: this.state.userID
+        riderID: this.state.userID,
+        driverID: this.state.driverID,
       })
     })
       .then(response => response.json())
