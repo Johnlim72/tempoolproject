@@ -7,10 +7,12 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Picker,
   ImageBackground,
   ListView,
   Dimensions,
   ActivityIndicator,
+  Platform,
   TextInput
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
@@ -34,7 +36,8 @@ export default class RideListScreen extends React.Component {
       TextDate: "",
       TextLocation: "",
       isLoading: true,
-      dataSource: ""
+      dataSource: "",
+      typeOfRides: ""
     };
 
     console.log(
@@ -135,6 +138,7 @@ export default class RideListScreen extends React.Component {
         </Text>
         <Button
           title="Click to View Ride"
+          color="darkred"
           onPress={this.OpenDetailsActivity.bind(this, {
             rowDriverID: rowData.driverID,
             rowRiderID: rowData.riderID
@@ -143,6 +147,27 @@ export default class RideListScreen extends React.Component {
       </View>
     );
   }
+
+  updateType(typeOfRides) {
+    this.setState({ typeOfRides: typeOfRides });
+  }
+
+  renderHeader = () => {
+    var header = (
+      <View style={styles1.header_footer_style}>
+        <Picker
+          selectedValue={this.state.typeOfRides}
+          onValueChange={value => this.updateType(value)}
+        >
+          <Picker.Item label="Potential" value="Potential" />
+          <Picker.Item label="Accepted" value="Accepted" />
+          <Picker.Item label="Past" value="Past" />
+        </Picker>
+      </View>
+    );
+
+    return header;
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -158,9 +183,37 @@ export default class RideListScreen extends React.Component {
         <ListView
           dataSource={this.state.dataSource}
           renderSeparator={this.ListViewItemSeparator}
+          renderHeader={this.renderHeader}
           renderRow={this._renderRow.bind(this)}
         />
       </View>
     );
   }
 }
+
+const styles1 = StyleSheet.create({
+  MainContainer: {
+    justifyContent: "center",
+    flex: 1,
+    paddingTop: Platform.OS == "ios" ? 20 : 0
+  },
+
+  rowViewContainer: {
+    padding: 10,
+    fontSize: 18,
+    height: 44
+  },
+
+  header_footer_style: {
+    width: "100%",
+    height: 45,
+    backgroundColor: "white"
+  },
+
+  textStyle: {
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 22,
+    padding: 7
+  }
+});

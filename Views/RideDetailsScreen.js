@@ -34,7 +34,10 @@ export default class RideDetailsScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log("listviewclickitemholder2: " + this.props.navigation.state.params.ListViewCLickItemHolder2);
+    console.log(
+      "listviewclickitemholder2: " +
+        this.props.navigation.state.params.ListViewCLickItemHolder2
+    );
     fetch("http://cis-linux2.temple.edu/~tuf41055/php/getRiderForList.php", {
       method: "POST",
       headers: {
@@ -125,7 +128,9 @@ export default class RideDetailsScreen extends React.Component {
             title="Accept"
             onPress={() =>
               this.props.navigation.navigate("RideList", {
-                TextEmail: this.props.navigation.state.params.TextEmail
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                TextUserID: this.props.navigation.state.params
+                  .ListViewClickItemHolder
               })
             }
             color="darkred"
@@ -137,7 +142,9 @@ export default class RideDetailsScreen extends React.Component {
             title="Decline"
             onPress={() =>
               this.props.navigation.navigate("RideList", {
-                TextEmail: this.props.navigation.state.params.TextEmail
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                TextUserID: this.props.navigation.state.params
+                  .ListViewClickItemHolder
               })
             }
             color="darkred"
