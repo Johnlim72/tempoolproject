@@ -118,7 +118,7 @@ export default class DashboardScreen extends React.Component {
   render() {
     const { goBack } = this.props.navigation;
 
-    this.getUserAndNavToList();
+    this.getUserAndNavToList;
     if (this.state.SwitchOnValueHolder == true) {
       return (
         <View

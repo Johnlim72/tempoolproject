@@ -9,16 +9,15 @@ import {
   View,
   Text,
   TextInput,
-  AsyncStorage,
+  AsyncStorage
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
-import styles from "./style"
+import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
 export default class FindRideScreen extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -27,16 +26,15 @@ export default class FindRideScreen extends React.Component {
       longitude: this.props.navigation.state.params.TextLongitude,
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
-      loader: true,
-    }
+      list1: "",
+      loader: true
+    };
   }
 
-  findDriver () {
-
-  //  Alert.alert("inside find 1");
-
-    // try {
-      fetch("http://cis-linux2.temple.edu/~tuf70921/php/get_drivers_within_schedule.php", {
+  findDriver() {
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf70921/php/get_drivers_within_schedule.php",
+      {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -46,22 +44,24 @@ export default class FindRideScreen extends React.Component {
           address: this.state.address,
           longitude: this.state.longitude,
           latitude: this.state.latitude,
-          userID: this.state.userID,
+          userID: this.state.userID
         })
-      })
+      }
+    )
       .then(response => response.json())
       .then(responseJson => {
-        let drivers = responseJson.rows;
-        Alert.alert(drivers);
+        console.log("drivers: ", responseJson);
+        this.findShortDriver();
         this.setState({
           loader: false,
+          list1: responseJson
         });
       })
       .catch(error => {
         Alert.alert(error.toString());
       });
 
-      //Alert.alert("inside find");
+    //Alert.alert("inside find");
 
     //   let responseText = await response.text();
     //   //Alert.alert(responseText);
@@ -80,22 +80,53 @@ export default class FindRideScreen extends React.Component {
     // }
   }
 
-  render() {
+  findShortDriver() {
+    console.log("list1: ", this.state.list1);
+    // fetch(
+    //   "http://cis-linux2.temple.edu/~tuf70921/php/get_drivers_within_schedule.php",
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //       address: this.state.address,
+    //       longitude: this.state.longitude,
+    //       latitude: this.state.latitude,
+    //       userID: this.state.userID
+    //     })
+    //   }
+    // )
+    //   .then(response => response.json())
+    //   .then(responseJson => {
+    //     console.log("drivers: ", responseJson);
+    //
+    //     this.setState({
+    //       loader: false,
+    //       list1: responseJson
+    //     });
+    //   })
+    //   .catch(error => {
+    //     Alert.alert(error.toString());
+    //   });
+  }
 
+  render() {
     this.findDriver();
     return (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "darkred",
-            justifyContent: "center"
-          }}
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "darkred",
+          justifyContent: "center"
+        }}
+      >
+        <ImageBackground
+          source={background}
+          style={styles.background}
+          resizeMode="cover"
         >
-          <ImageBackground
-            source={background}
-            style={styles.background}
-            resizeMode="cover"
-          >
           <View
             style={{
               flex: 1,
@@ -103,43 +134,48 @@ export default class FindRideScreen extends React.Component {
               alignItems: "center"
             }}
           >
-          {this.state.loader ? <Text style={{
-            color: "white",
-            fontFamily: "Futura",
-            fontSize: 30,
-            paddingTop: 20,
-            justifyContent: "center",
-            alignItems: "center"
-          }}>Loading...</Text> :
-            <Text
-              style={{
-                color: "white",
-                fontFamily: "Futura",
-                fontSize: 30,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              Find a Ride
-            </Text>
-          }
-          </View>
-
-            <View style={{ flex: 5 }}>
-              <View
+            {this.state.loader ? (
+              <Text
                 style={{
-                  flex: 1,
-                  backgroundColor: "white",
-                  borderRadius: 10,
-                  padding: 20,
-                  margin: 10
+                  color: "white",
+                  fontFamily: "Futura",
+                  fontSize: 30,
+                  paddingTop: 20,
+                  justifyContent: "center",
+                  alignItems: "center"
                 }}
               >
-              </View>
-            </View>
-            </ImageBackground>
+                Loading...
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "Futura",
+                  fontSize: 30,
+                  paddingTop: 20,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                Find a Ride
+              </Text>
+            )}
           </View>
-      );
+
+          <View style={{ flex: 5 }}>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "white",
+                borderRadius: 10,
+                padding: 20,
+                margin: 10
+              }}
+            />
+          </View>
+        </ImageBackground>
+      </View>
+    );
   }
 }
