@@ -74,20 +74,10 @@ export default class RideListScreen extends React.Component {
             "Please wait for Riders to request a ride to you.",
             [
               {
-                text: "Ok",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Ok"
               },
               {
-                text: "Cancel",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Cancel"
               }
             ],
             { cancelable: false }
@@ -173,20 +163,10 @@ export default class RideListScreen extends React.Component {
             "Please wait for Riders to request a ride to you.",
             [
               {
-                text: "Ok",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Ok"
               },
               {
-                text: "Cancel",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Cancel"
               }
             ],
             { cancelable: false }
