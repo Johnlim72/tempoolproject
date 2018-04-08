@@ -48,7 +48,8 @@ export default class RideListScreen extends React.Component {
   OpenDetailsActivity(idUsers) {
     this.props.navigation.navigate("RideDetails", {
       ListViewClickItemHolder: idUsers.rowDriverID,
-      ListViewCLickItemHolder2: idUsers.rowRiderID
+      ListViewCLickItemHolder2: idUsers.rowRiderID,
+      typeOfRides: this.state.typeOfRides
     });
   }
 
