@@ -30,6 +30,8 @@ export default class FindRideScreen extends React.Component {
       list1: [],
       loader: true,
       driverID: null,
+      rideID: null,
+      status: "Potential",
     };
   }
 
@@ -57,11 +59,9 @@ export default class FindRideScreen extends React.Component {
         console.log("drivers: ", responseJson);
         if (responseJson.num_rows > 0) {
           this.setState({
-            loader: false,
             list1: responseJson
           });
           this.findShortDriver();
-          this.insertRideToServer();
         } else {
           Alert.alert("No drivers leaving soon");
         }
@@ -131,6 +131,7 @@ export default class FindRideScreen extends React.Component {
       this.setState({
         driverID: this.state.list1.rows[minUser].userID,
       });
+      this.insertRideToServer();
     }
   }
 
@@ -154,20 +155,60 @@ export default class FindRideScreen extends React.Component {
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
         if (responseJson.error == 0) {
-          Alert.alert(
-            "Success!",
-            "Potential Ride Inserted",
-            [
-              {
-                text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
-                  })
+          this.setState({
+            rideID: responseJson.rideID,
+          });
+
+          var timer = setInterval(() => {
+            fetch("http://cis-linux2.temple.edu/~tuf70921/php/check_if_accepted.php", {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                rideID: this.state.rideID,
+              })
+            })
+            .then(response => response.json())
+            .then(responseJson => {
+              Alert.alert("status: " + responseJson.status);
+              if(responseJson.error == 0) {
+                this.setState({
+                  status: responseJson.status
+                });
+              } else {
+                Alert.alert("Error");
+                status = "Error";
               }
-            ],
-            { cancelable: false }
-          );
+
+              if(this.state.status === "Accepted") {
+                this.setState({
+                  loader: false,
+                });
+                Alert.alert(
+                  "Success!",
+                  "Potential Ride Inserted",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () =>
+                        this.props.navigation.navigate("Dashboard", {
+                          TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                        })
+                    }
+                  ],
+                  { cancelable: false }
+                );
+                clearInterval(timer);
+              }
+            })
+            .catch(error => {
+              Alert.alert("Error: " + error.toString());
+            });
+          }, 10000);
+        } else {
+          Alert.alert("Error. " + responseJson.errorMessage);
         }
       })
       .catch(error => {
