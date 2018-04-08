@@ -26,7 +26,7 @@ export default class FindRideScreen extends React.Component {
       longitude: this.props.navigation.state.params.TextLongitude,
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
-      list1: "",
+      list1: [],
       loader: true
     };
   }
@@ -51,11 +51,12 @@ export default class FindRideScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log("drivers: ", responseJson);
-        this.findShortDriver();
+
         this.setState({
           loader: false,
           list1: responseJson
         });
+        this.findShortDriver();
       })
       .catch(error => {
         Alert.alert(error.toString());
@@ -81,39 +82,38 @@ export default class FindRideScreen extends React.Component {
   }
 
   findShortDriver() {
-    console.log("list1: ", this.state.list1);
-    // fetch(
-    //   "http://cis-linux2.temple.edu/~tuf70921/php/get_drivers_within_schedule.php",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //       address: this.state.address,
-    //       longitude: this.state.longitude,
-    //       latitude: this.state.latitude,
-    //       userID: this.state.userID
-    //     })
-    //   }
-    // )
-    //   .then(response => response.json())
-    //   .then(responseJson => {
-    //     console.log("drivers: ", responseJson);
-    //
-    //     this.setState({
-    //       loader: false,
-    //       list1: responseJson
-    //     });
-    //   })
-    //   .catch(error => {
-    //     Alert.alert(error.toString());
-    //   });
+    //console.log("list1: ", this.state.list1);
+    var count = this.state.list1.rows.length;
+    console.log("count: " + count);
+    var distance;
+    var min;
+    if (this.state.list1.length > 0) {
+
+      for (var i = 0; i < this.state.matchedTimesList.length; i++) {
+        distance = geolib.getDistance(
+          {
+            latitude: this.state.matchedTimesList[i].latitude,
+            longitude: this.state.matchedTimesList[i].longitude
+          },
+          { latitude: 39.9811935, longitude: -75.15535119999998 }
+        );
+        console.log(distance);
+        if ( i == 0) {
+          min = distance;
+        } else if (distance < min) {
+          min = distance;
+        }
+
+      }
+      console.log("shortest distance is " + min);
+    }
+  }
+  componentDidMount() {
+
+      this.findDriver();
   }
 
   render() {
-    this.findDriver();
     return (
       <View
         style={{
