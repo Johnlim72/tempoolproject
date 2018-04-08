@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
+import geolib from "geolib";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -84,20 +85,20 @@ export default class FindRideScreen extends React.Component {
   findShortDriver() {
     //console.log("list1: ", this.state.list1);
     var count = this.state.list1.rows.length;
-    console.log("count: " + count);
+
     var distance;
     var min;
-    if (this.state.list1.length > 0) {
+    if (count > 0) {
 
-      for (var i = 0; i < this.state.matchedTimesList.length; i++) {
+      for (var i = 0; i < count; i++) {
         distance = geolib.getDistance(
           {
-            latitude: this.state.matchedTimesList[i].latitude,
-            longitude: this.state.matchedTimesList[i].longitude
+            latitude: this.state.list1.rows[i].latitude,
+            longitude: this.state.list1.rows[i].longitude
           },
           { latitude: 39.9811935, longitude: -75.15535119999998 }
         );
-        console.log(distance);
+        console.log("idDriver: " + this.state.list1.rows[i].idDriver + ", distance: " + distance);
         if ( i == 0) {
           min = distance;
         } else if (distance < min) {
