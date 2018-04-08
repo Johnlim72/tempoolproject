@@ -152,7 +152,7 @@ export default class RideListScreen extends React.Component {
   updateType(typeOfRides) {
     this.setState({ typeOfRides: typeOfRides });
 
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
+    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -161,7 +161,7 @@ export default class RideListScreen extends React.Component {
       body: JSON.stringify({
         //idUser: this.state.TextUserID
         idUser: this.props.navigation.state.params.TextUserID,
-        typeOfRides: this.state.typeOfRdes
+        typeOfRides: typeOfRides
       })
     })
       .then(response => response.json())
