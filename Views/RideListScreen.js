@@ -130,11 +130,7 @@ export default class RideListScreen extends React.Component {
       <View style={[styles.Container, { marginVertical: 10 }]}>
         <Text
           style={styles.rowViewContainer}
-          onPress={this.OpenDetailsActivity.bind(
-            this,
-            rowData.driverID,
-            rowData.riderID
-          )}
+          
         >
           {rowData.riderID + " \n" + rowData.rider_datetime}
         </Text>

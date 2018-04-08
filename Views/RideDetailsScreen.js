@@ -89,9 +89,8 @@ export default class RideDetailsScreen extends React.Component {
 
   updateRide(acceptedOrPotential) {
     this.setState({ acceptedOrPotential: acceptedOrPotential });
-    console.log("acceptedOrPotential: " + this.state.acceptedOrPotential);
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/updateRide.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -99,7 +98,7 @@ export default class RideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         ride_ID: this.state.rideID,
-        acceptedOrPotential: this.state.acceptedOrPotential
+        acceptedOrPotential: acceptedOrPotential
       })
     })
       .then(response => response.json())
@@ -113,8 +112,27 @@ export default class RideDetailsScreen extends React.Component {
               {
                 text: "OK",
                 onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  this.props.navigation.navigate("RideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.props.navigation.state.params
+                      .ListViewClickItemHolder
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        } else if (responseJson == "Ride Declined.") {
+          Alert.alert(
+            "Success!",
+            "Ride Declined.",
+            [
+              {
+                text: "OK",
+                onPress: () =>
+                  this.props.navigation.navigate("RideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.props.navigation.state.params
+                      .ListViewClickItemHolder
                   })
               }
             ],
