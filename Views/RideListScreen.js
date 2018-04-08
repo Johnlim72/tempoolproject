@@ -37,17 +37,19 @@ export default class RideListScreen extends React.Component {
       dataSource: ""
     };
 
-    console.log("constructor: " + this.state.TextUserID + " " + this.state.TextEmail);
+    console.log(
+      "constructor: " + this.state.TextUserID + " " + this.state.TextEmail
+    );
   }
 
-  OpenDetailsActivity(idUser) {
+  OpenDetailsActivity(idUsers) {
     this.props.navigation.navigate("RideDetails", {
-      ListViewClickItemHolder: idUser
+      ListViewClickItemHolder: idUsers.rowDriverID,
+      ListViewCLickItemHolder2: idUsers.rowRiderID
     });
   }
 
   componentDidMount() {
-
     return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
       method: "POST",
       headers: {
@@ -62,7 +64,7 @@ export default class RideListScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
-        if (responseJson == null) {
+        if (responseJson == "No Results Found.") {
           Alert.alert(
             "No Rides For You Yet",
             "Please wait for Riders to request a ride to you.",
@@ -118,6 +120,30 @@ export default class RideListScreen extends React.Component {
     );
   };
 
+  _renderRow(rowData) {
+    return (
+      <View style={[styles.Container, { marginVertical: 10 }]}>
+        <Text
+          style={styles.rowViewContainer}
+          onPress={this.OpenDetailsActivity.bind(
+            this,
+            rowData.driverID,
+            rowData.riderID
+          )}
+        >
+          {rowData.riderID + " \n" + rowData.rider_datetime}
+        </Text>
+        <Button
+          title="Click to View Ride"
+          onPress={this.OpenDetailsActivity.bind(this, {
+            rowDriverID: rowData.driverID,
+            rowRiderID: rowData.riderID
+          })}
+        />
+      </View>
+    );
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -132,18 +158,7 @@ export default class RideListScreen extends React.Component {
         <ListView
           dataSource={this.state.dataSource}
           renderSeparator={this.ListViewItemSeparator}
-          renderRow={rowData => (
-            <Text
-              style={styles.rowViewContainer}
-              onPress={this.OpenDetailsActivity.bind(
-                this,
-                rowData.driverID
-              )}
-            >
-              {" "}
-              {rowData.riderID + "'s ride"}{" "}
-            </Text>
-          )}
+          renderRow={this._renderRow.bind(this)}
         />
       </View>
     );

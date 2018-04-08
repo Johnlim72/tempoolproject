@@ -113,8 +113,53 @@ export default class FindRideScreen extends React.Component {
           minUser = i;
         }
       }
-      console.log("shortest distance is " + min + ", which is user: " + this.state.list1.rows[minUser].userID);
+      console.log(
+        "shortest distance is " +
+          min +
+          ", which is user: " +
+          this.state.list1.rows[minUser].userID
+      );
     }
+  }
+
+  insertRideToServer() {
+
+    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_ride_info.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        rider_address: this.state.address,
+        rider_loc_lat: this.state.latitude,
+        rider_loc_long: this.state.longitude,
+        riderID: this.state.userID
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Ride successfully inserted.") {
+          Alert.alert(
+            "Success!",
+            "Potential Ride Inserted",
+            [
+              {
+                text: "OK",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   componentDidMount() {
