@@ -36,7 +36,7 @@ export default class DashboardScreen extends React.Component {
       TextUserID: "",
       SwitchOnValueHolder: true,
       disabled: false,
-      userID: this.props.navigation.state.params.userID,
+      userID: this.props.navigation.state.params.userID
     };
   }
 
@@ -114,11 +114,12 @@ export default class DashboardScreen extends React.Component {
         console.error(error);
       });
   }
-
+  componentDidMount() {
+    this.getUserAndNavToList();
+  }
   render() {
     const { goBack } = this.props.navigation;
 
-    this.getUserAndNavToList;
     if (this.state.SwitchOnValueHolder == true) {
       return (
         <View
@@ -184,38 +185,38 @@ export default class DashboardScreen extends React.Component {
                 </View>
               </View>
             </View>
-          <View style={{ flex: 5, marginTop: 10 }}>
-            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-              <Button
-                title="Find a Ride"
-                onPress={() =>
-                  this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder,
-                    userID: this.state.userID,
-                    findRideNow: true,
-                  })
-                }
-                color="darkred"
-                disabled={this.state.disabled}
-              />
-            </View>
+            <View style={{ flex: 5, marginTop: 10 }}>
+              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+                <Button
+                  title="Find a Ride"
+                  onPress={() =>
+                    this.props.navigation.navigate("Location", {
+                      TextEmail: this.props.navigation.state.params.TextEmail,
+                      Status: this.state.SwitchOnValueHolder,
+                      userID: this.state.userID,
+                      findRideNow: true
+                    })
+                  }
+                  color="darkred"
+                  disabled={this.state.disabled}
+                />
+              </View>
 
-            <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-              <Button
-                title="Schedule a Ride"
-                onPress={() =>
-                  this.props.navigation.navigate("Location", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder,
-                    userID: this.state.userID,
-                    findRideNow: false,
-                  })
-                }
-                color="darkred"
-                disabled={this.state.disabled}
-              />
-            </View>
+              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+                <Button
+                  title="Schedule a Ride"
+                  onPress={() =>
+                    this.props.navigation.navigate("Location", {
+                      TextEmail: this.props.navigation.state.params.TextEmail,
+                      Status: this.state.SwitchOnValueHolder,
+                      userID: this.state.userID,
+                      findRideNow: false
+                    })
+                  }
+                  color="darkred"
+                  disabled={this.state.disabled}
+                />
+              </View>
 
               <View style={[styles.buttonContainer, { marginTop: 0 }]}>
                 <Button

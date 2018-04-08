@@ -24,14 +24,42 @@ export default class RideDetailsScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextRiderID: "",
-      TextRiderName: "",
-      TextDate: "",
-      TextLocation: ""
+      TextRiderEmail: "",
+      TextRiderFirstName: "",
+      TextRiderLastName: "",
+      TextRiderPhoneNumber: "",
+      TextRiderDateTime: "",
+      TextRiderAddress: ""
     };
   }
 
   componentDidMount() {
+    console.log("listviewclickitemholder2: " + this.props.navigation.state.params.ListViewCLickItemHolder2);
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/getRiderForList.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        // Getting the id.
+        riderID: this.props.navigation.state.params.ListViewCLickItemHolder2
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        this.setState({
+          TextRiderEmail: responseJson.email,
+          TextRiderFirstName: responseJson.firstName,
+          TextRiderLastName: responseJson.lastName,
+          TextRiderPhoneNumber: responseJson.phoneNumber
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     fetch("http://cis-linux2.temple.edu/~tuf41055/php/filter.php", {
       method: "POST",
       headers: {
@@ -40,16 +68,15 @@ export default class RideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         // Getting the id.
-        driverID: this.props.navigation.state.params.ListViewClickItemHolder
+        driverID: this.props.navigation.state.params.ListViewClickItemHolder,
+        riderID: this.props.navigation.state.params.ListViewCLickItemHolder2
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
-          TextEmail: responseJson[0].riderID,
-          TextRiderName: responseJson[0].rider_name,
-          TextDate: responseJson[0].start_time,
-          TextLocation: responseJson[0].address
+          TextRiderDateTime: responseJson[0].rider_datetime,
+          TextRiderAddress: responseJson[0].rider_address
         });
       })
       .catch(error => {
@@ -61,28 +88,36 @@ export default class RideDetailsScreen extends React.Component {
     return (
       <View style={styles.MainContainer}>
         <View style={{ flex: 1, flexDirection: "column" }}>
-          <Text style={[styles.textViewContainer, { marginBottom: 20, fontSize: 30 }]}>
+          <Text
+            style={[
+              styles.textViewContainer,
+              { marginBottom: 20, fontSize: 30 }
+            ]}
+          >
             {" "}
             {"Ride Details"}{" "}
           </Text>
           <Text style={styles.textViewContainer}>
             {" "}
-            {"Email = " + this.state.TextEmail}{" "}
+            {"Email = " + this.state.TextRiderEmail}{" "}
           </Text>
 
           <Text style={styles.textViewContainer}>
             {" "}
-            {"Rider Name = " + this.state.TextRiderName}{" "}
+            {"Name = " +
+              this.state.TextRiderFirstName +
+              " " +
+              this.state.TextRiderLastName}{" "}
           </Text>
 
           <Text style={styles.textViewContainer}>
             {" "}
-            {"Time = " + this.state.TextDate}{" "}
+            {"Pickup Time = " + this.state.TextRiderDateTime}{" "}
           </Text>
 
           <Text style={styles.textViewContainer}>
             {" "}
-            {"Location = " + this.state.TextLocation}{" "}
+            {"Address = " + this.state.TextRiderAddress}{" "}
           </Text>
         </View>
         <View style={[styles.buttonContainer, { marginTop: 0 }]}>
