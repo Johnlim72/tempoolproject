@@ -88,30 +88,37 @@ export default class FindRideScreen extends React.Component {
 
     var distance;
     var min;
-    if (count > 0) {
+    var minUser;
 
+    if (count > 0) {
       for (var i = 0; i < count; i++) {
         distance = geolib.getDistance(
           {
             latitude: this.state.list1.rows[i].latitude,
             longitude: this.state.list1.rows[i].longitude
           },
-          { latitude: 39.9811935, longitude: -75.15535119999998 }
+          { latitude: this.state.latitude, longitude: this.state.longitude }
         );
-        console.log("idDriver: " + this.state.list1.rows[i].idDriver + ", distance: " + distance);
-        if ( i == 0) {
+        console.log(
+          "userID: " +
+            this.state.list1.rows[i].userID +
+            ", distance: " +
+            distance
+        );
+        if (i == 0) {
           min = distance;
+          minUser = i;
         } else if (distance < min) {
           min = distance;
+          minUser = i;
         }
-
       }
-      console.log("shortest distance is " + min);
+      console.log("shortest distance is " + min + ", which is user: " + this.state.list1.rows[minUser].userID);
     }
   }
-  componentDidMount() {
 
-      this.findDriver();
+  componentDidMount() {
+    this.findDriver();
   }
 
   render() {
