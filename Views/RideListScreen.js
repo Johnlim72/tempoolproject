@@ -37,7 +37,7 @@ export default class RideListScreen extends React.Component {
       TextLocation: "",
       isLoading: true,
       dataSource: "",
-      typeOfRides: ""
+      typeOfRides: "Potential"
     };
 
     console.log(
@@ -61,7 +61,8 @@ export default class RideListScreen extends React.Component {
       },
       body: JSON.stringify({
         //idUser: this.state.TextUserID
-        idUser: this.props.navigation.state.params.TextUserID
+        idUser: this.props.navigation.state.params.TextUserID,
+        typeOfRides: this.state.typeOfRides
       })
     })
       .then(response => response.json())
@@ -150,6 +151,64 @@ export default class RideListScreen extends React.Component {
 
   updateType(typeOfRides) {
     this.setState({ typeOfRides: typeOfRides });
+
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        //idUser: this.state.TextUserID
+        idUser: this.props.navigation.state.params.TextUserID,
+        typeOfRides: this.state.typeOfRdes
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        if (responseJson == "No Results Found.") {
+          Alert.alert(
+            "No Rides For You Yet",
+            "Please wait for Riders to request a ride to you.",
+            [
+              {
+                text: "Ok",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
+              },
+              {
+                text: "Cancel",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        } else {
+          let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          this.setState(
+            {
+              isLoading: false,
+              dataSource: ds.cloneWithRows(responseJson)
+            },
+            function() {
+              // In this block you can do something with new state.
+            }
+          );
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   renderHeader = () => {
