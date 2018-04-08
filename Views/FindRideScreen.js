@@ -52,6 +52,8 @@ export default class FindRideScreen extends React.Component {
     )
       .then(response => response.json())
       .then(responseJson => {
+        //Alert.alert(responseJson.toString());
+        //Alert.alert("num_rows: " + responseJson.num_rows);
         console.log("drivers: ", responseJson);
         if (responseJson.num_rows > 0) {
           this.setState({
@@ -151,7 +153,7 @@ export default class FindRideScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Ride successfully inserted.") {
+        if (responseJson.error == 0) {
           Alert.alert(
             "Success!",
             "Potential Ride Inserted",
