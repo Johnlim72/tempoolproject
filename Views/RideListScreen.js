@@ -48,7 +48,8 @@ export default class RideListScreen extends React.Component {
   OpenDetailsActivity(idUsers) {
     this.props.navigation.navigate("RideDetails", {
       ListViewClickItemHolder: idUsers.rowDriverID,
-      ListViewCLickItemHolder2: idUsers.rowRiderID
+      ListViewCLickItemHolder2: idUsers.rowRiderID,
+      typeOfRides: this.state.typeOfRides
     });
   }
 
@@ -119,11 +120,7 @@ export default class RideListScreen extends React.Component {
       <View style={[styles.Container, { marginVertical: 10 }]}>
         <Text
           style={styles.rowViewContainer}
-          onPress={this.OpenDetailsActivity.bind(
-            this,
-            rowData.driverID,
-            rowData.riderID
-          )}
+          
         >
           {rowData.riderID + " \n" + rowData.rider_datetime}
         </Text>

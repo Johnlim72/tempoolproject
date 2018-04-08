@@ -71,24 +71,6 @@ export default class FindRideScreen extends React.Component {
       .catch(error => {
         Alert.alert(error.toString());
       });
-
-    //Alert.alert("inside find");
-
-    //   let responseText = await response.text();
-    //   //Alert.alert(responseText);
-    //   if (response.status >= 200 && response.status < 300) {
-    //     let responseJson = JSON.parse(responseText);
-    //     Alert.alert("success");
-    //     //Alert.alert(responseText);
-    //   } else {
-    //     let error = JSON.parse(responseText);
-    //     throw "Error";
-    //     //throw error.errorMessage;
-    //   }
-    //
-    // } catch (error) {
-    //   Alert.alert(error);
-    // }
   }
 
   findShortDriver() {
