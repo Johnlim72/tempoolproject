@@ -75,10 +75,20 @@ export default class RideListScreen extends React.Component {
             "Please wait for Riders to request a ride to you.",
             [
               {
-                text: "Ok"
+                text: "Ok",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
               },
               {
-                text: "Cancel"
+                text: "Cancel",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
               }
             ],
             { cancelable: false }
@@ -120,7 +130,7 @@ export default class RideListScreen extends React.Component {
       <View style={[styles.Container, { marginVertical: 10 }]}>
         <Text
           style={styles.rowViewContainer}
-          
+
         >
           {rowData.riderID + " \n" + rowData.rider_datetime}
         </Text>
@@ -160,10 +170,20 @@ export default class RideListScreen extends React.Component {
             "Please wait for Riders to request a ride to you.",
             [
               {
-                text: "Ok"
+                text: "Ok",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
               },
               {
-                text: "Cancel"
+                text: "Cancel",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder
+                  })
               }
             ],
             { cancelable: false }

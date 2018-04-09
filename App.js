@@ -18,7 +18,6 @@ import ScheduleScreen from "./Views/ScheduleScreen";
 import LocationScreen from "./Views/LocationScreen";
 import RideListScreen from "./Views/RideListScreen";
 import FindRideScreen from "./Views/FindRideScreen";
-
 import RideDetailsScreen from "./Views/RideDetailsScreen";
 import DriverScheduleScreen from "./Views/DriverScheduleScreen";
 

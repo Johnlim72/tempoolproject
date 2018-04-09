@@ -117,6 +117,7 @@ export default class FindRideScreen extends React.Component {
       this.setState({
         driverID: this.state.list1.rows[minUser].userID,
       });
+      console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
     }
   }

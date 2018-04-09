@@ -10,14 +10,14 @@ import {
   ImageBackground,
   Dimensions,
   TextInput,
-  AsyncStorage,
+  AsyncStorage
 } from "react-native";
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import DatePicker from "react-native-datepicker";
 import geolib from "geolib";
 import styles from "./style";
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -32,15 +32,15 @@ export default class ScheduleScreen extends React.Component {
   state = {
     isDateTimePickerVisible: false,
     chosenDate: null,
-    userID: null,
+    userID: null
   };
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-  _handleDatePicked = (date) => {
-    console.log('A date has been picked: ', date);
+  _handleDatePicked = date => {
+    console.log("A date has been picked: ", date);
     //Alert.alert(date.toTimeString());
     this.state.chosenDate = date;
     this._hideDateTimePicker();
@@ -49,13 +49,13 @@ export default class ScheduleScreen extends React.Component {
   async getToken() {
     try {
       let userID = await AsyncStorage.getItem(USERID);
-      if(userID) {
+      if (userID) {
         this.state.userID = userID;
         this.Insert();
       }
-    } catch(error) {
-        console.log("Something went wrong");
-        Alert.alert("An Error occurred: " + error);
+    } catch (error) {
+      console.log("Something went wrong");
+      Alert.alert("An Error occurred: " + error);
     }
   }
 
@@ -113,7 +113,7 @@ export default class ScheduleScreen extends React.Component {
         rider_address: TextAddress.toString(),
         rider_latitude: TextLatitude.toString(),
         rider_longitude: TextLongitude.toString(),
-        userID: this.state.userID,
+        userID: this.state.userID
       })
     })
       .then(response => response.json())
@@ -161,7 +161,7 @@ export default class ScheduleScreen extends React.Component {
         driver_address: TextAddress.toString(),
         driver_latitude: TextLatitude.toString(),
         driver_longitude: TextLongitude.toString(),
-        userID: this.state.userID,
+        userID: this.state.userID
       })
     })
       .then(response => response.json())
@@ -221,12 +221,11 @@ export default class ScheduleScreen extends React.Component {
           { latitude: 39.9811935, longitude: -75.15535119999998 }
         );
         console.log(distance);
-        if ( i == 0) {
+        if (i == 0) {
           min = distance;
         } else if (distance < min) {
           min = distance;
         }
-
       }
       console.log("shortest distance is " + min);
     }
@@ -317,44 +316,7 @@ export default class ScheduleScreen extends React.Component {
                 style={[styles.inputAddress, { color: "black" }]}
               />
             </View>
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 18,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline"
-              }}
-            >
-              Latitude:
-            </Text>
-            <View style={styles.inputWrap}>
-              <TextInput
-                placeholderTextColor="#b3b3b3"
-                placeholder="Latitude"
-                defaultValue={this.props.navigation.state.params.TextLatitude}
-                onChangeText={TextLatitude => this.setState({ TextLatitude })}
-                style={[styles.input, { color: "black" }]}
-              />
-            </View>
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 18,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline"
-              }}
-            >
-              Longitude
-            </Text>
-            <View style={styles.inputWrap}>
-              <TextInput
-                placeholderTextColor="#b3b3b3"
-                placeholder="Longitude"
-                defaultValue={this.props.navigation.state.params.TextLongitude}
-                onChangeText={TextLongitude => this.setState({ TextLongitude })}
-                style={[styles.input, { color: "black" }]}
-              />
-            </View>
+
             <Text
               style={{
                 color: "darkred",
@@ -391,7 +353,11 @@ export default class ScheduleScreen extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Button title="Save" onPress={this.getToken.bind(this)} color="white" />
+                <Button
+                  title="Save"
+                  onPress={this.getToken.bind(this)}
+                  color="white"
+                />
               </View>
             </TouchableOpacity>
           </View>
