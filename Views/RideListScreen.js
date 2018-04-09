@@ -69,44 +69,19 @@ export default class RideListScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
-        if (responseJson == "No Results Found.") {
-          Alert.alert(
-            "No Rides For You Yet",
-            "Please wait for Riders to request a ride to you.",
-            [
-              {
-                text: "Ok",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
-              },
-              {
-                text: "Cancel",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
-              }
-            ],
-            { cancelable: false }
-          );
-        } else {
-          let ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-          });
-          this.setState(
-            {
-              isLoading: false,
-              dataSource: ds.cloneWithRows(responseJson)
-            },
-            function() {
-              // In this block you can do something with new state.
-            }
-          );
-        }
+
+        let ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+        });
+        this.setState(
+          {
+            isLoading: false,
+            dataSource: ds.cloneWithRows(responseJson)
+          },
+          function() {
+            // In this block you can do something with new state.
+          }
+        );
       })
       .catch(error => {
         console.error(error);
@@ -128,10 +103,7 @@ export default class RideListScreen extends React.Component {
   _renderRow(rowData) {
     return (
       <View style={[styles.Container, { marginVertical: 10 }]}>
-        <Text
-          style={styles.rowViewContainer}
-
-        >
+        <Text style={styles.rowViewContainer}>
           {rowData.riderID + " \n" + rowData.rider_datetime}
         </Text>
         <Button
