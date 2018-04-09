@@ -64,7 +64,6 @@ export default class InitialScreen extends React.Component {
   }
 
   async storeToken(accessToken, email, userID) {
-    Alert.alert("Inside storetoken: " + accessToken + ", " + email + ", " + userID);
     try {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       await AsyncStorage.setItem(EMAIL, email);

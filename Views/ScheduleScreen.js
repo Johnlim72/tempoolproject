@@ -43,6 +43,9 @@ export default class ScheduleScreen extends React.Component {
     console.log("A date has been picked: ", date);
     //Alert.alert(date.toTimeString());
     this.state.chosenDate = date;
+    this.state.dateSelected = true;
+    this.state.dateText = date.toLocaleDateString();
+    this.state.timeText = date.toLocaleTimeString();
     this._hideDateTimePicker();
   };
 
@@ -72,6 +75,9 @@ export default class ScheduleScreen extends React.Component {
       userID: this.props.navigation.state.params.userID,
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
       FindOrScheduleText: "",
+      dateText: "",
+      timeText: "",
+      dateSelected: false,
       chosenDate: null,
       URL: "",
       matchedTimesList: [
@@ -232,6 +238,17 @@ export default class ScheduleScreen extends React.Component {
     }
   };
 
+  isDateSelected() {
+    if (this.state.dateSelected == true) {
+      return (
+        <View>
+          <Text>Date: {this.state.dateText}</Text>
+          <Text>Time: {this.state.timeText}</Text>
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
       <View
@@ -318,21 +335,28 @@ export default class ScheduleScreen extends React.Component {
               />
             </View>
 
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 18,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline",
-                marginTop: 20
-              }}
-            >
-              Date:
-            </Text>
-
             <View style={{ flex: 1 }}>
               <TouchableOpacity onPress={this._showDateTimePicker}>
-                <Text>Show DatePicker</Text>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "darkred",
+                    borderRadius: 10,
+                    padding: 10
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 18,
+                      paddingHorizontal: 10,
+                      marginTop: 20
+                    }}
+                  >
+                    Click to Choose Date
+                  </Text>
+                </View>
               </TouchableOpacity>
               <DateTimePicker
                 isVisible={this.state.isDateTimePickerVisible}
@@ -341,6 +365,8 @@ export default class ScheduleScreen extends React.Component {
                 mode="datetime"
               />
             </View>
+
+            {this.isDateSelected()}
 
             <TouchableOpacity activeOpacity={0.5} onPress={this.Insert}>
               <View
