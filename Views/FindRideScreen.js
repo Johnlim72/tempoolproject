@@ -35,7 +35,7 @@ export default class FindRideScreen extends React.Component {
       acceptedRide: false,
       driverName: "",
       driverEmail: "",
-      driverPhoneNumber: "",
+      driverPhoneNumber: ""
     };
   }
 
@@ -70,7 +70,6 @@ export default class FindRideScreen extends React.Component {
           Alert.alert("No drivers leaving soon");
         }
         //Alert.alert(responseJson.toString());
-
       })
       .catch(error => {
         Alert.alert(error.toString());
@@ -115,7 +114,7 @@ export default class FindRideScreen extends React.Component {
           this.state.list1.rows[minUser].userID
       );
       this.setState({
-        driverID: this.state.list1.rows[minUser].userID,
+        driverID: this.state.list1.rows[minUser].userID
       });
       console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
@@ -123,7 +122,6 @@ export default class FindRideScreen extends React.Component {
   }
 
   insertRideToServer() {
-
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_ride_info.php", {
       method: "POST",
       headers: {
@@ -135,7 +133,7 @@ export default class FindRideScreen extends React.Component {
         rider_loc_lat: this.state.latitude,
         rider_loc_long: this.state.longitude,
         riderID: this.state.userID,
-        driverID: this.state.driverID,
+        driverID: this.state.driverID
       })
     })
       .then(response => response.json())
@@ -143,64 +141,64 @@ export default class FindRideScreen extends React.Component {
         //Then open Profile activity and send user email to profile activity.
         if (responseJson.error == 0) {
           this.setState({
-            rideID: responseJson.rideID,
+            rideID: responseJson.rideID
           });
 
           var timer = setInterval(() => {
-            fetch("http://cis-linux2.temple.edu/~tuf70921/php/check_if_accepted.php", {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                rideID: this.state.rideID,
+            fetch(
+              "http://cis-linux2.temple.edu/~tuf70921/php/check_if_accepted.php",
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  rideID: this.state.rideID
+                })
+              }
+            )
+              .then(response => response.json())
+              .then(responseJson => {
+                if (responseJson.error == 0) {
+                  this.setState({
+                    status: responseJson.status
+                  });
+                } else {
+                  Alert.alert("Error");
+                  status = "Error";
+                }
+
+                if (this.state.status === "Accepted") {
+                  Alert.alert("status: " + responseJson.status);
+                  this.setState({
+                    loader: false,
+                    acceptedRide: true,
+                    driverName: responseJson.driverName,
+                    driverEmail: responseJson.driverEmail,
+                    driverPhoneNumber: responseJson.driverPhoneNumber
+                  });
+
+                  // Alert.alert(
+                  //   "Success!",
+                  //   "Potential Ride Inserted",
+                  //   [
+                  //     {
+                  //       text: "OK",
+                  //       onPress: () =>
+                  //         this.props.navigation.navigate("Dashboard", {
+                  //           TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  //         })
+                  //     }
+                  //   ],
+                  //   { cancelable: false }
+                  // );
+                  clearInterval(timer);
+                }
               })
-            })
-            .then(response => response.json())
-            .then(responseJson => {
-
-              if(responseJson.error == 0) {
-                this.setState({
-                  status: responseJson.status,
-                });
-              } else {
-                Alert.alert("Error");
-                status = "Error";
-              }
-
-              if(this.state.status === "Accepted") {
-                Alert.alert("status: " + responseJson.status);
-                this.setState({
-                  loader: false,
-                  acceptedRide: true,
-                  driverName: responseJson.driverName,
-                  driverEmail: responseJson.driverEmail,
-                  driverPhoneNumber: responseJson.driverPhoneNumber,
-                });
-
-
-
-                // Alert.alert(
-                //   "Success!",
-                //   "Potential Ride Inserted",
-                //   [
-                //     {
-                //       text: "OK",
-                //       onPress: () =>
-                //         this.props.navigation.navigate("Dashboard", {
-                //           TextEmail: this.props.navigation.state.params.TextEmail.toString()
-                //         })
-                //     }
-                //   ],
-                //   { cancelable: false }
-                // );
-                clearInterval(timer);
-              }
-            })
-            .catch(error => {
-              Alert.alert("Error: " + error.toString());
-            });
+              .catch(error => {
+                Alert.alert("Error: " + error.toString());
+              });
           }, 10000);
         } else {
           Alert.alert("Error. " + responseJson.errorMessage);
@@ -216,12 +214,36 @@ export default class FindRideScreen extends React.Component {
   }
 
   renderDriver() {
-    if(this.state.acceptedRide == true) {
+    if (this.state.acceptedRide == true) {
       return (
         <View>
-        <Text>Driver: {this.state.driverName}</Text>
-        <Text>Email: {this.state.driverEmail}</Text>
-        <Text>Phone Number: {this.state.driverPhoneNumber}</Text>
+          <Text
+            style={{
+              fontFamily: "Futura",
+              fontSize: 30,
+              paddingTop: 20
+            }}
+          >
+            Driver: {this.state.driverName}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Futura",
+              fontSize: 30,
+              paddingTop: 20
+            }}
+          >
+            Email: {this.state.driverEmail}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Futura",
+              fontSize: 30,
+              paddingTop: 20
+            }}
+          >
+            Phone Number: {this.state.driverPhoneNumber}
+          </Text>
         </View>
       );
     }
@@ -280,15 +302,16 @@ export default class FindRideScreen extends React.Component {
           <View style={{ flex: 5 }}>
             <View
               style={{
-                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
                 backgroundColor: "white",
                 borderRadius: 10,
                 padding: 20,
                 margin: 10
               }}
             >
-              { this.renderDriver() }
-              </View>
+              {this.renderDriver()}
+            </View>
           </View>
         </ImageBackground>
       </View>
