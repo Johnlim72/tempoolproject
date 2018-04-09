@@ -49,6 +49,7 @@ export default class InitialScreen extends React.Component {
       let accessToken = await AsyncStorage.getItem(ACCESS_TOKEN);
       let email = await AsyncStorage.getItem(EMAIL);
       let userID = await AsyncStorage.getItem(USERID);
+      console.log("gettoken in initial screen: " + userID);
       if(accessToken) {
         this.props.navigation.navigate("Dashboard", {
           accessToken: accessToken,

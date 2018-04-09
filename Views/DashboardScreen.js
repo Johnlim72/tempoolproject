@@ -76,7 +76,8 @@ export default class DashboardScreen extends React.Component {
             onPress: () =>
               this.props.navigation.navigate("Location", {
                 TextEmail: this.props.navigation.state.params.TextEmail,
-                Status: this.state.SwitchOnValueHolder
+                Status: this.state.SwitchOnValueHolder,
+                userID: this.state.userID
               })
           },
           {

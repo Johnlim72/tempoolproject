@@ -49,6 +49,7 @@ export default class ScheduleScreen extends React.Component {
   async getToken() {
     try {
       let userID = await AsyncStorage.getItem(USERID);
+      console.log("userID in gettoken: " + userID);
       if (userID) {
         this.state.userID = userID;
         this.Insert();
@@ -70,7 +71,7 @@ export default class ScheduleScreen extends React.Component {
       TextDate: "03-25-2018",
       Status: this.props.navigation.state.params.Status,
       StatusText: "",
-      userID: null,
+      userID: this.props.navigation.state.params.userID,
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
       FindOrScheduleText: "",
       chosenDate: null,
@@ -149,6 +150,8 @@ export default class ScheduleScreen extends React.Component {
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
+
+    console.log("insertdrivertoserver driver id: " + this.state.userID);
 
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_driver_info.php", {
       method: "POST",

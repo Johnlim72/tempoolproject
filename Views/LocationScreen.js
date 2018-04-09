@@ -9,13 +9,14 @@ export default class MapScreen extends React.Component {
   };
 
   state = {
-    loader: false,
-  }
+    loader: false
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
+      userID: this.props.navigation.state.params.userID,
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextAddress: "",
       TextLatitude: "",
@@ -35,7 +36,8 @@ export default class MapScreen extends React.Component {
         userID: this.props.navigation.state.params.userID,
         TextEmail: this.props.navigation.state.params.TextEmail,
         Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
+        userID: this.props.navigation.state.params.userID
       });
     } else {
       this.props.navigation.navigate("Schedule", {
@@ -44,7 +46,8 @@ export default class MapScreen extends React.Component {
         TextLongitude: this.state.TextLongitude,
         TextEmail: this.props.navigation.state.params.TextEmail,
         Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
+        userID: this.props.navigation.state.params.userID
       });
     }
   };
