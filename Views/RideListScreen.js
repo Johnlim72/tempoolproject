@@ -104,7 +104,11 @@ export default class RideListScreen extends React.Component {
     return (
       <View style={[styles.Container, { marginVertical: 10 }]}>
         <Text style={styles.rowViewContainer}>
-          {rowData.riderID + " \n" + rowData.rider_datetime}
+          {"Name: "+ rowData.firstName +
+            " " +
+            rowData.lastName +
+            " \nPick-up Time: " +
+            rowData.rider_datetime}
         </Text>
         <Button
           title="Click to View Ride"
