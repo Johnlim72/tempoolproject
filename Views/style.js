@@ -34,7 +34,22 @@ export default StyleSheet.create({
     borderColor: "#fff",
     padding: 20
   },
-
+  buttonContainer2: {
+    margin: 20,
+    backgroundColor: "white",
+    ...Platform.select({
+        ios: {
+          backgroundColor: 'white',
+        },
+        android: {
+          backgroundColor: "#003399",
+        },
+      }),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    padding: 20
+  },
   textInput: {
     //
     height: 30, //

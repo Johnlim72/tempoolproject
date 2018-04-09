@@ -180,17 +180,40 @@ export default class RideListScreen extends React.Component {
       });
   }
 
+  // <Picker
+  //   selectedValue={this.state.typeOfRides}
+  //   onValueChange={value => this.updateType(value)}
+  // >
+  //   <Picker.Item label="Potential" value="Potential" />
+  //   <Picker.Item label="Accepted" value="Accepted" />
+  //   <Picker.Item label="Past" value="Past" />
+  // </Picker>
+
   renderHeader = () => {
     var header = (
       <View style={styles1.header_footer_style}>
-        <Picker
-          selectedValue={this.state.typeOfRides}
-          onValueChange={value => this.updateType(value)}
-        >
-          <Picker.Item label="Potential" value="Potential" />
-          <Picker.Item label="Accepted" value="Accepted" />
-          <Picker.Item label="Past" value="Past" />
-        </Picker>
+        <View style={{ width: "30%", marginHorizontal: 5 }}>
+          <Button
+            title="Potential"
+            color="darkred"
+            onPress={() => this.updateType("Potential")}
+          />
+        </View>
+
+        <View style={{ width: "30%", marginHorizontal: 5 }}>
+          <Button
+            title="Accepted"
+            color="darkred"
+            onPress={() => this.updateType("Accepted")}
+          />
+        </View>
+        <View style={{ width: "30%", marginHorizontal: 5 }}>
+          <Button
+            title="Past"
+            color="darkred"
+            onPress={() => this.updateType("Past")}
+          />
+        </View>
       </View>
     );
 
@@ -235,7 +258,9 @@ const styles1 = StyleSheet.create({
   header_footer_style: {
     width: "100%",
     height: 45,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    flexDirection: "row",
+    margin: 5
   },
 
   textStyle: {

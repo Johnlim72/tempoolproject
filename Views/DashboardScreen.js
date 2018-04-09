@@ -297,7 +297,7 @@ export default class DashboardScreen extends React.Component {
               </View>
             </View>
             <View style={{ flex: 5, marginTop: 10 }}>
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
                 <Button
                   title="List of Rides"
                   onPress={() =>
@@ -306,12 +306,12 @@ export default class DashboardScreen extends React.Component {
                       TextUserID: this.state.TextUserID
                     })
                   }
-                  color="darkred"
+                  color="#003399"
                   disabled={!this.state.disabled}
                 />
               </View>
 
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
                 <Button
                   title="Profile"
                   onPress={() =>
@@ -319,15 +319,15 @@ export default class DashboardScreen extends React.Component {
                       TextEmail: this.props.navigation.state.params.TextEmail
                     })
                   }
-                  color="darkred"
+                  color="#003399"
                 />
               </View>
 
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
                 <Button
                   title="Logout"
                   onPress={this.deleteToken.bind(this)}
-                  color="darkred"
+                  color="#003399"
                 />
               </View>
             </View>
