@@ -32,6 +32,10 @@ export default class FindRideScreen extends React.Component {
       driverID: null,
       rideID: null,
       status: "Potential",
+      acceptedRide: false,
+      driverName: "",
+      driverEmail: "",
+      driverPhoneNumber: "",
     };
   }
 
@@ -154,10 +158,10 @@ export default class FindRideScreen extends React.Component {
             })
             .then(response => response.json())
             .then(responseJson => {
-              Alert.alert("status: " + responseJson.status);
+
               if(responseJson.error == 0) {
                 this.setState({
-                  status: responseJson.status
+                  status: responseJson.status,
                 });
               } else {
                 Alert.alert("Error");
@@ -165,23 +169,31 @@ export default class FindRideScreen extends React.Component {
               }
 
               if(this.state.status === "Accepted") {
+                Alert.alert("status: " + responseJson.status);
                 this.setState({
                   loader: false,
+                  acceptedRide: true,
+                  driverName: responseJson.driverName,
+                  driverEmail: responseJson.driverEmail,
+                  driverPhoneNumber: responseJson.driverPhoneNumber,
                 });
-                Alert.alert(
-                  "Success!",
-                  "Potential Ride Inserted",
-                  [
-                    {
-                      text: "OK",
-                      onPress: () =>
-                        this.props.navigation.navigate("Dashboard", {
-                          TextEmail: this.props.navigation.state.params.TextEmail.toString()
-                        })
-                    }
-                  ],
-                  { cancelable: false }
-                );
+
+
+
+                // Alert.alert(
+                //   "Success!",
+                //   "Potential Ride Inserted",
+                //   [
+                //     {
+                //       text: "OK",
+                //       onPress: () =>
+                //         this.props.navigation.navigate("Dashboard", {
+                //           TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                //         })
+                //     }
+                //   ],
+                //   { cancelable: false }
+                // );
                 clearInterval(timer);
               }
             })
@@ -200,6 +212,18 @@ export default class FindRideScreen extends React.Component {
 
   componentDidMount() {
     this.findDriver();
+  }
+
+  renderDriver() {
+    if(this.state.acceptedRide == true) {
+      return (
+        <View>
+        <Text>Driver: {this.state.driverName}</Text>
+        <Text>Email: {this.state.driverEmail}</Text>
+        <Text>Phone Number: {this.state.driverPhoneNumber}</Text>
+        </View>
+      );
+    }
   }
 
   render() {
@@ -261,7 +285,9 @@ export default class FindRideScreen extends React.Component {
                 padding: 20,
                 margin: 10
               }}
-            />
+            >
+              { this.renderDriver() }
+              </View>
           </View>
         </ImageBackground>
       </View>

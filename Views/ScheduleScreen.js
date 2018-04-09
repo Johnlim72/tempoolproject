@@ -41,6 +41,7 @@ export default class ScheduleScreen extends React.Component {
 
   _handleDatePicked = (date) => {
     console.log('A date has been picked: ', date);
+    //Alert.alert(date.toTimeString());
     this.state.chosenDate = date;
     this._hideDateTimePicker();
   };
@@ -72,6 +73,7 @@ export default class ScheduleScreen extends React.Component {
       userID: null,
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
       FindOrScheduleText: "",
+      chosenDate: null,
       URL: "",
       matchedTimesList: [
         { latitude: 39.4998492, longitude: -75.1642928 },
@@ -91,84 +93,6 @@ export default class ScheduleScreen extends React.Component {
     } else {
       this.state.FindOrScheduleText = "Schedule a Ride For Later";
     }
-  }
-
-  componentDidMount() {
-    this.Clock = setInterval(() => this.GetTime(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.Clock);
-  }
-
-  GetTime() {
-    // Creating variables to hold time.
-    var date, TimeType, hour, minutes, seconds, fullTime;
-
-    // Creating Date() function object.
-    date = new Date();
-
-    var date1 = new Date().getDate();
-    var month = new Date().getMonth() + 1;
-    var year = new Date().getFullYear();
-
-    // Getting current hour from Date object.
-    hour = date.getHours();
-
-    // Checking if the Hour is less than equals to 11 then Set the Time format as AM.
-    if (hour <= 11) {
-      TimeType = "AM";
-    } else {
-      // If the Hour is Not less than equals to 11 then Set the Time format as PM.
-      TimeType = "PM";
-    }
-
-    // IF current hour is grater than 12 then minus 12 from current hour to make it in 12 Hours Format.
-    if (hour > 12) {
-      hour = hour - 12;
-    }
-
-    // If hour value is 0 then by default set its value to 12, because 24 means 0 in 24 hours time format.
-    if (hour == 0) {
-      hour = 12;
-    }
-
-    // Getting the current minutes from date object.
-    minutes = date.getMinutes();
-
-    // Checking if the minutes value is less then 10 then add 0 before minutes.
-    if (minutes < 10) {
-      minutes = "0" + minutes.toString();
-    }
-
-    //Getting current seconds from date object.
-    seconds = date.getSeconds();
-
-    // If seconds value is less than 10 then add 0 before seconds.
-    if (seconds < 10) {
-      seconds = "0" + seconds.toString();
-    }
-
-    // Adding all the variables in fullTime variable.
-    fullTime =
-      month +
-      "-" +
-      date1 +
-      "-" +
-      year +
-      " " +
-      hour.toString() +
-      ":" +
-      minutes.toString() +
-      ":" +
-      seconds.toString() +
-      " " +
-      TimeType.toString();
-
-    // Setting up fullTime variable in State.
-    this.setState({
-      TextDate: fullTime
-    });
   }
 
   InsertRiderToServer = () => {
@@ -454,33 +378,6 @@ export default class ScheduleScreen extends React.Component {
                 mode="datetime"
               />
             </View>
-
-            <DatePicker
-              style={{ width: 200 }}
-              date={this.state.TextDate}
-              mode="datetime"
-              placeholder="select date"
-              format="MM-DD-YYYY, h:mm a"
-              minDate="01-01-2018"
-              maxDate="12-31-2100"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: "absolute",
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-                // ... You can check the source to find the other keys.
-              }}
-              onDateChange={TextDate => {
-                this.setState({ TextDate: TextDate });
-              }}
-            />
 
             <TouchableOpacity activeOpacity={0.5} onPress={this.Insert}>
               <View
