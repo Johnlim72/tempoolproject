@@ -50,10 +50,8 @@ export default class ScheduleScreen extends React.Component {
     try {
       let userID = await AsyncStorage.getItem(USERID);
       console.log("userID in gettoken: " + userID);
-      if (userID) {
-        this.state.userID = userID;
-        this.Insert();
-      }
+
+      this.Insert();
     } catch (error) {
       console.log("Something went wrong");
       Alert.alert("An Error occurred: " + error);
