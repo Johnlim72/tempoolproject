@@ -22,13 +22,13 @@ export default StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     ...Platform.select({
-        ios: {
-          backgroundColor: 'white',
-        },
-        android: {
-          backgroundColor: 'darkred',
-        },
-      }),
+      ios: {
+        backgroundColor: "white"
+      },
+      android: {
+        backgroundColor: "darkred"
+      }
+    }),
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
@@ -38,13 +38,13 @@ export default StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     ...Platform.select({
-        ios: {
-          backgroundColor: 'white',
-        },
-        android: {
-          backgroundColor: "#003399",
-        },
-      }),
+      ios: {
+        backgroundColor: "white"
+      },
+      android: {
+        backgroundColor: "#003399"
+      }
+    }),
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
@@ -123,13 +123,13 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "white",
     ...Platform.select({
-        ios: {
-          backgroundColor: 'white',
-        },
-        android: {
-          backgroundColor: 'darkred',
-        },
-      }),
+      ios: {
+        backgroundColor: "white"
+      },
+      android: {
+        backgroundColor: "darkred"
+      }
+    }),
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
@@ -167,23 +167,20 @@ export default StyleSheet.create({
     borderRadius: 5,
     marginLeft: 5
   },
-  MainContainer:
- {
-    justifyContent: 'center',
-    flex:1,
+  MainContainer: {
+    justifyContent: "center",
+    flex: 1,
     margin: 10
-
- },
- rowViewContainer: {
+  },
+  rowViewContainer: {
     fontSize: 20,
     paddingRight: 10,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 10
   },
   textViewContainer: {
-
-    padding:5,
+    padding: 5,
     fontSize: 20,
-    color: '#000',
-   }
+    color: "#000"
+  }
 });
