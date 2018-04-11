@@ -7,13 +7,14 @@ import {
   Dimensions,
   Image,
   ImageBackground,
-  Button,
   View,
   Text,
   TextInput
 } from "react-native";
 import { StackNavigator, NavigationOptions } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
+
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 
@@ -64,19 +65,25 @@ export default class SignupScreen extends React.Component {
 
     // Check that all fields have been entered
 
-    if(TextInputFirstName != ""
-      && TextInputLastName != ""
-      && TextEmail != ""
-      && TextPassword != ""
-      && TextInputPhoneNumber != ""
-      && TextPasswordConfirm != "") {
+    if (
+      TextInputFirstName != "" &&
+      TextInputLastName != "" &&
+      TextEmail != "" &&
+      TextPassword != "" &&
+      TextInputPhoneNumber != "" &&
+      TextPasswordConfirm != ""
+    ) {
+      if (TextPassword === TextPasswordConfirm) {
+        var emailDomain = TextEmail.substr(
+          TextEmail.length - 10,
+          TextEmail.length
+        );
 
-        if(TextPassword === TextPasswordConfirm) {
-          var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
-
-          if(emailDomain.toLowerCase() === "temple.edu"){
-            try {
-              let response = await fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php", {
+        if (emailDomain.toLowerCase() === "temple.edu") {
+          try {
+            let response = await fetch(
+              "http://cis-linux2.temple.edu/~tuf70921/php/submit_user_info.php",
+              {
                 method: "POST",
                 headers: {
                   Accept: "application/json",
@@ -89,50 +96,51 @@ export default class SignupScreen extends React.Component {
                   password: TextPassword,
                   phoneNumber: TextInputPhoneNumber
                 })
-              });
+              }
+            );
 
-              let responseText = await response.text();
-              if(response.status >= 200 && response.status < 300) {
-                let responseJson = JSON.parse(responseText);
-                if(responseJson.error != 1) {
-                  let accessToken = responseJson.token;
-                  let userID = responseJson.userID;
+            let responseText = await response.text();
+            if (response.status >= 200 && response.status < 300) {
+              let responseJson = JSON.parse(responseText);
+              if (responseJson.error != 1) {
+                let accessToken = responseJson.token;
+                let userID = responseJson.userID;
 
-                  this.storeToken(accessToken, TextEmail, userID);
+                this.storeToken(accessToken, TextEmail, userID);
 
-                  Alert.alert(
-                    "Success!",
-                    "User created",
-                    [
-                      {
-                        text: "OK",
-                        onPress: () =>
-                          this.props.navigation.navigate("Dashboard", {
-                            TextEmail: TextEmail,
-                            accessToken: accessToken,
-                            userID: userID,
-                          })
-                      }
-                    ],
-                    { cancelable: false }
-                  );
-                } else {
-                  let error = responseJson.errorMessage;
-                  throw error;
-                }
+                Alert.alert(
+                  "Success!",
+                  "User created",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () =>
+                        this.props.navigation.navigate("Dashboard", {
+                          TextEmail: TextEmail,
+                          accessToken: accessToken,
+                          userID: userID
+                        })
+                    }
+                  ],
+                  { cancelable: false }
+                );
               } else {
                 let error = responseJson.errorMessage;
                 throw error;
               }
-            } catch(error) {
-              Alert.alert(error);
+            } else {
+              let error = responseJson.errorMessage;
+              throw error;
             }
-          } else {
-            Alert.alert("Please use a temple.edu email");
+          } catch (error) {
+            Alert.alert(error);
           }
         } else {
-          Alert.alert("Passwords don't match");
+          Alert.alert("Please use a temple.edu email");
         }
+      } else {
+        Alert.alert("Passwords don't match");
+      }
     } else {
       Alert.alert("Please fill in all fields");
     }
@@ -149,17 +157,20 @@ export default class SignupScreen extends React.Component {
       >
         <ImageBackground
           source={background}
-          style={[styles.background, {padding: 50}]}
+          style={[styles.background, { padding: 10 }]}
           resizeMode="cover"
         >
-          <View style={[styles.inputWrap, {marginTop: 120}]}>
+          <View style={[styles.inputWrap, { marginTop: 60 }]}>
             <TextInput
               placeholderTextColor="#b3b3b3"
               placeholder="First Name"
               onChangeText={TextInputFirstName =>
                 this.setState({ TextInputFirstName })
               }
-              style={[styles.input, { color: "white" }]}
+              style={[
+                styles.input,
+                { color: "white", fontFamily: "Quicksand-Regular" }
+              ]}
             />
           </View>
           <View style={styles.inputWrap}>
@@ -169,7 +180,10 @@ export default class SignupScreen extends React.Component {
               onChangeText={TextInputLastName =>
                 this.setState({ TextInputLastName })
               }
-              style={[styles.input, { color: "white" }]}
+              style={[
+                styles.input,
+                { color: "white", fontFamily: "Quicksand-Regular" }
+              ]}
             />
           </View>
           <View style={styles.inputWrap}>
@@ -177,7 +191,10 @@ export default class SignupScreen extends React.Component {
               placeholder="TU E-mail"
               placeholderTextColor="#b3b3b3"
               onChangeText={TextEmail => this.setState({ TextEmail })}
-              style={[styles.input, { color: "white" }]}
+              style={[
+                styles.input,
+                { color: "white", fontFamily: "Quicksand-Regular" }
+              ]}
             />
           </View>
           <View style={styles.inputWrap}>
@@ -185,7 +202,10 @@ export default class SignupScreen extends React.Component {
               placeholderTextColor="#b3b3b3"
               placeholder="Password"
               onChangeText={TextPassword => this.setState({ TextPassword })}
-              style={[styles.input, { color: "white" }]}
+              style={[
+                styles.input,
+                { color: "white", fontFamily: "Quicksand-Regular" }
+              ]}
               secureTextEntry
             />
           </View>
@@ -193,8 +213,13 @@ export default class SignupScreen extends React.Component {
             <TextInput
               placeholderTextColor="#b3b3b3"
               placeholder="Confirm Password"
-              onChangeText={TextPasswordConfirm => this.setState({ TextPasswordConfirm })}
-              style={[styles.input, { color: "white" }]}
+              onChangeText={TextPasswordConfirm =>
+                this.setState({ TextPasswordConfirm })
+              }
+              style={[
+                styles.input,
+                { color: "white", fontFamily: "Quicksand-Regular" }
+              ]}
               secureTextEntry
             />
           </View>
@@ -205,17 +230,33 @@ export default class SignupScreen extends React.Component {
               onChangeText={TextInputPhoneNumber =>
                 this.setState({ TextInputPhoneNumber })
               }
-              style={[styles.input, { color: "white" }]}
+              style={[
+                styles.input,
+                {
+                  color: "white",
+                  fontFamily: "Quicksand-Regular"
+                }
+              ]}
             />
           </View>
-
-          <View style={styles.buttonContainer}>
-            <Button
-              title="Sign Up"
-              onPress={this.InsertDataToServer.bind(this)}
-              color="darkred"
-            />
-          </View>
+          <Button
+            style={{
+              backgroundColor: "white",
+              borderColor: "white",
+              borderRadius: 22,
+              borderWidth: 2,
+              marginTop: 30
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "darkred",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
+            onPress={this.InsertDataToServer.bind(this)}
+          >
+            Sign Up
+          </Button>
         </ImageBackground>
       </View>
     );

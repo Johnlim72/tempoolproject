@@ -152,8 +152,9 @@ export default class DashboardScreen extends React.Component {
                 <Text
                   style={{
                     color: "darkred",
-                    fontFamily: "Futura",
+                    fontFamily: "Quicksand-Regular",
                     fontSize: 30,
+                    fontWeight: "400",
                     paddingBottom: 10
                   }}
                 >
