@@ -21,6 +21,7 @@ import FindRideScreen from "./Views/FindRideScreen";
 import RideDetailsScreen from "./Views/RideDetailsScreen";
 import DriverScheduleScreen from "./Views/DriverScheduleScreen";
 
+import ExampleScreen from "./Views/Example";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -56,6 +57,9 @@ const RootStack = StackNavigator(
     },
     DriverSchedule: {
       screen: DriverScheduleScreen
+    },
+    Example: {
+      screen: ExampleScreen
     }
   },
   {

@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Button,
   View,
   Text,
   TextInput,
@@ -15,6 +14,7 @@ import {
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
 import { Switch } from "react-native-switch";
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -57,36 +57,8 @@ export default class DashboardScreen extends React.Component {
     });
 
     if (value == true) {
-      //rider true driver false
-      //Perform any task here which you want to execute on Switch ON event.
-      //  Alert.alert("Rider status selected.");
-      //list of rides does not work
-
       this.setState({ disabled: false });
     } else {
-      //Perform any task here which you want to execute on Switch OFF event.
-      //find a ride does not work
-      //schedule a ride does not work
-      Alert.alert(
-        "Driver Status Selected",
-        "Would you like to fill out your schedule?",
-        [
-          {
-            text: "Yes",
-            onPress: () =>
-              this.props.navigation.navigate("Location", {
-                TextEmail: this.props.navigation.state.params.TextEmail,
-                Status: this.state.SwitchOnValueHolder,
-                userID: this.state.userID
-              })
-          },
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed")
-          }
-        ],
-        { cancelable: false }
-      );
       this.setState({ disabled: true });
     }
   };
@@ -167,7 +139,16 @@ export default class DashboardScreen extends React.Component {
                     flexDirection: "row"
                   }}
                 >
-                  <Text style={{ marginRight: 10 }}>Driver</Text>
+                  <Text
+                    style={{
+                      marginRight: 10,
+                      fontFamily: "Quicksand-Regular",
+                      fontWeight: "400",
+                      color: "black"
+                    }}
+                  >
+                    Driver
+                  </Text>
                   <Switch
                     onValueChange={value => this.ShowAlert(value)}
                     activeText={""}
@@ -183,50 +164,106 @@ export default class DashboardScreen extends React.Component {
                     style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
                     value={this.state.SwitchOnValueHolder}
                   />
-                  <Text style={{ marginLeft: 10 }}>Rider</Text>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      fontFamily: "Quicksand-Regular",
+                      fontWeight: "400",
+                      color: "black"
+                    }}
+                  >
+                    Rider
+                  </Text>
                 </View>
               </View>
             </View>
             <View style={{ flex: 5, marginTop: 10 }}>
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-                <Button
-                  title="Find a Ride"
-                  onPress={() =>
-                    this.props.navigation.navigate("Location", {
-                      TextEmail: this.props.navigation.state.params.TextEmail,
-                      Status: this.state.SwitchOnValueHolder,
-                      userID: this.state.userID,
-                      findRideNow: true
-                    })
-                  }
-                  color="darkred"
-                  disabled={this.state.disabled}
-                />
-              </View>
-
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-                <Button
-                  title="Schedule a Ride"
-                  onPress={() =>
-                    this.props.navigation.navigate("Location", {
-                      TextEmail: this.props.navigation.state.params.TextEmail,
-                      Status: this.state.SwitchOnValueHolder,
-                      userID: this.state.userID,
-                      findRideNow: false
-                    })
-                  }
-                  color="darkred"
-                  disabled={this.state.disabled}
-                />
-              </View>
-
-              <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-                <Button
-                  title="Logout"
-                  onPress={this.deleteToken.bind(this)}
-                  color="darkred"
-                />
-              </View>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID,
+                    findRideNow: true
+                  })
+                }
+              >
+                Find a Ride
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID,
+                    findRideNow: false
+                  })
+                }
+              >
+                Schedule a Ride
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Profile", {
+                    TextEmail: this.props.navigation.state.params.TextEmail
+                  })
+                }
+              >
+                Profile
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={this.deleteToken.bind(this)}
+              >
+                Logout
+              </Button>
             </View>
           </ImageBackground>
         </View>
@@ -263,7 +300,8 @@ export default class DashboardScreen extends React.Component {
                 <Text
                   style={{
                     color: "darkred",
-                    fontFamily: "Futura",
+                    fontFamily: "Quicksand-Regular",
+                    fontWeight: "400",
                     fontSize: 30,
                     paddingBottom: 10
                   }}
@@ -277,7 +315,16 @@ export default class DashboardScreen extends React.Component {
                     flexDirection: "row"
                   }}
                 >
-                  <Text style={{ marginRight: 10 }}>Driver</Text>
+                  <Text
+                    style={{
+                      marginRight: 10,
+                      fontFamily: "Quicksand-Regular",
+                      fontWeight: "400",
+                      color: "black"
+                    }}
+                  >
+                    Driver
+                  </Text>
                   <Switch
                     onValueChange={value => this.ShowAlert(value)}
                     activeText={""}
@@ -293,44 +340,103 @@ export default class DashboardScreen extends React.Component {
                     style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
                     value={this.state.SwitchOnValueHolder}
                   />
-                  <Text style={{ marginLeft: 10 }}>Rider</Text>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      fontFamily: "Quicksand-Regular",
+                      fontWeight: "400",
+                      color: "black"
+                    }}
+                  >
+                    Rider
+                  </Text>
                 </View>
               </View>
             </View>
             <View style={{ flex: 5, marginTop: 10 }}>
-              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
-                <Button
-                  title="List of Rides"
-                  onPress={() =>
-                    this.props.navigation.navigate("RideList", {
-                      TextEmail: this.props.navigation.state.params.TextEmail,
-                      TextUserID: this.state.TextUserID
-                    })
-                  }
-                  color="#003399"
-                  disabled={!this.state.disabled}
-                />
-              </View>
-
-              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
-                <Button
-                  title="Profile"
-                  onPress={() =>
-                    this.props.navigation.navigate("Profile", {
-                      TextEmail: this.props.navigation.state.params.TextEmail
-                    })
-                  }
-                  color="#003399"
-                />
-              </View>
-
-              <View style={[styles.buttonContainer2, { marginTop: 0 }]}>
-                <Button
-                  title="Logout"
-                  onPress={this.deleteToken.bind(this)}
-                  color="#003399"
-                />
-              </View>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID
+                  })
+                }
+              >
+                Input Schedule
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("RideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                List of Rides
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Profile", {
+                    TextEmail: this.props.navigation.state.params.TextEmail
+                  })
+                }
+              >
+                Profile
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "darkred",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={this.deleteToken.bind(this)}
+              >
+                Logout
+              </Button>
             </View>
           </ImageBackground>
         </View>
