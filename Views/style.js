@@ -88,17 +88,14 @@ export default StyleSheet.create({
   },
   inputWrap: {
     flexDirection: "row",
-    marginBottom: 10,
     height: 40,
     borderBottomWidth: 1,
-    borderBottomColor: "#CCC"
+    borderBottomColor: "black"
   },
   inputWrapAddress: {
     flexDirection: "row",
-    marginBottom: 10,
-    height: 100,
-    borderBottomWidth: 1,
-    borderBottomColor: "#CCC"
+
+    height: 80
   },
   iconWrap: {
     paddingHorizontal: 7,
@@ -176,11 +173,20 @@ export default StyleSheet.create({
     fontSize: 20,
     paddingRight: 10,
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    fontFamily: "Quicksand-Regular"
   },
   textViewContainer: {
     padding: 5,
     fontSize: 20,
-    color: "#000"
+    color: "black",
+    fontFamily: "Quicksand-Regular"
+  },
+  textViewContainer2: {
+    padding: 5,
+    fontSize: 20,
+    color: "darkred",
+    fontFamily: "Quicksand-Regular",
+    
   }
 });

@@ -3,7 +3,6 @@ import {
   AppRegistry,
   Alert,
   StyleSheet,
-  Button,
   View,
   TouchableOpacity,
   Text,
@@ -15,6 +14,7 @@ import {
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -153,67 +153,86 @@ export default class RideDetailsScreen extends React.Component {
             <Text
               style={[
                 styles.textViewContainer,
-                { marginBottom: 20, fontSize: 30 }
+                {
+                  marginBottom: 20,
+                  fontSize: 30,
+                  fontFamily: "Quicksand-Regular"
+                }
               ]}
             >
-              {" "}
-              {"Ride Details"}{" "}
+              {"Ride Details"}
             </Text>
+            <Text style={styles.textViewContainer2}>{"Name"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Email = " + this.state.TextRiderEmail}{" "}
-            </Text>
-
-            <Text style={styles.textViewContainer}>
-              {" "}
-              {"Name = " +
-                this.state.TextRiderFirstName +
+              {this.state.TextRiderFirstName +
                 " " +
-                this.state.TextRiderLastName}{" "}
+                this.state.TextRiderLastName}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Email"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Pickup Time = " + this.state.TextRiderDateTime}{" "}
+              {this.state.TextRiderEmail}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Address = " + this.state.TextRiderAddress}{" "}
+              {this.state.TextRiderDateTime}
+            </Text>
+            <Text style={styles.textViewContainer2}>{"Address"}</Text>
+            <Text style={styles.textViewContainer}>
+              {this.state.TextRiderAddress}
             </Text>
           </View>
-          <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-            <Button
-              title="Accept"
-              onPress={
-                () => this.updateRide("Accepted")
-                // () =>
-                // this.props.navigation.navigate("RideList", {
-                //   TextEmail: this.props.navigation.state.params.TextEmail,
-                //   TextUserID: this.props.navigation.state.params
-                //     .ListViewClickItemHolder
-                // }),
-              }
-              color="darkred"
-              disabled={this.state.disabled}
-            />
-          </View>
-          <View style={[styles.buttonContainer, { marginTop: 0 }]}>
-            <Button
-              title="Decline"
-              onPress={
-                () => this.updateRide("Declined")
-                // () =>
-                // this.props.navigation.navigate("RideList", {
-                //   TextEmail: this.props.navigation.state.params.TextEmail,
-                //   TextUserID: this.props.navigation.state.params
-                //     .ListViewClickItemHolder
-                // })
-              }
-              color="darkred"
-              disabled={this.state.disabled}
-            />
-          </View>
+
+          <Button
+            style={{
+              backgroundColor: "darkred",
+              borderColor: "darkred",
+              borderRadius: 22,
+              borderWidth: 2
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
+            onPress={
+              () => this.updateRide("Accepted")
+              // () =>
+              // this.props.navigation.navigate("RideList", {
+              //   TextEmail: this.props.navigation.state.params.TextEmail,
+              //   TextUserID: this.props.navigation.state.params
+              //     .ListViewClickItemHolder
+              // }),
+            }
+          >
+            Accept
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: "darkred",
+              borderColor: "darkred",
+              borderRadius: 22,
+              borderWidth: 2
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
+            onPress={
+              () => this.updateRide("Declined")
+              // () =>
+              // this.props.navigation.navigate("RideList", {
+              //   TextEmail: this.props.navigation.state.params.TextEmail,
+              //   TextUserID: this.props.navigation.state.params
+              //     .ListViewClickItemHolder
+              // })
+            }
+          >
+            Decline
+          </Button>
         </View>
       );
     } else if (this.props.navigation.state.params.typeOfRides == "Accepted") {
@@ -223,38 +242,47 @@ export default class RideDetailsScreen extends React.Component {
             <Text
               style={[
                 styles.textViewContainer,
-                { marginBottom: 20, fontSize: 30 }
+                {
+                  marginBottom: 20,
+                  fontSize: 30,
+                  fontFamily: "Quicksand-Regular"
+                }
               ]}
             >
-              {" "}
-              {"Ride Details"}{" "}
+              {"Ride Details"}
             </Text>
+            <Text style={styles.textViewContainer2}>{"Name"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Email = " + this.state.TextRiderEmail}{" "}
-            </Text>
-
-            <Text style={styles.textViewContainer}>
-              {" "}
-              {"Name = " +
-                this.state.TextRiderFirstName +
+              {this.state.TextRiderFirstName +
                 " " +
-                this.state.TextRiderLastName}{" "}
+                this.state.TextRiderLastName}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Email"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Pickup Time = " + this.state.TextRiderDateTime}{" "}
+              {this.state.TextRiderEmail}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Address = " + this.state.TextRiderAddress}{" "}
+              {this.state.TextRiderDateTime}
             </Text>
-          </View>
-          <View style={[styles.buttonContainer, { marginTop: 0 }]}>
+            <Text style={styles.textViewContainer2}>{"Address"}</Text>
+            <Text style={styles.textViewContainer}>
+              {this.state.TextRiderAddress}
+            </Text>
             <Button
-              title="View Directions"
+              style={{
+                backgroundColor: "darkred",
+                borderColor: "darkred",
+                borderRadius: 22,
+                borderWidth: 2,
+                marginTop: 30
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand-Regular",
+                fontWeight: "400"
+              }}
               onPress={() =>
                 this.props.navigation.navigate("RideList", {
                   TextEmail: this.props.navigation.state.params.TextEmail,
@@ -262,9 +290,33 @@ export default class RideDetailsScreen extends React.Component {
                     .ListViewClickItemHolder
                 })
               }
-              color="darkred"
-              disabled={this.state.disabled}
-            />
+            >
+              View Directions
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "green",
+                borderColor: "green",
+                borderRadius: 22,
+                borderWidth: 2,
+                marginTop: 10
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand-Regular",
+                fontWeight: "400"
+              }}
+              onPress={() =>
+                this.props.navigation.navigate("RideList", {
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  TextUserID: this.props.navigation.state.params
+                    .ListViewClickItemHolder
+                })
+              }
+            >
+              Start Ride Now
+            </Button>
           </View>
         </View>
       );
@@ -275,33 +327,32 @@ export default class RideDetailsScreen extends React.Component {
             <Text
               style={[
                 styles.textViewContainer,
-                { marginBottom: 20, fontSize: 30 }
+                {
+                  marginBottom: 20,
+                  fontSize: 30,
+                  fontFamily: "Quicksand-Regular"
+                }
               ]}
             >
-              {" "}
-              {"Ride Details"}{" "}
+              {"Ride Details"}
             </Text>
+            <Text style={styles.textViewContainer2}>{"Name"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Email = " + this.state.TextRiderEmail}{" "}
-            </Text>
-
-            <Text style={styles.textViewContainer}>
-              {" "}
-              {"Name = " +
-                this.state.TextRiderFirstName +
+              {this.state.TextRiderFirstName +
                 " " +
-                this.state.TextRiderLastName}{" "}
+                this.state.TextRiderLastName}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Email"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Pickup Time = " + this.state.TextRiderDateTime}{" "}
+              {this.state.TextRiderEmail}
             </Text>
-
+            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
             <Text style={styles.textViewContainer}>
-              {" "}
-              {"Address = " + this.state.TextRiderAddress}{" "}
+              {this.state.TextRiderDateTime}
+            </Text>
+            <Text style={styles.textViewContainer2}>{"Address"}</Text>
+            <Text style={styles.textViewContainer}>
+              {this.state.TextRiderAddress}
             </Text>
           </View>
         </View>

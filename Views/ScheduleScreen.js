@@ -18,11 +18,17 @@ import geolib from "geolib";
 import styles from "./style";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Button from "apsl-react-native-button";
+import MapView, { Polyline } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
 const USERID = "userID";
+
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.0022;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {
@@ -246,14 +252,14 @@ export default class ScheduleScreen extends React.Component {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            marginBottom: 100
+            marginBottom: 50
           }}
         >
           <Text
             style={{
               color: "darkred",
               fontFamily: "Quicksand-Regular",
-              fontSize: 30,
+              fontSize: 24,
               paddingTop: 20,
               justifyContent: "center",
               alignItems: "center"
@@ -265,7 +271,7 @@ export default class ScheduleScreen extends React.Component {
             style={{
               color: "darkred",
               fontFamily: "Quicksand-Regular",
-              fontSize: 30,
+              fontSize: 24,
               paddingTop: 20,
               justifyContent: "center",
               alignItems: "center"
@@ -330,7 +336,7 @@ export default class ScheduleScreen extends React.Component {
               flex: 1,
               backgroundColor: "white",
               borderRadius: 10,
-              padding: 20,
+              padding: 10,
               margin: 10,
               flex: 5
             }}
@@ -352,25 +358,11 @@ export default class ScheduleScreen extends React.Component {
             >
               Pick different location
             </Button>
-            <Text
-              style={{
-                color: "darkred",
-                fontSize: 30,
-                paddingHorizontal: 10,
-                textDecorationLine: "underline",
-                fontFamily: "Quicksand-Regular",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 20
-              }}
-            >
-              Address
-            </Text>
+
             <View style={styles.inputWrapAddress}>
               <TextInput
                 placeholderTextColor="#b3b3b3"
                 placeholder="Address: "
-                s
                 defaultValue={this.props.navigation.state.params.TextAddress}
                 multiline={true}
                 editable={true}
@@ -381,14 +373,52 @@ export default class ScheduleScreen extends React.Component {
                 ]}
               />
             </View>
+            <MapView
+              region={{
+                latitude: parseFloat(
+                  this.props.navigation.state.params.TextLatitude
+                ),
+                longitude: parseFloat(
+                  this.props.navigation.state.params.TextLongitude
+                ),
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+              }}
+              mapType="hybrid"
+              showsUserLocation={true}
+              followUserLocation={true}
+              style={{
+                width: width * 0.9,
+                height: height / 4
+              }}
+            >
+              <MapView.Marker
+                coordinate={{
+                  latitude: parseFloat(
+                    this.props.navigation.state.params.TextLatitude
+                  ),
+                  longitude: parseFloat(
+                    this.props.navigation.state.params.TextLongitude
+                  )
+                }}
+              />
+            </MapView>
 
-            <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                borderTopWidth: 1,
+                borderTopColor: "black",
+                marginTop: 5
+              }}
+            >
               <Button
                 style={{
                   backgroundColor: "darkred",
                   borderColor: "darkred",
                   borderRadius: 22,
-                  borderWidth: 2
+                  borderWidth: 2,
+                  marginTop: 5
                 }}
                 textStyle={{
                   fontSize: 18,
