@@ -3,7 +3,6 @@ import {
   AppRegistry,
   Alert,
   StyleSheet,
-  Button,
   View,
   TouchableOpacity,
   Text,
@@ -18,6 +17,7 @@ import DatePicker from "react-native-datepicker";
 import geolib from "geolib";
 import styles from "./style";
 import DateTimePicker from "react-native-modal-datetime-picker";
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -241,9 +241,38 @@ export default class ScheduleScreen extends React.Component {
   isDateSelected() {
     if (this.state.dateSelected == true) {
       return (
-        <View>
-          <Text>Date: {this.state.dateText}</Text>
-          <Text>Time: {this.state.timeText}</Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 100
+          }}
+        >
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand-Regular",
+              fontSize: 30,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            Date: {this.state.dateText}
+          </Text>
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand-Regular",
+              fontSize: 30,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            Time: {this.state.timeText}
+          </Text>
         </View>
       );
     }
@@ -274,7 +303,7 @@ export default class ScheduleScreen extends React.Component {
             <Text
               style={{
                 color: "white",
-                fontFamily: "Futura",
+                fontFamily: "Quicksand-Regular",
                 fontSize: 30,
                 paddingTop: 20,
                 justifyContent: "center",
@@ -286,7 +315,7 @@ export default class ScheduleScreen extends React.Component {
             <Text
               style={{
                 color: "white",
-                fontFamily: "Futura",
+                fontFamily: "Quicksand-Regular",
                 fontSize: 30,
                 paddingTop: 20,
                 justifyContent: "center",
@@ -307,20 +336,35 @@ export default class ScheduleScreen extends React.Component {
             }}
           >
             <Button
-              title="Pick Location"
+              style={{
+                backgroundColor: "darkred",
+                borderColor: "darkred",
+                borderRadius: 22,
+                borderWidth: 2
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand-Regular",
+                fontWeight: "400"
+              }}
               onPress={this.PickLocation}
-              color="darkred"
-            />
+            >
+              Pick different location
+            </Button>
             <Text
               style={{
                 color: "darkred",
-                fontSize: 18,
+                fontSize: 30,
                 paddingHorizontal: 10,
                 textDecorationLine: "underline",
+                fontFamily: "Quicksand-Regular",
+                alignItems: "center",
+                justifyContent: "center",
                 marginTop: 20
               }}
             >
-              Address:
+              Address
             </Text>
             <View style={styles.inputWrapAddress}>
               <TextInput
@@ -331,33 +375,31 @@ export default class ScheduleScreen extends React.Component {
                 multiline={true}
                 editable={true}
                 onChangeText={TextAddress => this.setState({ TextAddress })}
-                style={[styles.inputAddress, { color: "black" }]}
+                style={[
+                  styles.inputAddress,
+                  { color: "black", fontFamily: "Quicksand-Regular" }
+                ]}
               />
             </View>
 
             <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={this._showDateTimePicker}>
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "darkred",
-                    borderRadius: 10,
-                    padding: 10
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 18,
-                      paddingHorizontal: 10,
-                      marginTop: 20
-                    }}
-                  >
-                    Click to Choose Date
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <Button
+                style={{
+                  backgroundColor: "darkred",
+                  borderColor: "darkred",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={this._showDateTimePicker}
+              >
+                Click to choose date
+              </Button>
               <DateTimePicker
                 isVisible={this.state.isDateTimePickerVisible}
                 onConfirm={this._handleDatePicked}
@@ -368,25 +410,23 @@ export default class ScheduleScreen extends React.Component {
 
             {this.isDateSelected()}
 
-            <TouchableOpacity activeOpacity={0.5} onPress={this.Insert}>
-              <View
-                style={{
-                  backgroundColor: "darkred",
-                  borderRadius: 10,
-                  height: 60,
-                  marginTop: 10,
-                  padding: 10,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Button
-                  title="Save"
-                  onPress={this.getToken.bind(this)}
-                  color="white"
-                />
-              </View>
-            </TouchableOpacity>
+            <Button
+              style={{
+                backgroundColor: "green",
+                borderColor: "green",
+                borderRadius: 22,
+                borderWidth: 2
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand-Regular",
+                fontWeight: "400"
+              }}
+              onPress={this.getToken.bind(this)}
+            >
+              Insert Schedule
+            </Button>
           </View>
         </ImageBackground>
       </View>

@@ -48,6 +48,9 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Futura.ttf</string>
+		<string>Quicksand-Light.ttf</string>
+		<string>Quicksand-Regular.ttf</string>
+		<string>Simplifica.ttf</string>
 	</array>
 </dict>
 </plist>

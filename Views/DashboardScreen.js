@@ -177,22 +177,22 @@ export default class DashboardScreen extends React.Component {
                 </View>
               </View>
             </View>
-            <View style={{ flex: 5, marginTop: 10 }}>
+            <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "darkred",
+                  borderColor: "darkred",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
                 onPress={() =>
-                  this.props.navigation.navigate("Location", {
+                  this.props.navigation.navigate("Track", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     Status: this.state.SwitchOnValueHolder,
                     userID: this.state.userID,
@@ -204,14 +204,14 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "#e60000",
+                  borderColor: "#e60000",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
@@ -228,14 +228,14 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "#ff6666",
+                  borderColor: "#ff6666",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
@@ -353,17 +353,17 @@ export default class DashboardScreen extends React.Component {
                 </View>
               </View>
             </View>
-            <View style={{ flex: 5, marginTop: 10 }}>
+            <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "#000080",
+                  borderColor: "#000080",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
@@ -379,14 +379,14 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "#3333ff",
+                  borderColor: "#3333ff",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
@@ -401,14 +401,14 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "white",
-                  borderColor: "white",
+                  backgroundColor: "#6666ff",
+                  borderColor: "#6666ff",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "white",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
@@ -429,7 +429,7 @@ export default class DashboardScreen extends React.Component {
                 }}
                 textStyle={{
                   fontSize: 18,
-                  color: "darkred",
+                  color: "navy",
                   fontFamily: "Quicksand-Regular",
                   fontWeight: "400"
                 }}
