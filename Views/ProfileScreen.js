@@ -3,7 +3,6 @@ import {
   AppRegistry,
   Alert,
   StyleSheet,
-  Button,
   View,
   TouchableOpacity,
   Text,
@@ -13,6 +12,8 @@ import {
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
+
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -85,31 +86,38 @@ export default class ProfileScreen extends React.Component {
     const { TextPasswordConfirm } = this.state;
     const { TextInputPhoneNumber } = this.state;
 
-    if(TextInputFirstName != ""
-      && TextInputLastName != ""
-      && TextEmail != ""
-      && TextPassword != ""
-      && TextInputPhoneNumber != ""
-      && TextPasswordConfirm != "") {
+    if (
+      TextInputFirstName != "" &&
+      TextInputLastName != "" &&
+      TextEmail != "" &&
+      TextPassword != "" &&
+      TextInputPhoneNumber != "" &&
+      TextPasswordConfirm != ""
+    ) {
+      if (TextPassword === TextPasswordConfirm) {
+        var emailDomain = TextEmail.substr(
+          TextEmail.length - 10,
+          TextEmail.length
+        );
 
-      if(TextPassword === TextPasswordConfirm) {
-        var emailDomain = TextEmail.substr(TextEmail.length - 10, TextEmail.length);
-
-        if(emailDomain === "temple.edu"){
-          fetch("http://cis-linux2.temple.edu/~tuf41055/php/update_user_info.php", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              firstName: TextInputFirstName,
-              lastName: TextInputLastName,
-              email: TextEmail,
-              password: TextPassword,
-              phoneNumber: TextInputPhoneNumber
-            })
-          })
+        if (emailDomain === "temple.edu") {
+          fetch(
+            "http://cis-linux2.temple.edu/~tuf41055/php/update_user_info.php",
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                firstName: TextInputFirstName,
+                lastName: TextInputLastName,
+                email: TextEmail,
+                password: TextPassword,
+                phoneNumber: TextInputPhoneNumber
+              })
+            }
+          )
             .then(response => response.json())
             .then(responseJson => {
               if (responseJson === "User successfully updated.") {
@@ -165,15 +173,15 @@ export default class ProfileScreen extends React.Component {
         >
           <View
             style={{
-              flex: 1,
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              margin: 10
             }}
           >
             <Text
               style={{
                 color: "white",
-                fontFamily: "Futura",
+                fontFamily: "Quicksand-Regular",
                 fontSize: 30,
                 paddingTop: 20,
                 justifyContent: "center",
@@ -183,14 +191,15 @@ export default class ProfileScreen extends React.Component {
               Profile
             </Text>
           </View>
-          <View style={{ flex: 5 }}>
+          <View style={{ flex: 1 }}>
             <View
               style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 10,
                 padding: 20,
-                margin: 10
+                margin: 20,
+                marginBottom: 30
               }}
             >
               <Text
@@ -198,10 +207,11 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                First Name:
+                First Name
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
@@ -211,7 +221,10 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextInputFirstName =>
                     this.setState({ TextInputFirstName })
                   }
-                  style={[styles.input, { color: "black" }]}
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                 />
               </View>
               <Text
@@ -219,10 +232,11 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                Last Name:
+                Last Name
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
@@ -232,7 +246,10 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextInputLastName =>
                     this.setState({ TextInputLastName })
                   }
-                  style={[styles.input, { color: "black" }]}
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                 />
               </View>
               <Text
@@ -240,10 +257,11 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                TU E-mail:
+                TU E-mail
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
@@ -251,10 +269,11 @@ export default class ProfileScreen extends React.Component {
                   placeholderTextColor="#b3b3b3"
                   defaultValue={this.state.TextEmail}
                   editable={false}
-                  onChangeText={TextEmail =>
-                    this.setState({ TextEmail })
-                  }
-                  style={[styles.input, { color: "black" }]}
+                  onChangeText={TextEmail => this.setState({ TextEmail })}
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                 />
               </View>
               <Text
@@ -262,10 +281,11 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                Password:
+                Password
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
@@ -273,7 +293,10 @@ export default class ProfileScreen extends React.Component {
                   placeholder="Password"
                   defaultValue={this.state.TextPassword}
                   onChangeText={TextPassword => this.setState({ TextPassword })}
-                  style={[styles.input, { color: "black" }]}
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                   secureTextEntry
                 />
               </View>
@@ -282,18 +305,24 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                Confirm Password:
+                Confirm Password
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
                   placeholderTextColor="#b3b3b3"
                   placeholder="Confirm Password"
                   defaultValue={this.state.TextPasswordConfirm}
-                  onChangeText={TextPasswordConfirm => this.setState({ TextPasswordConfirm })}
-                  style={[styles.input, { color: "black" }]}
+                  onChangeText={TextPasswordConfirm =>
+                    this.setState({ TextPasswordConfirm })
+                  }
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                   secureTextEntry
                 />
               </View>
@@ -302,10 +331,11 @@ export default class ProfileScreen extends React.Component {
                   color: "darkred",
                   fontSize: 18,
                   paddingHorizontal: 10,
-                  textDecorationLine: "underline"
+                  textDecorationLine: "underline",
+                  fontFamily: "Quicksand-Regular"
                 }}
               >
-                Phone Number:
+                Phone Number
               </Text>
               <View style={styles.inputWrap}>
                 <TextInput
@@ -315,31 +345,30 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextInputPhoneNumber =>
                     this.setState({ TextInputPhoneNumber })
                   }
-                  style={[styles.input, { color: "black" }]}
+                  style={[
+                    styles.input,
+                    { color: "black", fontFamily: "Quicksand-Regular" }
+                  ]}
                 />
               </View>
-              <TouchableOpacity
+
+              <Button
+                style={{
+                  backgroundColor: "darkred",
+                  borderColor: "darkred",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
                 onPress={this.UpdateDataToServer}
-                activeOpacity={0.5}
               >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: 10,
-                    height: 60,
-                    marginTop: 10,
-                    padding: 10,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <Button
-                    title="Save"
-                    onPress={this.UpdateDataToServer}
-                    color="black"
-                  />
-                </View>
-              </TouchableOpacity>
+                Save
+              </Button>
             </View>
           </View>
         </ImageBackground>

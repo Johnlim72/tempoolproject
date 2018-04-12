@@ -104,7 +104,9 @@ export default class MapScreen extends React.Component {
         filterReverseGeocodingByTypes={["street_address"]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
         debounce={200}
         renderRightButton={() => (
-          <Button title="Save" color="darkred" onPress={this.SaveLocation} />
+          <View style={{ borderRadius: 5, margin: 10, marginTop: 2 }}>
+            <Button title="Save" color="darkred" onPress={this.SaveLocation} />
+          </View>
         )}
       /> // debounce the requests in ms. Set to 0 to remove debounce. By
     );
