@@ -3,7 +3,6 @@ import {
   AppRegistry,
   Alert,
   StyleSheet,
-  Button,
   View,
   TouchableOpacity,
   Text,
@@ -17,6 +16,7 @@ import {
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
+import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
@@ -37,7 +37,10 @@ export default class RideListScreen extends React.Component {
       TextLocation: "",
       isLoading: true,
       dataSource: "",
-      typeOfRides: "Potential"
+      typeOfRides: "Potential",
+      colorPotential: "green",
+      colorAccepted: "darkred",
+      colorPast: "darkred"
     };
 
     console.log(
@@ -102,28 +105,64 @@ export default class RideListScreen extends React.Component {
 
   _renderRow(rowData) {
     return (
-      <View style={[styles.Container, { marginVertical: 10 }]}>
+      <View style={[styles.Container, { marginVertical: 2 }]}>
         <Text style={styles.rowViewContainer}>
-          {"Name: "+ rowData.firstName +
+          {"Name: " +
+            rowData.firstName +
             " " +
             rowData.lastName +
             " \nPick-up Time: " +
             rowData.rider_datetime}
         </Text>
+
         <Button
-          title="Click to View Ride"
-          color="darkred"
+          style={{
+            backgroundColor: "green",
+            borderColor: "green",
+            borderRadius: 22,
+            borderWidth: 2
+          }}
+          textStyle={{
+            fontSize: 18,
+            color: "white",
+            fontFamily: "Quicksand-Regular",
+            fontWeight: "400"
+          }}
           onPress={this.OpenDetailsActivity.bind(this, {
             rowDriverID: rowData.driverID,
             rowRiderID: rowData.riderID
           })}
-        />
+        >
+          Click to View Ride
+        </Button>
       </View>
     );
   }
 
   updateType(typeOfRides) {
     this.setState({ typeOfRides: typeOfRides });
+    if (typeOfRides == "Potential") {
+      //set state of potential color to green and others to red
+      this.setState({
+        colorPotential: "green",
+        colorAccepted: "darkred",
+        colorPast: "darkred"
+      });
+    } else if (typeOfRides == "Accepted") {
+      //set state of accepted color to green and others to red
+      this.setState({
+        colorPotential: "darkred",
+        colorAccepted: "green",
+        colorPast: "darkred"
+      });
+    } else if (typeOfRides == "Past") {
+      //set state of past color to green and others to red
+      this.setState({
+        colorPotential: "darkred",
+        colorAccepted: "darkred",
+        colorPast: "green"
+      });
+    }
 
     return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
       method: "POST",
@@ -198,25 +237,61 @@ export default class RideListScreen extends React.Component {
       <View style={styles1.header_footer_style}>
         <View style={{ width: "30%", marginHorizontal: 5 }}>
           <Button
-            title="Potential"
-            color="darkred"
+            style={{
+              backgroundColor: this.state.colorPotential,
+              borderColor: this.state.colorPotential,
+              borderRadius: 22,
+              borderWidth: 2
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
             onPress={() => this.updateType("Potential")}
-          />
+          >
+            Potential
+          </Button>
         </View>
 
         <View style={{ width: "30%", marginHorizontal: 5 }}>
           <Button
-            title="Accepted"
-            color="darkred"
+            style={{
+              backgroundColor: this.state.colorAccepted,
+              borderColor: this.state.colorAccepted,
+              borderRadius: 22,
+              borderWidth: 2
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
             onPress={() => this.updateType("Accepted")}
-          />
+          >
+            Accepted
+          </Button>
         </View>
         <View style={{ width: "30%", marginHorizontal: 5 }}>
           <Button
-            title="Past"
-            color="darkred"
+            style={{
+              backgroundColor: this.state.colorPast,
+              borderColor: this.state.colorPast,
+              borderRadius: 22,
+              borderWidth: 2
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand-Regular",
+              fontWeight: "400"
+            }}
             onPress={() => this.updateType("Past")}
-          />
+          >
+            Past
+          </Button>
         </View>
       </View>
     );

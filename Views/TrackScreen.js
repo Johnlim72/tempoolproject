@@ -8,10 +8,10 @@ import {
   StatusBar
 } from "react-native";
 
-import MapView from "react-native-maps";
+import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
-import pick from "lodash.pick";
+import pick from "lodash/pick";
 import haversine from "haversine";
 
 const { width, height } = Dimensions.get("window");
@@ -62,6 +62,8 @@ export default class TrackScreen extends React.Component {
         distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
         prevLatLng: newLatLngs
       });
+
+      console.log(this.state.routeCoordinates);
     });
   }
 
@@ -78,7 +80,7 @@ export default class TrackScreen extends React.Component {
     return (
       <View style={styles1.container}>
         <MapView
-          initialRegion={{
+          region={{
             latitude: LATITUDE,
             longitude: LONGITUDE,
             latitudeDelta: LATITUDE_DELTA,
@@ -91,11 +93,16 @@ export default class TrackScreen extends React.Component {
           overlays={[
             {
               coordinates: this.state.routeCoordinates,
-              strokeColor: "#19B5FE",
+              strokeColor: "darkred",
               lineWidth: 10
             }
           ]}
         >
+          <Polyline
+            coordinates={this.state.routeCoordinates}
+            strokeColor="darkred" // fallback for when `strokeColors` is not supported by the map-provider
+            strokeWidth={6}
+          />
           <MapView.Marker coordinate={coordinates[0]} />
           <MapView.Marker coordinate={coordinates[1]} />
 
@@ -146,7 +153,6 @@ const styles1 = StyleSheet.create({
     paddingTop: 30
   },
   map: {
-
     width: width,
     height: height
   },
