@@ -166,7 +166,7 @@ export default class RideDetailsScreen extends React.Component {
                 {
                   marginBottom: 20,
                   fontSize: 30,
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }
               ]}
             >
@@ -202,7 +202,7 @@ export default class RideDetailsScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "white",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={
@@ -228,7 +228,7 @@ export default class RideDetailsScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "white",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={
@@ -255,7 +255,7 @@ export default class RideDetailsScreen extends React.Component {
                 {
                   marginBottom: 20,
                   fontSize: 30,
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }
               ]}
             >
@@ -290,7 +290,7 @@ export default class RideDetailsScreen extends React.Component {
               textStyle={{
                 fontSize: 18,
                 color: "white",
-                fontFamily: "Quicksand-Regular",
+                fontFamily: "Quicksand",
                 fontWeight: "400"
               }}
               onPress={() =>
@@ -320,7 +320,7 @@ export default class RideDetailsScreen extends React.Component {
               textStyle={{
                 fontSize: 18,
                 color: "white",
-                fontFamily: "Quicksand-Regular",
+                fontFamily: "Quicksand",
                 fontWeight: "400"
               }}
               onPress={() =>
@@ -346,7 +346,7 @@ export default class RideDetailsScreen extends React.Component {
                 {
                   marginBottom: 20,
                   fontSize: 30,
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }
               ]}
             >

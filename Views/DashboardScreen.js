@@ -124,7 +124,7 @@ export default class DashboardScreen extends React.Component {
                 <Text
                   style={{
                     color: "darkred",
-                    fontFamily: "Quicksand-Regular",
+                    fontFamily: "Quicksand",
                     fontSize: 30,
                     fontWeight: "400",
                     paddingBottom: 10
@@ -142,7 +142,7 @@ export default class DashboardScreen extends React.Component {
                   <Text
                     style={{
                       marginRight: 10,
-                      fontFamily: "Quicksand-Regular",
+                      fontFamily: "Quicksand",
                       fontWeight: "400",
                       color: "black"
                     }}
@@ -167,7 +167,7 @@ export default class DashboardScreen extends React.Component {
                   <Text
                     style={{
                       marginLeft: 10,
-                      fontFamily: "Quicksand-Regular",
+                      fontFamily: "Quicksand",
                       fontWeight: "400",
                       color: "black"
                     }}
@@ -188,7 +188,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -212,7 +212,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -236,7 +236,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -257,7 +257,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "darkred",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={this.deleteToken.bind(this)}
@@ -300,7 +300,7 @@ export default class DashboardScreen extends React.Component {
                 <Text
                   style={{
                     color: "darkred",
-                    fontFamily: "Quicksand-Regular",
+                    fontFamily: "Quicksand",
                     fontWeight: "400",
                     fontSize: 30,
                     paddingBottom: 10
@@ -318,7 +318,7 @@ export default class DashboardScreen extends React.Component {
                   <Text
                     style={{
                       marginRight: 10,
-                      fontFamily: "Quicksand-Regular",
+                      fontFamily: "Quicksand",
                       fontWeight: "400",
                       color: "black"
                     }}
@@ -343,7 +343,7 @@ export default class DashboardScreen extends React.Component {
                   <Text
                     style={{
                       marginLeft: 10,
-                      fontFamily: "Quicksand-Regular",
+                      fontFamily: "Quicksand",
                       fontWeight: "400",
                       color: "black"
                     }}
@@ -364,7 +364,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -375,7 +375,29 @@ export default class DashboardScreen extends React.Component {
                   })
                 }
               >
-                Input Schedule
+                Input a Schedule
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#0000e6",
+                  borderColor: "#0000e6",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("ScheduleList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                Your Schedules
               </Button>
               <Button
                 style={{
@@ -387,7 +409,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -409,7 +431,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -431,7 +453,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={() =>
@@ -452,7 +474,7 @@ export default class DashboardScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "navy",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={this.deleteToken.bind(this)}

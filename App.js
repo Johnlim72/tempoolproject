@@ -21,6 +21,8 @@ import FindRideScreen from "./Views/FindRideScreen";
 import RideDetailsScreen from "./Views/RideDetailsScreen";
 import DriverScheduleScreen from "./Views/DriverScheduleScreen";
 import ViewDirectionsScreen from "./Views/ViewDirectionsScreen";
+import ScheduleListScreen from "./Views/ScheduleListScreen";
+import UpdateScheduleScreen from "./Views/UpdateScheduleScreen";
 import MapScreen from "./Views/MapScreen";
 import TrackScreen from "./Views/TrackScreen";
 
@@ -68,6 +70,12 @@ const RootStack = StackNavigator(
     },
     ViewDirections: {
       screen: ViewDirectionsScreen
+    },
+    ScheduleList: {
+      screen: ScheduleListScreen
+    },
+    UpdateSchedule: {
+      screen: UpdateScheduleScreen
     }
   },
   {

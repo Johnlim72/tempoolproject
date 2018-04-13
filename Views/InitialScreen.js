@@ -157,7 +157,7 @@ export default class InitialScreen extends React.Component {
                   color: "white",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   marginTop: 250,
                   fontSize: 50
                 }}
@@ -181,7 +181,7 @@ export default class InitialScreen extends React.Component {
                   onChangeText={TextEmail => this.setState({ TextEmail })}
                   style={[
                     styles.input,
-                    { color: "white", fontFamily: "Quicksand-Regular" }
+                    { color: "white", fontFamily: "Quicksand" }
                   ]}
                 />
               </View>
@@ -199,7 +199,7 @@ export default class InitialScreen extends React.Component {
                   onChangeText={TextPassword => this.setState({ TextPassword })}
                   style={[
                     styles.input,
-                    { color: "white", fontFamily: "Quicksand-Regular" }
+                    { color: "white", fontFamily: "Quicksand" }
                   ]}
                   secureTextEntry
                 />
@@ -223,7 +223,7 @@ export default class InitialScreen extends React.Component {
                   textStyle={{
                     fontSize: 18,
                     color: "darkred",
-                    fontFamily: "Quicksand-Regular",
+                    fontFamily: "Quicksand",
                     fontWeight: "400"
                   }}
                   onPress={this.UserLoginFunction.bind(this)}
@@ -240,7 +240,7 @@ export default class InitialScreen extends React.Component {
                   textStyle={{
                     fontSize: 18,
                     color: "darkred",
-                    fontFamily: "Quicksand-Regular",
+                    fontFamily: "Quicksand",
                     fontWeight: "400"
                   }}
                   onPress={() => this.props.navigation.navigate("Signup")}

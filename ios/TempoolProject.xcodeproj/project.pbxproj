@@ -43,6 +43,7 @@
 		B1AE8E076E93446F96171DF5 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACDFA760097C4B6697E1890D /* Quicksand-Light.ttf */; };
 		73C49ACE8E8245BF9BF61478 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E08E75B2AF41E8B9FAD107 /* Quicksand-Regular.ttf */; };
 		08E809CD5E894316A5D3E3EB /* Simplifica.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9024F13F55104E8C93A7D7C6 /* Simplifica.ttf */; };
+		7C8F1B8335CF49E5AB5A249C /* Quicksand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDA6EA2D295A49B093454B3F /* Quicksand.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +359,7 @@
 		ACDFA760097C4B6697E1890D /* Quicksand-Light.ttf */ = {isa = PBXFileReference; name = "Quicksand-Light.ttf"; path = "../assets/fonts/Quicksand-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		46E08E75B2AF41E8B9FAD107 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; name = "Quicksand-Regular.ttf"; path = "../assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9024F13F55104E8C93A7D7C6 /* Simplifica.ttf */ = {isa = PBXFileReference; name = "Simplifica.ttf"; path = "../assets/fonts/Simplifica.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DDA6EA2D295A49B093454B3F /* Quicksand.ttf */ = {isa = PBXFileReference; name = "Quicksand.ttf"; path = "../assets/fonts/Quicksand.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -632,6 +634,7 @@
 				ACDFA760097C4B6697E1890D /* Quicksand-Light.ttf */,
 				46E08E75B2AF41E8B9FAD107 /* Quicksand-Regular.ttf */,
 				9024F13F55104E8C93A7D7C6 /* Simplifica.ttf */,
+				DDA6EA2D295A49B093454B3F /* Quicksand.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1090,6 +1093,7 @@
 				B1AE8E076E93446F96171DF5 /* Quicksand-Light.ttf in Resources */,
 				73C49ACE8E8245BF9BF61478 /* Quicksand-Regular.ttf in Resources */,
 				08E809CD5E894316A5D3E3EB /* Simplifica.ttf in Resources */,
+				7C8F1B8335CF49E5AB5A249C /* Quicksand.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
