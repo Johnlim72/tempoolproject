@@ -300,6 +300,7 @@ export default class RideDetailsScreen extends React.Component {
                     .ListViewClickItemHolder,
                   rider_loc_lat: this.state.rider_loc_lat,
                   rider_loc_long: this.state.rider_loc_long,
+                  rider_address: this.state.TextRiderAddress,
                   driver_address: this.state.driver_address,
                   driver_longitude: this.state.driver_longitude,
                   driver_latitude: this.state.driver_latitude

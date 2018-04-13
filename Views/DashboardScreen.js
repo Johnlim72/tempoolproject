@@ -356,8 +356,8 @@ export default class DashboardScreen extends React.Component {
             <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
                 style={{
-                  backgroundColor: "#000080",
-                  borderColor: "#000080",
+                  backgroundColor: "#0000b3",
+                  borderColor: "#0000b3",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
@@ -379,8 +379,30 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#3333ff",
-                  borderColor: "#3333ff",
+                  backgroundColor: "#1a1aff",
+                  borderColor: "#1a1aff",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand-Regular",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("RideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                Start Looking for Riders
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#4d4dff",
+                  borderColor: "#4d4dff",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
@@ -401,8 +423,8 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#6666ff",
-                  borderColor: "#6666ff",
+                  backgroundColor: "#8080ff",
+                  borderColor: "#8080ff",
                   borderRadius: 22,
                   borderWidth: 2
                 }}

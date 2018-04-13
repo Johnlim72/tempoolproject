@@ -22,9 +22,6 @@ const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
 export default class RideListScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
 
   constructor(props) {
     super(props);
@@ -348,7 +345,6 @@ const styles1 = StyleSheet.create({
   header_footer_style: {
     width: "100%",
     height: 45,
-    backgroundColor: "white",
     flexDirection: "row",
     margin: 5
   },
