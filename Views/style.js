@@ -88,9 +88,7 @@ export default StyleSheet.create({
   },
   inputWrap: {
     flexDirection: "row",
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: "black"
+    height: 40
   },
   inputWrapAddress: {
     flexDirection: "row",
@@ -186,7 +184,6 @@ export default StyleSheet.create({
     padding: 5,
     fontSize: 20,
     color: "darkred",
-    fontFamily: "Quicksand-Regular",
-    
+    fontFamily: "Quicksand-Regular"
   }
 });

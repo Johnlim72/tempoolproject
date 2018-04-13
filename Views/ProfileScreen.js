@@ -20,7 +20,7 @@ const background = require("./login3_bg.jpg");
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   constructor(props) {

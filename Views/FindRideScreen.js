@@ -35,13 +35,16 @@ export default class FindRideScreen extends React.Component {
       acceptedRide: false,
       driverName: "",
       driverEmail: "",
-      driverPhoneNumber: ""
+      driverPhoneNumber: "",
+      driver_address: "",
+      driver_longitude: "",
+      driver_latitude: ""
     };
   }
 
   findDriver() {
     fetch(
-      "http://cis-linux2.temple.edu/~tuf70921/php/get_drivers_within_schedule.php",
+      "http://cis-linux2.temple.edu/~tuf41055/php/get_drivers_within_schedule.php",
       {
         method: "POST",
         headers: {
@@ -58,8 +61,8 @@ export default class FindRideScreen extends React.Component {
     )
       .then(response => response.json())
       .then(responseJson => {
-        //Alert.alert(responseJson.toString());
-        //Alert.alert("num_rows: " + responseJson.num_rows);
+        Alert.alert(responseJson.toString());
+        Alert.alert("num_rows: " + responseJson.num_rows);
         console.log("drivers: ", responseJson);
         if (responseJson.num_rows > 0) {
           this.setState({
@@ -114,7 +117,10 @@ export default class FindRideScreen extends React.Component {
           this.state.list1.rows[minUser].userID
       );
       this.setState({
-        driverID: this.state.list1.rows[minUser].userID
+        driverID: this.state.list1.rows[minUser].userID,
+        driver_address: this.state.list1.rows[minUser].addressText,
+        driver_latitude: this.state.list1.rows[minUser].latitude,
+        driver_longitude: this.state.list1.rows[minUser].longitude
       });
       console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
@@ -122,7 +128,7 @@ export default class FindRideScreen extends React.Component {
   }
 
   insertRideToServer() {
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_ride_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_ride_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -133,7 +139,10 @@ export default class FindRideScreen extends React.Component {
         rider_loc_lat: this.state.latitude,
         rider_loc_long: this.state.longitude,
         riderID: this.state.userID,
-        driverID: this.state.driverID
+        driverID: this.state.driverID,
+        driver_address: this.state.driver_address,
+        driver_latitude: this.state.driver_latitude,
+        driver_longitude: this.state.driver_longitude
       })
     })
       .then(response => response.json())

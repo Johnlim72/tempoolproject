@@ -22,9 +22,6 @@ const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
 export default class RideListScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
 
   constructor(props) {
     super(props);
@@ -73,18 +70,36 @@ export default class RideListScreen extends React.Component {
       .then(responseJson => {
         console.log(responseJson);
 
-        let ds = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2
-        });
-        this.setState(
-          {
+        if (responseJson == "No strings found.") {
+          let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          this.setState({
+            isLoading: false,
+            dataSource: ds.cloneWithRows([])
+          });
+          Alert.alert(
+            "No Rides For You Yet",
+            "Please wait for Riders to request a ride to you.",
+            [
+              {
+                text: "Ok"
+              },
+              {
+                text: "Cancel"
+              }
+            ],
+            { cancelable: false }
+          );
+        } else {
+          let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          this.setState({
             isLoading: false,
             dataSource: ds.cloneWithRows(responseJson)
-          },
-          function() {
-            // In this block you can do something with new state.
-          }
-        );
+          });
+        }
       })
       .catch(error => {
         console.error(error);
@@ -179,26 +194,23 @@ export default class RideListScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
-        if (responseJson == "No Results Found.") {
+        if (responseJson == "No strings found.") {
+          let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          this.setState({
+            isLoading: false,
+            dataSource: ds.cloneWithRows([])
+          });
           Alert.alert(
             "No Rides For You Yet",
             "Please wait for Riders to request a ride to you.",
             [
               {
-                text: "Ok",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Ok"
               },
               {
-                text: "Cancel",
-                onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    Status: this.state.SwitchOnValueHolder
-                  })
+                text: "Cancel"
               }
             ],
             { cancelable: false }
@@ -207,15 +219,10 @@ export default class RideListScreen extends React.Component {
           let ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
           });
-          this.setState(
-            {
-              isLoading: false,
-              dataSource: ds.cloneWithRows(responseJson)
-            },
-            function() {
-              // In this block you can do something with new state.
-            }
-          );
+          this.setState({
+            isLoading: false,
+            dataSource: ds.cloneWithRows(responseJson)
+          });
         }
       })
       .catch(error => {
@@ -315,6 +322,7 @@ export default class RideListScreen extends React.Component {
           renderSeparator={this.ListViewItemSeparator}
           renderHeader={this.renderHeader}
           renderRow={this._renderRow.bind(this)}
+          enableEmptySections={true}
         />
       </View>
     );
@@ -337,7 +345,6 @@ const styles1 = StyleSheet.create({
   header_footer_style: {
     width: "100%",
     height: 45,
-    backgroundColor: "white",
     flexDirection: "row",
     margin: 5
   },
