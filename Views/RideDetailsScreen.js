@@ -31,7 +31,12 @@ export default class RideDetailsScreen extends React.Component {
       TextRiderLastName: "",
       TextRiderPhoneNumber: "",
       TextRiderDateTime: "",
-      TextRiderAddress: ""
+      TextRiderAddress: "",
+      rider_loc_lat: "",
+      rider_loc_long: "",
+      driver_address: "",
+      driver_latitude: "",
+      driver_longitude: ""
     };
   }
 
@@ -78,7 +83,12 @@ export default class RideDetailsScreen extends React.Component {
         this.setState({
           TextRiderDateTime: responseJson[0].rider_datetime,
           TextRiderAddress: responseJson[0].rider_address,
-          rideID: responseJson[0].ride_ID
+          rideID: responseJson[0].ride_ID,
+          rider_loc_lat: responseJson[0].rider_loc_lat,
+          rider_loc_long: responseJson[0].rider_loc_long,
+          driver_address: responseJson[0].driver_address,
+          driver_latitude: responseJson[0].driver_latitude,
+          driver_longitude: responseJson[0].driver_longitude
         });
         console.log("ride_ID: " + responseJson[0].ride_ID);
       })
@@ -284,10 +294,15 @@ export default class RideDetailsScreen extends React.Component {
                 fontWeight: "400"
               }}
               onPress={() =>
-                this.props.navigation.navigate("RideList", {
+                this.props.navigation.navigate("ViewDirections", {
                   TextEmail: this.props.navigation.state.params.TextEmail,
                   TextUserID: this.props.navigation.state.params
-                    .ListViewClickItemHolder
+                    .ListViewClickItemHolder,
+                  rider_loc_lat: this.state.rider_loc_lat,
+                  rider_loc_long: this.state.rider_loc_long,
+                  driver_address: this.state.driver_address,
+                  driver_longitude: this.state.driver_longitude,
+                  driver_latitude: this.state.driver_latitude
                 })
               }
             >

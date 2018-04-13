@@ -192,7 +192,7 @@ export default class DashboardScreen extends React.Component {
                   fontWeight: "400"
                 }}
                 onPress={() =>
-                  this.props.navigation.navigate("Track", {
+                  this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     Status: this.state.SwitchOnValueHolder,
                     userID: this.state.userID,
