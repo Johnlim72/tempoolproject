@@ -74,10 +74,10 @@ export default class UpdateScheduleScreen extends React.Component {
       rowData: this.props.navigation.state.params.rowData,
       TextDate: this.props.navigation.state.params.departureDateTime,
       userID: this.props.navigation.state.params.rowData.userID,
-      dateText: "",
-      timeText: "",
+      dateText: this.props.navigation.state.params.rowData.departureDateTime,
+      timeText: this.props.navigation.state.params.rowData.departureDateTime,
       dateSelected: false,
-      chosenDate: null,
+      chosenDate: this.props.navigation.state.params.rowData.departureDateTime,
       URL: ""
     };
   }
@@ -178,6 +178,42 @@ export default class UpdateScheduleScreen extends React.Component {
           </Text>
         </View>
       );
+    } else {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 50
+          }}
+        >
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand",
+              fontSize: 24,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            Date & Time:
+          </Text>
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand",
+              fontSize: 24,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            {this.state.dateText}
+          </Text>
+        </View>
+      );
     }
   }
 
@@ -202,7 +238,7 @@ export default class UpdateScheduleScreen extends React.Component {
               backgroundColor: "white",
               borderRadius: 10,
               padding: 10,
-              margin: 10,
+              margin: 20,
               flex: 5
             }}
           >
@@ -274,7 +310,7 @@ export default class UpdateScheduleScreen extends React.Component {
                   borderColor: "darkred",
                   borderRadius: 22,
                   borderWidth: 2,
-                  marginTop: 5
+                  marginTop: 30
                 }}
                 textStyle={{
                   fontSize: 18,
