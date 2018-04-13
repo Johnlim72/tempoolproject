@@ -181,7 +181,7 @@ export default class ProfileScreen extends React.Component {
             <Text
               style={{
                 color: "white",
-                fontFamily: "Quicksand-Regular",
+                fontFamily: "Quicksand",
                 fontSize: 30,
                 paddingTop: 20,
                 justifyContent: "center",
@@ -208,7 +208,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 First Name
@@ -223,7 +223,7 @@ export default class ProfileScreen extends React.Component {
                   }
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                 />
               </View>
@@ -233,7 +233,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 Last Name
@@ -248,7 +248,7 @@ export default class ProfileScreen extends React.Component {
                   }
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                 />
               </View>
@@ -258,7 +258,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 TU E-mail
@@ -272,7 +272,7 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextEmail => this.setState({ TextEmail })}
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                 />
               </View>
@@ -282,7 +282,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 Password
@@ -295,7 +295,7 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextPassword => this.setState({ TextPassword })}
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                   secureTextEntry
                 />
@@ -306,7 +306,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 Confirm Password
@@ -321,7 +321,7 @@ export default class ProfileScreen extends React.Component {
                   }
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                   secureTextEntry
                 />
@@ -332,7 +332,7 @@ export default class ProfileScreen extends React.Component {
                   fontSize: 18,
                   paddingHorizontal: 10,
                   textDecorationLine: "underline",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }}
               >
                 Phone Number
@@ -347,7 +347,7 @@ export default class ProfileScreen extends React.Component {
                   }
                   style={[
                     styles.input,
-                    { color: "black", fontFamily: "Quicksand-Regular" }
+                    { color: "black", fontFamily: "Quicksand" }
                   ]}
                 />
               </View>
@@ -362,7 +362,7 @@ export default class ProfileScreen extends React.Component {
                 textStyle={{
                   fontSize: 18,
                   color: "white",
-                  fontFamily: "Quicksand-Regular",
+                  fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
                 onPress={this.UpdateDataToServer}

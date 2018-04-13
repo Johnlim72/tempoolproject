@@ -140,7 +140,7 @@ export default class RideListScreen extends React.Component {
           textStyle={{
             fontSize: 18,
             color: "white",
-            fontFamily: "Quicksand-Regular",
+            fontFamily: "Quicksand",
             fontWeight: "400"
           }}
           onPress={this.OpenDetailsActivity.bind(this, {
@@ -253,7 +253,7 @@ export default class RideListScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "white",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={() => this.updateType("Potential")}
@@ -273,7 +273,7 @@ export default class RideListScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "white",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={() => this.updateType("Accepted")}
@@ -292,7 +292,7 @@ export default class RideListScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "white",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={() => this.updateType("Past")}

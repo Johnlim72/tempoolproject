@@ -169,7 +169,7 @@ export default class SignupScreen extends React.Component {
               }
               style={[
                 styles.input,
-                { color: "white", fontFamily: "Quicksand-Regular" }
+                { color: "white", fontFamily: "Quicksand" }
               ]}
             />
           </View>
@@ -182,7 +182,7 @@ export default class SignupScreen extends React.Component {
               }
               style={[
                 styles.input,
-                { color: "white", fontFamily: "Quicksand-Regular" }
+                { color: "white", fontFamily: "Quicksand" }
               ]}
             />
           </View>
@@ -193,7 +193,7 @@ export default class SignupScreen extends React.Component {
               onChangeText={TextEmail => this.setState({ TextEmail })}
               style={[
                 styles.input,
-                { color: "white", fontFamily: "Quicksand-Regular" }
+                { color: "white", fontFamily: "Quicksand" }
               ]}
             />
           </View>
@@ -204,7 +204,7 @@ export default class SignupScreen extends React.Component {
               onChangeText={TextPassword => this.setState({ TextPassword })}
               style={[
                 styles.input,
-                { color: "white", fontFamily: "Quicksand-Regular" }
+                { color: "white", fontFamily: "Quicksand" }
               ]}
               secureTextEntry
             />
@@ -218,7 +218,7 @@ export default class SignupScreen extends React.Component {
               }
               style={[
                 styles.input,
-                { color: "white", fontFamily: "Quicksand-Regular" }
+                { color: "white", fontFamily: "Quicksand" }
               ]}
               secureTextEntry
             />
@@ -234,7 +234,7 @@ export default class SignupScreen extends React.Component {
                 styles.input,
                 {
                   color: "white",
-                  fontFamily: "Quicksand-Regular"
+                  fontFamily: "Quicksand"
                 }
               ]}
             />
@@ -250,7 +250,7 @@ export default class SignupScreen extends React.Component {
             textStyle={{
               fontSize: 18,
               color: "darkred",
-              fontFamily: "Quicksand-Regular",
+              fontFamily: "Quicksand",
               fontWeight: "400"
             }}
             onPress={this.InsertDataToServer.bind(this)}
