@@ -32,11 +32,11 @@ export default class DashboardScreen extends React.Component {
     super(props);
 
     this.state = {
+      userID: this.props.navigation.state.params.userID,
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextUserID: "",
       SwitchOnValueHolder: true,
-      disabled: false,
-      userID: this.props.navigation.state.params.userID
+      disabled: false
     };
   }
 
@@ -413,7 +413,7 @@ export default class DashboardScreen extends React.Component {
                   fontWeight: "400"
                 }}
                 onPress={() =>
-                  this.props.navigation.navigate("RideList", {
+                  this.props.navigation.navigate("StartLooking", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     TextUserID: this.state.TextUserID
                   })

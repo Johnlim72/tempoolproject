@@ -20,12 +20,14 @@ import RideListScreen from "./Views/RideListScreen";
 import FindRideScreen from "./Views/FindRideScreen";
 import RideDetailsScreen from "./Views/RideDetailsScreen";
 import DriverScheduleScreen from "./Views/DriverScheduleScreen";
+import UpdateLocationScreen from "./Views/UpdateLocationScreen";
 import ViewDirectionsScreen from "./Views/ViewDirectionsScreen";
 import ScheduleListScreen from "./Views/ScheduleListScreen";
 import UpdateScheduleScreen from "./Views/UpdateScheduleScreen";
 import MapScreen from "./Views/MapScreen";
 import TrackScreen from "./Views/TrackScreen";
-
+import StartLookingScreen from "./Views/StartLookingScreen";
+import DriverLookingScreen from "./Views/DriverLookingScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -76,6 +78,15 @@ const RootStack = StackNavigator(
     },
     UpdateSchedule: {
       screen: UpdateScheduleScreen
+    },
+    UpdateLocation: {
+      screen: UpdateLocationScreen
+    },
+    StartLooking: {
+      screen: StartLookingScreen
+    },
+    DriverLooking: {
+      screen: DriverLookingScreen
     }
   },
   {

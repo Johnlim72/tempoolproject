@@ -38,7 +38,8 @@ export default class FindRideScreen extends React.Component {
       driverPhoneNumber: "",
       driver_address: "",
       driver_longitude: "",
-      driver_latitude: ""
+      driver_latitude: "",
+      driverScheduleID: ""
     };
   }
 
@@ -120,7 +121,8 @@ export default class FindRideScreen extends React.Component {
         driverID: this.state.list1.rows[minUser].userID,
         driver_address: this.state.list1.rows[minUser].addressText,
         driver_latitude: this.state.list1.rows[minUser].latitude,
-        driver_longitude: this.state.list1.rows[minUser].longitude
+        driver_longitude: this.state.list1.rows[minUser].longitude,
+        driverScheduleID: this.state.list1.rows[minUser].idDriver
       });
       console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
@@ -142,7 +144,8 @@ export default class FindRideScreen extends React.Component {
         driverID: this.state.driverID,
         driver_address: this.state.driver_address,
         driver_latitude: this.state.driver_latitude,
-        driver_longitude: this.state.driver_longitude
+        driver_longitude: this.state.driver_longitude,
+        driverScheduleID: this.state.driverScheduleID
       })
     })
       .then(response => response.json())
@@ -188,20 +191,6 @@ export default class FindRideScreen extends React.Component {
                     driverPhoneNumber: responseJson.driverPhoneNumber
                   });
 
-                  // Alert.alert(
-                  //   "Success!",
-                  //   "Potential Ride Inserted",
-                  //   [
-                  //     {
-                  //       text: "OK",
-                  //       onPress: () =>
-                  //         this.props.navigation.navigate("Dashboard", {
-                  //           TextEmail: this.props.navigation.state.params.TextEmail.toString()
-                  //         })
-                  //     }
-                  //   ],
-                  //   { cancelable: false }
-                  // );
                   clearInterval(timer);
                 }
               })
@@ -228,7 +217,7 @@ export default class FindRideScreen extends React.Component {
         <View>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -237,7 +226,7 @@ export default class FindRideScreen extends React.Component {
           </Text>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -246,7 +235,7 @@ export default class FindRideScreen extends React.Component {
           </Text>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -283,20 +272,20 @@ export default class FindRideScreen extends React.Component {
               <Text
                 style={{
                   color: "white",
-                  fontFamily: "Futura",
+                  fontFamily: "Quicksand",
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",
                   alignItems: "center"
                 }}
               >
-                Loading...
+                Looking for Driver...
               </Text>
             ) : (
               <Text
                 style={{
                   color: "white",
-                  fontFamily: "Futura",
+                  fontFamily: "Quicksand",
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",
