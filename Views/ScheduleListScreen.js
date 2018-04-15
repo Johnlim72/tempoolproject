@@ -27,7 +27,6 @@ export default class ScheduleListScreen extends React.Component {
 
     this.state = {
       TextUserID: this.props.navigation.state.params.TextUserID,
-      TextEmail: this.props.navigation.state.params.TextEmail,
       TextRiderName: "",
       TextDate: "",
       TextLocation: "",

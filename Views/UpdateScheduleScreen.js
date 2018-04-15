@@ -72,8 +72,10 @@ export default class UpdateScheduleScreen extends React.Component {
 
     this.state = {
       rowData: this.props.navigation.state.params.rowData,
-      TextDate: this.props.navigation.state.params.departureDateTime,
+      address: this.props.navigation.state.params.rowData.addressText,
+      TextDate: this.props.navigation.state.params.rowData.departureDateTime,
       userID: this.props.navigation.state.params.rowData.userID,
+      idDriver: this.props.navigation.state.params.rowData.idDriver,
       dateText: this.props.navigation.state.params.rowData.departureDateTime,
       timeText: this.props.navigation.state.params.rowData.departureDateTime,
       dateSelected: false,
@@ -83,41 +85,34 @@ export default class UpdateScheduleScreen extends React.Component {
   }
 
   Update = () => {
-    const { TextEmail } = this.state;
-    const { TextAddress } = this.state;
-    const { TextLatitude } = this.state;
-    const { TextLongitude } = this.state;
-    const { TextDate } = this.state;
-
-    console.log("insertdrivertoserver driver id: " + this.state.userID);
-
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_driver_info.php", {
+    console.log("rowData", this.state.rowData);
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateSchedule.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        rideDateTime: this.state.chosenDate,
-        driver_address: TextAddress.toString(),
-        driver_latitude: TextLatitude.toString(),
-        driver_longitude: TextLongitude.toString(),
-        userID: this.state.userID
+        idDriver: this.state.idDriver,
+        addressText: this.state.address,
+        longitude: this.state.rowData.longitude,
+        latitude: this.state.rowData.latitude,
+        departureDateTime: this.state.chosenDate
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Driver successfully inserted.") {
+        if (responseJson == "Schedule successfully updated.") {
           Alert.alert(
             "Success!",
-            "Driver inserted",
+            "Schedule updated.",
             [
               {
                 text: "OK",
                 onPress: () =>
-                  this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                  this.props.navigation.navigate("ScheduleList", {
+                    TextUserID: this.state.userID
                   })
               }
             ],
@@ -131,13 +126,9 @@ export default class UpdateScheduleScreen extends React.Component {
   };
 
   PickLocation = () => {
-    this.props.navigation.navigate("Location", {
-      TextAddress: this.state.TextAddress,
-      TextLatitude: this.state.TextLatitude,
-      TextLongitude: this.state.TextLongitude,
-      TextEmail: this.props.navigation.state.params.TextEmail,
-      Status: this.state.Status,
-      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
+    this.props.navigation.navigate("UpdateLocation", {
+      address: this.state.address,
+      rowData: this.state.rowData
     });
   };
 

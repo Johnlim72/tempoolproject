@@ -20,6 +20,7 @@ import RideListScreen from "./Views/RideListScreen";
 import FindRideScreen from "./Views/FindRideScreen";
 import RideDetailsScreen from "./Views/RideDetailsScreen";
 import DriverScheduleScreen from "./Views/DriverScheduleScreen";
+import UpdateLocationScreen from "./Views/UpdateLocationScreen";
 import ViewDirectionsScreen from "./Views/ViewDirectionsScreen";
 import ScheduleListScreen from "./Views/ScheduleListScreen";
 import UpdateScheduleScreen from "./Views/UpdateScheduleScreen";
@@ -76,6 +77,9 @@ const RootStack = StackNavigator(
     },
     UpdateSchedule: {
       screen: UpdateScheduleScreen
+    },
+    UpdateLocation: {
+      screen: UpdateLocationScreen
     }
   },
   {
