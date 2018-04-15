@@ -188,20 +188,6 @@ export default class FindRideScreen extends React.Component {
                     driverPhoneNumber: responseJson.driverPhoneNumber
                   });
 
-                  // Alert.alert(
-                  //   "Success!",
-                  //   "Potential Ride Inserted",
-                  //   [
-                  //     {
-                  //       text: "OK",
-                  //       onPress: () =>
-                  //         this.props.navigation.navigate("Dashboard", {
-                  //           TextEmail: this.props.navigation.state.params.TextEmail.toString()
-                  //         })
-                  //     }
-                  //   ],
-                  //   { cancelable: false }
-                  // );
                   clearInterval(timer);
                 }
               })
@@ -228,7 +214,7 @@ export default class FindRideScreen extends React.Component {
         <View>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -237,7 +223,7 @@ export default class FindRideScreen extends React.Component {
           </Text>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -246,7 +232,7 @@ export default class FindRideScreen extends React.Component {
           </Text>
           <Text
             style={{
-              fontFamily: "Futura",
+              fontFamily: "Quicksand",
               fontSize: 30,
               paddingTop: 20
             }}
@@ -283,20 +269,20 @@ export default class FindRideScreen extends React.Component {
               <Text
                 style={{
                   color: "white",
-                  fontFamily: "Futura",
+                  fontFamily: "Quicksand",
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",
                   alignItems: "center"
                 }}
               >
-                Loading...
+                Looking for Driver...
               </Text>
             ) : (
               <Text
                 style={{
                   color: "white",
-                  fontFamily: "Futura",
+                  fontFamily: "Quicksand",
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",

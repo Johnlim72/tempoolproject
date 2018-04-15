@@ -21,13 +21,12 @@ import Button from "apsl-react-native-button";
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
-export default class ScheduleListScreen extends React.Component {
+export default class StartLookingScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       TextUserID: this.props.navigation.state.params.TextUserID,
-      TextEmail: this.props.navigation.state.params.TextEmail,
       TextRiderName: "",
       TextDate: "",
       TextLocation: "",
@@ -93,6 +92,16 @@ export default class ScheduleListScreen extends React.Component {
             isLoading: false,
             dataSource: ds.cloneWithRows(responseJson)
           });
+          Alert.alert(
+            "Pick one of your schedules",
+            "Choose which one would you like to use for riders to be able to request",
+            [
+              {
+                text: "Ok"
+              }
+            ],
+            { cancelable: false }
+          );
         }
       })
       .catch(error => {
@@ -129,7 +138,7 @@ export default class ScheduleListScreen extends React.Component {
             marginBottom: 5
           }}
         >
-          <View style={{ width: "47%", marginHorizontal: 5 }}>
+          <View style={{ width: "98%", marginHorizontal: 5 }}>
             <Button
               style={{
                 backgroundColor: "navy",
@@ -143,88 +152,33 @@ export default class ScheduleListScreen extends React.Component {
                 fontFamily: "Quicksand",
                 fontWeight: "400"
               }}
-              onPress={() => this.updateSchedule(rowData)}
-            >
-              Edit
-            </Button>
-          </View>
-          <View style={{ width: "47%", marginHorizontal: 5 }}>
-            <Button
-              style={{
-                backgroundColor: "darkred",
-                borderColor: "darkred",
-                borderRadius: 22,
-                borderWidth: 2
-              }}
-              textStyle={{
-                fontSize: 18,
-                color: "white",
-                fontFamily: "Quicksand",
-                fontWeight: "400"
-              }}
               onPress={() =>
                 Alert.alert(
-                  "Warning",
-                  "Are you sure you want to delete this schedule?",
+                  "Are you sure?",
+                  "You will start getting requests as soon as you choose a schedule",
                   [
                     {
-                      text: "OK",
-                      onPress: () => this.deleteSchedule(rowData)
+                      text: "Yes",
+                      onPress: () =>
+                        this.props.navigation.navigate("DriverLooking", {
+                          userID: this.state.TextUserID,
+                          rowData: rowData
+                        })
                     },
-                    { text: "Cancel" }
+                    {
+                      text: "No"
+                    }
                   ],
-                  { cancelable: true }
+                  { cancelable: false }
                 )
               }
             >
-              Delete
+              Choose this schedule
             </Button>
           </View>
         </View>
       </View>
     );
-  }
-
-  updateSchedule(rowData) {
-    this.props.navigation.navigate("UpdateSchedule", {
-      rowData: rowData
-    });
-  }
-
-  deleteSchedule(rowData) {
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/deleteSchedule.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        idDriver: rowData.idDriver
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Schedule successfully deleted.") {
-          Alert.alert(
-            "Success!",
-            "Schedule deleted.",
-            [
-              {
-                text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("ScheduleList", {
-                    TextUserID: this.state.TextUserID
-                  })
-              }
-            ],
-            { cancelable: false }
-          );
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
   renderHeader = () => {
@@ -240,7 +194,7 @@ export default class ScheduleListScreen extends React.Component {
             justifyContent: "center"
           }}
         >
-          Your Schedules
+          Start Looking For Riders
         </Text>
       </View>
     );

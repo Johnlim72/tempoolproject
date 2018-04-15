@@ -26,7 +26,8 @@ import ScheduleListScreen from "./Views/ScheduleListScreen";
 import UpdateScheduleScreen from "./Views/UpdateScheduleScreen";
 import MapScreen from "./Views/MapScreen";
 import TrackScreen from "./Views/TrackScreen";
-
+import StartLookingScreen from "./Views/StartLookingScreen";
+import DriverLookingScreen from "./Views/DriverLookingScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -80,6 +81,12 @@ const RootStack = StackNavigator(
     },
     UpdateLocation: {
       screen: UpdateLocationScreen
+    },
+    StartLooking: {
+      screen: StartLookingScreen
+    },
+    DriverLooking: {
+      screen: DriverLookingScreen
     }
   },
   {
