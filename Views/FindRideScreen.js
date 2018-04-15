@@ -38,7 +38,8 @@ export default class FindRideScreen extends React.Component {
       driverPhoneNumber: "",
       driver_address: "",
       driver_longitude: "",
-      driver_latitude: ""
+      driver_latitude: "",
+      driverScheduleID: ""
     };
   }
 
@@ -120,7 +121,8 @@ export default class FindRideScreen extends React.Component {
         driverID: this.state.list1.rows[minUser].userID,
         driver_address: this.state.list1.rows[minUser].addressText,
         driver_latitude: this.state.list1.rows[minUser].latitude,
-        driver_longitude: this.state.list1.rows[minUser].longitude
+        driver_longitude: this.state.list1.rows[minUser].longitude,
+        driverScheduleID: this.state.list1.rows[minUser].idDriver
       });
       console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
@@ -142,7 +144,8 @@ export default class FindRideScreen extends React.Component {
         driverID: this.state.driverID,
         driver_address: this.state.driver_address,
         driver_latitude: this.state.driver_latitude,
-        driver_longitude: this.state.driver_longitude
+        driver_longitude: this.state.driver_longitude,
+        driverScheduleID: this.state.driverScheduleID
       })
     })
       .then(response => response.json())
