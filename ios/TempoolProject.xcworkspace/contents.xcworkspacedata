@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:EdgeToSERC.gpx">
+   </FileRef>
+   <FileRef
       location = "group:TempoolProject.xcodeproj">
    </FileRef>
    <FileRef
