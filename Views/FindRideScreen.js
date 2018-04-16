@@ -156,7 +156,7 @@ export default class FindRideScreen extends React.Component {
             rideID: responseJson.rideID
           });
 
-          var timer = setInterval(() => {
+          this.timer = setInterval(() => {
             fetch(
               "http://cis-linux2.temple.edu/~tuf70921/php/check_if_accepted.php",
               {
@@ -191,7 +191,7 @@ export default class FindRideScreen extends React.Component {
                     driverPhoneNumber: responseJson.driverPhoneNumber
                   });
 
-                  clearInterval(timer);
+                  clearInterval(this.timer);
                 }
               })
               .catch(error => {
@@ -209,6 +209,10 @@ export default class FindRideScreen extends React.Component {
 
   componentDidMount() {
     this.findDriver();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   renderDriver() {

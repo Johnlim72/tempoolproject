@@ -52,10 +52,63 @@ export default class DriverLookingScreen extends React.Component {
       driver_longitude: "",
       acceptedOrPotential: ""
     };
+
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/updateScheduleForLooking.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idDriver: this.props.navigation.state.params.rowData.idDriver,
+          looking: "Looking"
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Schedule successfully updated to looking.") {
+          console.log(responseJson);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  componentWillUnmount() {
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/updateScheduleForLooking.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idDriver: this.props.navigation.state.params.rowData.idDriver,
+          looking: "Not Looking"
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Schedule successfully updated to looking.") {
+          console.log(responseJson);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    clearInterval(this.timer);
   }
 
   waitForRequest() {
-    var timer = setInterval(() => {
+    this.timer = setInterval(() => {
       fetch("http://cis-linux2.temple.edu/~tuf41055/php/checkForRequest.php", {
         method: "POST",
         headers: {
@@ -101,6 +154,7 @@ export default class DriverLookingScreen extends React.Component {
         .catch(error => {
           Alert.alert("Error: " + error.toString());
         });
+      console.log("in setInterval");
     }, 10000);
   }
 

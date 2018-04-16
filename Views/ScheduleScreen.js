@@ -182,14 +182,23 @@ export default class ScheduleScreen extends React.Component {
         //Then open Profile activity and send user email to profile activity.
         if (responseJson == "Driver successfully inserted.") {
           Alert.alert(
-            "Success!",
-            "Driver inserted",
+            "Success! Driver Inserted",
+            "Would you like to start looking for riders now?",
             [
               {
-                text: "OK",
+                text: "Yes",
+                onPress: () =>
+                  this.props.navigation.navigate("StartLooking", {
+                    TextEmail: this.props.navigation.state.params.TextEmail.toString(),
+                    TextUserID: this.state.userID
+                  })
+              },
+              {
+                text: "No",
                 onPress: () =>
                   this.props.navigation.navigate("Dashboard", {
-                    TextEmail: this.props.navigation.state.params.TextEmail.toString()
+                    TextEmail: this.props.navigation.state.params.TextEmail.toString(),
+                    TextUserID: this.state.userID
                   })
               }
             ],
