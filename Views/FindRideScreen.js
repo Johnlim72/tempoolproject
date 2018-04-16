@@ -43,6 +43,62 @@ export default class FindRideScreen extends React.Component {
     };
   }
 
+  putIntoQueue() {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/putIntoQueue.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userID: this.state.userID
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson.error == 0) {
+          console.log("Inserted rider into queue.");
+          this.waitForQueue();
+        } else {
+          Alert.alert("error" + responseJson.error);
+        }
+      })
+      .catch(error => {
+        Alert.alert(error.toString());
+      });
+  }
+
+  waitForQueue() {
+    this.timer = setInterval(() => {
+      fetch(
+        "http://cis-linux2.temple.edu/~tuf41055/php/checkIfNextInQueue.php",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userID: this.state.userID
+          })
+        }
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          if (responseJson.error == 0) {
+            //do algorithm
+
+            clearInterval(this.timer);
+          } else {
+            console.log("Still waiting...")
+          }
+        })
+        .catch(error => {
+          Alert.alert("Error: " + error.toString());
+        });
+    }, 10000);
+  }
+
   findDriver() {
     fetch(
       "http://cis-linux2.temple.edu/~tuf41055/php/get_drivers_within_schedule.php",
@@ -62,8 +118,6 @@ export default class FindRideScreen extends React.Component {
     )
       .then(response => response.json())
       .then(responseJson => {
-        Alert.alert(responseJson.toString());
-        Alert.alert("num_rows: " + responseJson.num_rows);
         console.log("drivers: ", responseJson);
         if (responseJson.num_rows > 0) {
           this.setState({
@@ -208,7 +262,7 @@ export default class FindRideScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.findDriver();
+    this.putIntoQueue();
   }
 
   componentWillUnmount() {
