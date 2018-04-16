@@ -90,7 +90,7 @@ const RootStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Track"
+    initialRouteName: "Initial"
   }
 );
 

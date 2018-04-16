@@ -80,7 +80,12 @@ export default class TrackScreen extends React.Component {
     return (
       <View style={styles1.container}>
         <MapView
-        
+          region={{
+            latitude: LATITUDE,
+            longitude: LONGITUDE,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
+          }}
           style={styles1.map}
           mapType="satellite"
           showsUserLocation={true}

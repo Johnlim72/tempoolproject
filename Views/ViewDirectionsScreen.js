@@ -85,10 +85,8 @@ export default class ViewDirectionsScreen extends React.Component {
           showsUserLocation={true}
           followUserLocation={true}
         >
-
-          <MapView.Marker coordinate={coordinates[0]} pincolor="darkred" />
-          <MapView.Marker coordinate={coordinates[1]} pincolor="blue" />
-
+          <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
+          <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
           <MapViewDirections
             origin={coordinates[0]}
             destination={coordinates[1]}
