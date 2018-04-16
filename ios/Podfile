@@ -1,0 +1,5 @@
+platform :ios, '11.0'
+target 'TempoolProject' do
+pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
+pod 'GoogleMaps'
+end
