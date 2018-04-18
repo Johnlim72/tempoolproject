@@ -39,7 +39,8 @@ export default class FindRideScreen extends React.Component {
       driver_address: "",
       driver_longitude: "",
       driver_latitude: "",
-      driverScheduleID: ""
+      driverScheduleID: "",
+      idQueue: ""
     };
   }
 
@@ -58,6 +59,10 @@ export default class FindRideScreen extends React.Component {
       .then(responseJson => {
         if (responseJson.error == 0) {
           console.log("Inserted rider into queue.");
+          this.setState({
+            idQueue: responseJson.idQueue
+          });
+          console.log("idQueue: ", this.state.idQueue);
           this.waitForQueue();
         } else {
           Alert.alert("error" + responseJson.error);
@@ -86,17 +91,18 @@ export default class FindRideScreen extends React.Component {
         .then(response => response.json())
         .then(responseJson => {
           if (responseJson.error == 0) {
+            console.log("serving...");
             //do algorithm
-
+            this.findDriver();
             clearInterval(this.timer);
           } else {
-            console.log("Still waiting...")
+            console.log("Still waiting...");
           }
         })
         .catch(error => {
           Alert.alert("Error: " + error.toString());
         });
-    }, 10000);
+    }, 5000);
   }
 
   findDriver() {
@@ -126,6 +132,30 @@ export default class FindRideScreen extends React.Component {
           this.findShortDriver();
         } else {
           Alert.alert("No drivers leaving soon");
+          fetch(
+            "http://cis-linux2.temple.edu/~tuf41055/php/updateQueueToServed.php",
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                idRider: this.state.userID,
+                idQueue: this.state.idQueue
+              })
+            }
+          )
+            .then(response => response.json())
+            .then(responseJson => {
+              //Then open Profile activity and send user email to profile activity.
+              if (responseJson == "Queue successfully updated Status to served.") {
+                console.log(responseJson);
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
         }
         //Alert.alert(responseJson.toString());
       })
@@ -204,13 +234,13 @@ export default class FindRideScreen extends React.Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        //Then open Profile activity and send user email to profile activity.
+        //Should have inserted ride, updated Driver Schedule to "Not Usable", and update the Queue for rider to "Served".
         if (responseJson.error == 0) {
           this.setState({
             rideID: responseJson.rideID
           });
 
-          this.timer = setInterval(() => {
+          this.timerCheckAccepted = setInterval(() => {
             fetch(
               "http://cis-linux2.temple.edu/~tuf70921/php/check_if_accepted.php",
               {
@@ -245,7 +275,7 @@ export default class FindRideScreen extends React.Component {
                     driverPhoneNumber: responseJson.driverPhoneNumber
                   });
 
-                  clearInterval(this.timer);
+                  clearInterval(this.timerCheckAccepted);
                 }
               })
               .catch(error => {
@@ -267,6 +297,31 @@ export default class FindRideScreen extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    clearInterval(this.timerCheckAccepted);
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/updateQueueToServed.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idRider: this.state.userID,
+          idQueue: this.state.idQueue
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Queue successfully updated Status to served.") {
+          console.log(responseJson);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   renderDriver() {
