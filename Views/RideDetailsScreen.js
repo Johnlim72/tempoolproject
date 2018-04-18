@@ -49,7 +49,7 @@ export default class RideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         // Getting the id.
-        riderID: this.props.navigation.state.params.ListViewCLickItemHolder2
+        riderID: this.props.navigation.state.params.ListViewClickItemHolder2
       })
     })
       .then(response => response.json())
@@ -66,6 +66,10 @@ export default class RideDetailsScreen extends React.Component {
         console.error(error);
       });
 
+    console.log(
+      "ListViewClickItemHolder3: ",
+      this.props.navigation.state.params.ListViewClickItemHolder3
+    );
     fetch("http://cis-linux2.temple.edu/~tuf41055/php/filter.php", {
       method: "POST",
       headers: {
@@ -75,7 +79,8 @@ export default class RideDetailsScreen extends React.Component {
       body: JSON.stringify({
         // Getting the id.
         driverID: this.props.navigation.state.params.ListViewClickItemHolder,
-        riderID: this.props.navigation.state.params.ListViewCLickItemHolder2
+        riderID: this.props.navigation.state.params.ListViewClickItemHolder2,
+        rideID: this.props.navigation.state.params.ListViewClickItemHolder3
       })
     })
       .then(response => response.json())

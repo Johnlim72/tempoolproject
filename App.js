@@ -28,6 +28,7 @@ import MapScreen from "./Views/MapScreen";
 import TrackScreen from "./Views/TrackScreen";
 import StartLookingScreen from "./Views/StartLookingScreen";
 import DriverLookingScreen from "./Views/DriverLookingScreen";
+import AltViewDirectionsScreen from "./Views/AltViewDirectionsScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -87,6 +88,9 @@ const RootStack = StackNavigator(
     },
     DriverLooking: {
       screen: DriverLookingScreen
+    },
+    AltViewDirections: {
+      screen: AltViewDirectionsScreen
     }
   },
   {

@@ -34,9 +34,9 @@ export default class RideListScreen extends React.Component {
       TextLocation: "",
       isLoading: true,
       dataSource: "",
-      typeOfRides: "Potential",
-      colorPotential: "green",
-      colorAccepted: "darkred",
+      typeOfRides: "Accepted",
+      colorPotential: "darkred",
+      colorAccepted: "green",
       colorPast: "darkred"
     };
 
@@ -48,7 +48,8 @@ export default class RideListScreen extends React.Component {
   OpenDetailsActivity(idUsers) {
     this.props.navigation.navigate("RideDetails", {
       ListViewClickItemHolder: idUsers.rowDriverID,
-      ListViewCLickItemHolder2: idUsers.rowRiderID,
+      ListViewClickItemHolder2: idUsers.rowRiderID,
+      ListViewClickItemHolder3: idUsers.rowRideID,
       typeOfRides: this.state.typeOfRides
     });
   }
@@ -145,7 +146,8 @@ export default class RideListScreen extends React.Component {
           }}
           onPress={this.OpenDetailsActivity.bind(this, {
             rowDriverID: rowData.driverID,
-            rowRiderID: rowData.riderID
+            rowRiderID: rowData.riderID,
+            rowRideID: rowData.ride_ID
           })}
         >
           Click to View Ride

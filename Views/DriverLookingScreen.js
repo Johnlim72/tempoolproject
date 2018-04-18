@@ -53,6 +53,11 @@ export default class DriverLookingScreen extends React.Component {
       acceptedOrPotential: ""
     };
 
+    this.updateScheduleForLooking();
+  }
+
+  updateScheduleForLooking() {
+    //looking
     fetch(
       "http://cis-linux2.temple.edu/~tuf41055/php/updateScheduleForLooking.php",
       {
@@ -79,7 +84,8 @@ export default class DriverLookingScreen extends React.Component {
       });
   }
 
-  componentWillUnmount() {
+  updateScheduleForNotLooking() {
+    //not looking
     fetch(
       "http://cis-linux2.temple.edu/~tuf41055/php/updateScheduleForLooking.php",
       {
@@ -104,7 +110,10 @@ export default class DriverLookingScreen extends React.Component {
       .catch(error => {
         console.error(error);
       });
-    clearInterval(this.timer);
+  }
+
+  componentDidMount() {
+    this.waitForRequest();
   }
 
   waitForRequest() {
@@ -146,9 +155,9 @@ export default class DriverLookingScreen extends React.Component {
               driver_latitude: responseJson.driver_latitude,
               driver_longitude: responseJson.driver_longitude
             });
-
+            this.updateScheduleForNotLooking();
             this.getRider();
-            clearInterval(timer);
+            clearInterval(this.timer);
           }
         })
         .catch(error => {
@@ -156,62 +165,6 @@ export default class DriverLookingScreen extends React.Component {
         });
       console.log("in setInterval");
     }, 10000);
-  }
-
-  updateRide(acceptedOrPotential) {
-    this.setState({ acceptedOrPotential: acceptedOrPotential });
-    console.log("acceptedOrPotential: " + acceptedOrPotential);
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ride_ID: this.state.ride_ID,
-        acceptedOrPotential: acceptedOrPotential
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Ride Accepted.") {
-          Alert.alert(
-            "Success!",
-            "Ride Accepted.",
-            [
-              {
-                text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("RideList", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    TextUserID: this.state.driverID
-                  })
-              }
-            ],
-            { cancelable: false }
-          );
-        } else if (responseJson == "Ride Declined.") {
-          Alert.alert(
-            "Success!",
-            "Ride Declined.",
-            [
-              {
-                text: "OK",
-                onPress: () =>
-                  this.props.navigation.navigate("RideList", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    TextUserID: this.state.driverID
-                  })
-              }
-            ],
-            { cancelable: false }
-          );
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
   getRider() {
@@ -241,8 +194,70 @@ export default class DriverLookingScreen extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.waitForRequest();
+  updateRide(acceptedOrPotential) {
+    this.setState({ acceptedOrPotential: acceptedOrPotential });
+    console.log("acceptedOrPotential: " + acceptedOrPotential);
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.ride_ID,
+        acceptedOrPotential: acceptedOrPotential
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Ride Declined.") {
+          Alert.alert(
+            "Ride Declined",
+            "Do you want to keep looking for other riders?",
+            [
+              {
+                text: "Yes",
+                onPress: () =>
+                  this.props.navigation.navigate("DriverLooking", {
+                    rowData: this.props.navigation.state.params.rowData,
+                    userID: this.props.navigation.state.params.userID
+                  })
+              },
+              {
+                text: "No",
+                onPress: () =>
+                  this.props.navigation.navigate("Dashboard", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    userID: this.state.driverID
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
+        }
+        this.updateScheduleForNotLooking();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  componentWillUnmount() {
+    this.updateScheduleForNotLooking();
+    clearInterval(this.timer);
+  }
+
+  goToRideScreen() {
+    this.updateRide("Accepted");
+    this.props.navigation.navigate("AltViewDirections", {
+      driver_address: this.state.driver_address,
+      rider_address: this.state.rider_address,
+      rider_loc_lat: this.state.rider_loc_lat,
+      rider_loc_long: this.state.rider_loc_long,
+      driver_latitude: this.state.driver_latitude,
+      driver_longitude: this.state.driver_longitude
+    });
   }
 
   renderRide() {
@@ -295,17 +310,24 @@ export default class DriverLookingScreen extends React.Component {
               fontFamily: "Quicksand",
               fontWeight: "400"
             }}
-            onPress={
-              () => this.updateRide("Accepted")
-              // () =>
-              // this.props.navigation.navigate("RideList", {
-              //   TextEmail: this.props.navigation.state.params.TextEmail,
-              //   TextUserID: this.props.navigation.state.params
-              //     .ListViewClickItemHolder
-              // }),
+            onPress={() =>
+              Alert.alert(
+                "Warning",
+                "Pressing 'OK' will accept and start your ride now",
+                [
+                  {
+                    text: "OK",
+                    onPress: () => this.goToRideScreen()
+                  },
+                  {
+                    text: "Cancel"
+                  }
+                ],
+                { cancelable: false }
+              )
             }
           >
-            Accept
+            Start Ride Now
           </Button>
 
           <Button
