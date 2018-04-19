@@ -18,11 +18,15 @@ import geolib from "geolib";
 import haversine from "haversine";
 import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import pick from "lodash/pick";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 const ASPECT_RATIO = width / height;
 const GOOGLE_MAPS_APIKEY = "AIzaSyCFwaPOiId1pFRm93-nbRBzF71UybpU9i8";
+
+const LATITUDE_DELTA = 0.0222;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class FindRideScreen extends React.Component {
   constructor(props) {
@@ -46,7 +50,10 @@ export default class FindRideScreen extends React.Component {
       driver_longitude: "",
       driver_latitude: "",
       driverScheduleID: "",
-      idQueue: ""
+      idQueue: "",
+      routeCoordinates: [],
+      distanceTravelled: 0,
+      prevLatLng: {}
     };
   }
 
@@ -303,19 +310,24 @@ export default class FindRideScreen extends React.Component {
       });
   }
 
-  calcDistance() {
-    return (
-      haversine(
-        {
-          latitude: parseFloat(this.state.latitude),
-          longitude: parseFloat(this.state.longitude)
-        },
-        {
-          latitude: parseFloat(this.state.driver_latitude),
-          longitude: parseFloat(this.state.driver_longitude)
-        }
-      ) || 0
-    );
+  // calcDistance() {
+  //   return (
+  //     haversine(
+  //       {
+  //         latitude: parseFloat(this.state.latitude),
+  //         longitude: parseFloat(this.state.longitude)
+  //       },
+  //       {
+  //         latitude: parseFloat(this.state.driver_latitude),
+  //         longitude: parseFloat(this.state.driver_longitude)
+  //       }
+  //     ) || 0
+  //   );
+  // }
+
+  calcDistance(newLatLng) {
+    const { prevLatLng } = this.state;
+    return haversine(prevLatLng, newLatLng) || 0;
   }
 
   componentWillUnmount() {
@@ -345,6 +357,7 @@ export default class FindRideScreen extends React.Component {
       .catch(error => {
         console.error(error);
       });
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   renderDriver() {
@@ -360,20 +373,48 @@ export default class FindRideScreen extends React.Component {
     ];
 
     if (this.state.acceptedRide == true) {
+      navigator.geolocation.getCurrentPosition(
+        position => {},
+        error => alert(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
+      this.watchID = navigator.geolocation.watchPosition(position => {
+        const { routeCoordinates, distanceTravelled } = this.state;
+        const newLatLngs = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        const positionLatLngs = pick(position.coords, [
+          "latitude",
+          "longitude"
+        ]);
+        this.setState({
+          routeCoordinates: routeCoordinates.concat(positionLatLngs),
+          distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
+          prevLatLng: newLatLngs
+        });
+
+        console.log(this.state.routeCoordinates);
+      });
       return (
         <View style={styles1.container}>
           <MapView
             region={{
               latitude: parseFloat(this.state.latitude),
               longitude: parseFloat(this.state.longitude),
-              latitudeDelta: 0.0322,
-              longitudeDelta: 0.0322 * ASPECT_RATIO
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA
             }}
             style={styles1.map}
             mapType="hybrid"
             showsUserLocation={true}
             followUserLocation={true}
           >
+            <Polyline
+              coordinates={this.state.routeCoordinates}
+              strokeColor="darkred" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeWidth={6}
+            />
             <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
             <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
             <MapViewDirections
@@ -412,7 +453,10 @@ export default class FindRideScreen extends React.Component {
             <View style={styles1.bottomBarGroup}>
               <Text style={styles1.bottomBarHeader}>To</Text>
               <Text style={styles1.bottomBarContent3}>
-                {(this.calcDistance() * 0.621371).toFixed(2)} mi
+                {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(
+                  2
+                )}{" "}
+                mi
               </Text>
             </View>
             <View style={styles1.bottomBarGroup}>
