@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AppRegistry,
+  ActivityIndicator,
   Alert,
   StyleSheet,
   Button,
@@ -383,6 +384,24 @@ export default class FindRideScreen extends React.Component {
               strokeColor="yellow"
             />
           </MapView>
+          <View style={styles1.topBar}>
+            <View style={styles1.topBarGroup}>
+              <Text style={styles1.topBarHeader}>Driver Name</Text>
+              <Text style={styles1.topBarContent}>{this.state.driverName}</Text>
+            </View>
+            <View style={styles1.topBarGroup}>
+              <Text style={styles1.topBarHeader}>Phone Number</Text>
+              <Text style={styles1.topBarContent}>
+                {this.state.driverPhoneNumber}
+              </Text>
+            </View>
+            <View style={styles1.topBarGroup}>
+              <Text style={styles1.topBarHeader}>E-mail</Text>
+              <Text style={styles1.topBarContent}>
+                {this.state.driverEmail}
+              </Text>
+            </View>
+          </View>
           <View style={styles1.bottomBar}>
             <View style={styles1.bottomBarGroup}>
               <Text style={styles1.bottomBarHeader}>Driver Address</Text>
@@ -435,29 +454,36 @@ export default class FindRideScreen extends React.Component {
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  marginBottom: 50
                 }}
               >
                 Looking for Driver...
               </Text>
+              <ActivityIndicator size="large" color="white" />
             </View>
-          ) : null}
-
-          <View style={{ flex: 6 }}>
+          ) : (
             <View
               style={{
+                flex: 1,
                 justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "white",
-                borderRadius: 10,
-                padding: 20,
-                margin: 10,
-                marginTop: 0
+                alignItems: "center"
               }}
             >
-              {this.renderDriver()}
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  borderRadius: 10,
+
+                  margin: 10
+                }}
+              >
+                {this.renderDriver()}
+              </View>
             </View>
-          </View>
+          )}
         </ImageBackground>
       </View>
     );
@@ -531,6 +557,32 @@ const styles1 = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
     color: "yellow",
+    textAlign: "center"
+  },
+  topBar: {
+    position: "absolute",
+    height: 70,
+    top: 0,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    width: width,
+    padding: 10,
+    flexWrap: "wrap",
+    flexDirection: "row"
+  },
+  topBarGroup: {
+    flex: 1
+  },
+  topBarHeader: {
+    color: "#fff",
+    fontWeight: "400",
+    textAlign: "center"
+  },
+  topBarContent: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 14,
+    marginTop: 5,
+    color: "#19B5FE",
     textAlign: "center"
   }
 });

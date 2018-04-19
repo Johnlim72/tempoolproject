@@ -95,6 +95,28 @@ export default class AltViewDirectionsScreen extends React.Component {
             strokeColor="yellow"
           />
         </MapView>
+        <View style={styles1.topBar}>
+          <View style={styles1.topBarGroup}>
+            <Text style={styles1.topBarHeader}>Rider Name</Text>
+            <Text style={styles1.topBarContent}>
+              {this.props.navigation.state.params.TextRiderFirstName +
+                " " +
+                this.props.navigation.state.params.TextRiderLastName}
+            </Text>
+          </View>
+          <View style={styles1.topBarGroup}>
+            <Text style={styles1.topBarHeader}>Phone Number</Text>
+            <Text style={styles1.topBarContent}>
+              {this.props.navigation.state.params.TextRiderPhoneNumber}
+            </Text>
+          </View>
+          <View style={styles1.topBarGroup}>
+            <Text style={styles1.topBarHeader}>E-mail</Text>
+            <Text style={styles1.topBarContent}>
+              {this.props.navigation.state.params.TextRiderEmail}
+            </Text>
+          </View>
+        </View>
         <View style={styles1.bottomBar}>
           <View style={styles1.bottomBarGroup}>
             <Text style={styles1.bottomBarHeader}>Driver Address</Text>
@@ -188,6 +210,32 @@ const styles1 = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
     color: "yellow",
+    textAlign: "center"
+  },
+  topBar: {
+    position: "absolute",
+    height: 70,
+    top: 0,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    width: width,
+    padding: 10,
+    flexWrap: "wrap",
+    flexDirection: "row"
+  },
+  topBarGroup: {
+    flex: 1
+  },
+  topBarHeader: {
+    color: "#fff",
+    fontWeight: "400",
+    textAlign: "center"
+  },
+  topBarContent: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 14,
+    marginTop: 5,
+    color: "#ff6666",
     textAlign: "center"
   }
 });

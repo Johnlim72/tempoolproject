@@ -39,8 +39,18 @@ export default class LocationScreen extends React.Component {
         FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
         userID: this.props.navigation.state.params.userID
       });
-    } else {
+    } else if (this.props.navigation.state.params.driverNowOrLater == "Later") {
       this.props.navigation.navigate("Schedule", {
+        TextAddress: this.state.TextAddress,
+        TextLatitude: this.state.TextLatitude,
+        TextLongitude: this.state.TextLongitude,
+        TextEmail: this.props.navigation.state.params.TextEmail,
+        Status: this.props.navigation.state.params.Status,
+        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
+        userID: this.props.navigation.state.params.userID
+      });
+    } else if (this.props.navigation.state.params.driverNowOrLater == "Now") {
+      this.props.navigation.navigate("PickUpRiderNow", {
         TextAddress: this.state.TextAddress,
         TextLatitude: this.state.TextLatitude,
         TextLongitude: this.state.TextLongitude,

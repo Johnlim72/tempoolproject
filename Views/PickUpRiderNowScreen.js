@@ -19,7 +19,7 @@ import Button from "apsl-react-native-button";
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
-export default class DriverLookingScreen extends React.Component {
+export default class PickUpRiderNowScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +35,7 @@ export default class DriverLookingScreen extends React.Component {
       status: "Not Found",
       riderRequested: false,
       driverName: "",
-      driverEmail: "",
+      driverEmail: this.props.navigation.state.params.TextEmail,
       driverPhoneNumber: "",
       TextRiderEmail: "",
       TextRiderFirstName: "",
@@ -54,7 +54,35 @@ export default class DriverLookingScreen extends React.Component {
       acceptedOrPotential: ""
     };
 
-    this.updateScheduleForLooking();
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/submitDriverReturnDriver.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          driver_address: this.state.address,
+          driver_latitude: this.state.latitude,
+          driver_longitude: this.state.longitude,
+          userID: this.state.userID
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        console.log("driver from submitDriverReturnDriver", responseJson);
+        this.setState({
+          driverScheduleID: responseJson.idDriver
+        });
+
+        this.updateScheduleForLooking();
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   updateScheduleForLooking() {
@@ -68,7 +96,7 @@ export default class DriverLookingScreen extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          idDriver: this.props.navigation.state.params.rowData.idDriver,
+          idDriver: this.state.driverScheduleID,
           looking: "Looking"
         })
       }
@@ -96,7 +124,7 @@ export default class DriverLookingScreen extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          idDriver: this.props.navigation.state.params.rowData.idDriver,
+          idDriver: this.state.driverScheduleID,
           looking: "Not Looking"
         })
       }
@@ -126,7 +154,7 @@ export default class DriverLookingScreen extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          driverScheduleID: this.props.navigation.state.params.rowData.idDriver
+          driverScheduleID: this.state.driverScheduleID
         })
       })
         .then(response => response.json())
@@ -220,9 +248,12 @@ export default class DriverLookingScreen extends React.Component {
               {
                 text: "Yes",
                 onPress: () =>
-                  this.props.navigation.navigate("DriverLooking", {
-                    rowData: this.props.navigation.state.params.rowData,
-                    userID: this.props.navigation.state.params.userID
+                  this.props.navigation.navigate("PickUpRiderNow", {
+                    TextAddress: this.state.address,
+                    TextLatitude: this.state.latitude,
+                    TextLongitude: this.state.longitude,
+                    TextEmail: this.state.driverEmail,
+                    userID: this.state.userID
                   })
               },
               {
@@ -256,7 +287,7 @@ export default class DriverLookingScreen extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          idDriver: this.props.navigation.state.params.rowData.idDriver,
+          idDriver: this.state.driverScheduleID,
           looking: "Not Looking"
         })
       }

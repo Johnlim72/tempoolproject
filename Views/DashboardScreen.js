@@ -371,7 +371,32 @@ export default class DashboardScreen extends React.Component {
                   this.props.navigation.navigate("Location", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     Status: this.state.SwitchOnValueHolder,
-                    userID: this.state.userID
+                    userID: this.state.userID,
+                    driverNowOrLater: "Now"
+                  })
+                }
+              >
+                Pick Up a Rider Now
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#0000b3",
+                  borderColor: "#0000b3",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Location", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    Status: this.state.SwitchOnValueHolder,
+                    userID: this.state.userID,
+                    driverNowOrLater: "Later"
                   })
                 }
               >

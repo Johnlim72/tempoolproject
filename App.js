@@ -29,6 +29,7 @@ import TrackScreen from "./Views/TrackScreen";
 import StartLookingScreen from "./Views/StartLookingScreen";
 import DriverLookingScreen from "./Views/DriverLookingScreen";
 import AltViewDirectionsScreen from "./Views/AltViewDirectionsScreen";
+import PickUpRiderNowScreen from "./Views/PickUpRiderNowScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -91,6 +92,9 @@ const RootStack = StackNavigator(
     },
     AltViewDirections: {
       screen: AltViewDirectionsScreen
+    },
+    PickUpRiderNow: {
+      screen: PickUpRiderNowScreen
     }
   },
   {

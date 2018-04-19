@@ -163,7 +163,7 @@ export default class ScheduleScreen extends React.Component {
 
     console.log("insertdrivertoserver driver id: " + this.state.userID);
 
-    fetch("http://cis-linux2.temple.edu/~tuf70921/php/submit_driver_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_driver_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
