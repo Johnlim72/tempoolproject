@@ -410,11 +410,7 @@ export default class FindRideScreen extends React.Component {
             showsUserLocation={true}
             followUserLocation={true}
           >
-            <Polyline
-              coordinates={this.state.routeCoordinates}
-              strokeColor="darkred" // fallback for when `strokeColors` is not supported by the map-provider
-              strokeWidth={6}
-            />
+
             <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
             <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
             <MapViewDirections
@@ -423,6 +419,11 @@ export default class FindRideScreen extends React.Component {
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={3}
               strokeColor="yellow"
+            />
+            <Polyline
+              coordinates={this.state.routeCoordinates}
+              strokeColor="darkred" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeWidth={6}
             />
           </MapView>
           <View style={styles1.topBar}>

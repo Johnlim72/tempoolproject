@@ -16,6 +16,8 @@ import MapViewDirections from "react-native-maps-directions";
 const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
 const GOOGLE_MAPS_APIKEY = "AIzaSyCFwaPOiId1pFRm93-nbRBzF71UybpU9i8";
+const LATITUDE_DELTA = 0.0222;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class AltViewDirectionsScreen extends React.Component {
   constructor(props) {
@@ -24,31 +26,43 @@ export default class AltViewDirectionsScreen extends React.Component {
     this.state = {
       distance: "",
       rider_address: this.props.navigation.state.params.rider_address,
-      driver_address: this.props.navigation.state.params.driver_address
+      driver_address: this.props.navigation.state.params.driver_address,
+      routeCoordinates: [],
+      distanceTravelled: 0,
+      prevLatLng: {}
     };
   }
 
-  calcDistance() {
-    return (
-      haversine(
-        {
-          latitude: parseFloat(
-            this.props.navigation.state.params.rider_loc_lat
-          ),
-          longitude: parseFloat(
-            this.props.navigation.state.params.rider_loc_long
-          )
-        },
-        {
-          latitude: parseFloat(
-            this.props.navigation.state.params.driver_latitude
-          ),
-          longitude: parseFloat(
-            this.props.navigation.state.params.driver_longitude
-          )
-        }
-      ) || 0
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {},
+      error => alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
+    this.watchID = navigator.geolocation.watchPosition(position => {
+      const { routeCoordinates, distanceTravelled } = this.state;
+      const newLatLngs = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      const positionLatLngs = pick(position.coords, ["latitude", "longitude"]);
+      this.setState({
+        routeCoordinates: routeCoordinates.concat(positionLatLngs),
+        distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
+        prevLatLng: newLatLngs
+      });
+
+      console.log(this.state.routeCoordinates);
+    });
+  }
+
+  calcDistance(newLatLng) {
+    const { prevLatLng } = this.state;
+    return haversine(prevLatLng, newLatLng) || 0;
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   render() {
@@ -77,8 +91,8 @@ export default class AltViewDirectionsScreen extends React.Component {
             longitude: parseFloat(
               this.props.navigation.state.params.rider_loc_long
             ),
-            latitudeDelta: 0.0322,
-            longitudeDelta: 0.0322 * ASPECT_RATIO
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
           }}
           style={styles1.map}
           mapType="hybrid"
@@ -93,6 +107,11 @@ export default class AltViewDirectionsScreen extends React.Component {
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={3}
             strokeColor="yellow"
+          />
+          <Polyline
+            coordinates={this.state.routeCoordinates}
+            strokeColor="darkred" // fallback for when `strokeColors` is not supported by the map-provider
+            strokeWidth={6}
           />
         </MapView>
         <View style={styles1.topBar}>
@@ -127,7 +146,8 @@ export default class AltViewDirectionsScreen extends React.Component {
           <View style={styles1.bottomBarGroup}>
             <Text style={styles1.bottomBarHeader}>To</Text>
             <Text style={styles1.bottomBarContent3}>
-              {(this.calcDistance() * 0.621371).toFixed(2)} mi
+              {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(2)}{" "}
+              mi
             </Text>
           </View>
           <View style={styles1.bottomBarGroup}>
