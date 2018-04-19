@@ -36,7 +36,8 @@ export default class DashboardScreen extends React.Component {
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextUserID: "",
       SwitchOnValueHolder: true,
-      disabled: false
+      disabled: false,
+      status: ""
     };
   }
 
@@ -77,7 +78,8 @@ export default class DashboardScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
-          TextUserID: responseJson.idUser
+          TextUserID: responseJson.idUser,
+          status: responseJson.status
         });
 
         console.log("TextUserId: " + this.state.TextUserID);
@@ -93,7 +95,7 @@ export default class DashboardScreen extends React.Component {
   render() {
     const { goBack } = this.props.navigation;
 
-    if (this.state.SwitchOnValueHolder == true) {
+    if (this.state.status == "Rider") {
       return (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -112,70 +114,17 @@ export default class DashboardScreen extends React.Component {
                 marginTop: 20
               }}
             >
-              <View
+              <Text
                 style={{
-                  flex: 1,
-                  paddingHorizontal: 50,
-                  paddingTop: 10,
-                  borderRadius: 10,
-                  backgroundColor: "white"
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontSize: 30,
+                  fontWeight: "400",
+                  paddingBottom: 10
                 }}
               >
-                <Text
-                  style={{
-                    color: "darkred",
-                    fontFamily: "Quicksand",
-                    fontSize: 30,
-                    fontWeight: "400",
-                    paddingBottom: 10
-                  }}
-                >
-                  Dashboard
-                </Text>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "row"
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginRight: 10,
-                      fontFamily: "Quicksand",
-                      fontWeight: "400",
-                      color: "black"
-                    }}
-                  >
-                    Driver
-                  </Text>
-                  <Switch
-                    onValueChange={value => this.ShowAlert(value)}
-                    activeText={""}
-                    inActiveText={""}
-                    disabled={false}
-                    circleSize={30}
-                    barHeight={30}
-                    circleBorderWidth={3}
-                    backgroundActive={"darkred"}
-                    backgroundInactive={"#003399"}
-                    circleActiveColor={"#cc0000"}
-                    circleInActiveColor={"#1a75ff"}
-                    style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
-                    value={this.state.SwitchOnValueHolder}
-                  />
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      fontFamily: "Quicksand",
-                      fontWeight: "400",
-                      color: "black"
-                    }}
-                  >
-                    Rider
-                  </Text>
-                </View>
-              </View>
+                Dashboard
+              </Text>
             </View>
             <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
@@ -288,70 +237,17 @@ export default class DashboardScreen extends React.Component {
                 marginTop: 20
               }}
             >
-              <View
+              <Text
                 style={{
-                  flex: 1,
-                  paddingHorizontal: 50,
-                  paddingTop: 10,
-                  borderRadius: 10,
-                  backgroundColor: "white"
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400",
+                  fontSize: 30,
+                  paddingBottom: 10
                 }}
               >
-                <Text
-                  style={{
-                    color: "darkred",
-                    fontFamily: "Quicksand",
-                    fontWeight: "400",
-                    fontSize: 30,
-                    paddingBottom: 10
-                  }}
-                >
-                  Dashboard
-                </Text>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "row"
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginRight: 10,
-                      fontFamily: "Quicksand",
-                      fontWeight: "400",
-                      color: "black"
-                    }}
-                  >
-                    Driver
-                  </Text>
-                  <Switch
-                    onValueChange={value => this.ShowAlert(value)}
-                    activeText={""}
-                    inActiveText={""}
-                    disabled={false}
-                    circleSize={30}
-                    barHeight={30}
-                    circleBorderWidth={3}
-                    backgroundActive={"darkred"}
-                    backgroundInactive={"#003399"}
-                    circleActiveColor={"#cc0000"}
-                    circleInActiveColor={"#1a75ff"}
-                    style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
-                    value={this.state.SwitchOnValueHolder}
-                  />
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      fontFamily: "Quicksand",
-                      fontWeight: "400",
-                      color: "black"
-                    }}
-                  >
-                    Rider
-                  </Text>
-                </View>
-              </View>
+                Dashboard
+              </Text>
             </View>
             <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
@@ -424,28 +320,7 @@ export default class DashboardScreen extends React.Component {
               >
                 Your Schedules
               </Button>
-              <Button
-                style={{
-                  backgroundColor: "#1a1aff",
-                  borderColor: "#1a1aff",
-                  borderRadius: 22,
-                  borderWidth: 2
-                }}
-                textStyle={{
-                  fontSize: 18,
-                  color: "white",
-                  fontFamily: "Quicksand",
-                  fontWeight: "400"
-                }}
-                onPress={() =>
-                  this.props.navigation.navigate("StartLooking", {
-                    TextEmail: this.props.navigation.state.params.TextEmail,
-                    TextUserID: this.state.TextUserID
-                  })
-                }
-              >
-                Start Looking for Riders
-              </Button>
+
               <Button
                 style={{
                   backgroundColor: "#4d4dff",
