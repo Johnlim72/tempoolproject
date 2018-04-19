@@ -10,6 +10,8 @@ import {
 
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import haversine from "haversine";
+
+import pick from "lodash/pick";
 import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
