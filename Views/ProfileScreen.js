@@ -8,19 +8,22 @@ import {
   Text,
   ImageBackground,
   Dimensions,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from "react-native";
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import styles from "./style";
-
+import { Switch } from "react-native-switch";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
+const USERID = "userID";
+
 export default class ProfileScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
   constructor(props) {
@@ -32,9 +35,14 @@ export default class ProfileScreen extends React.Component {
       TextEmail: this.props.navigation.state.params.TextEmail,
       TextPassword: "",
       TextInputPhoneNumber: "",
-      TextPasswordConfirm: ""
+      TextPasswordConfirm: "",
+      theUser: "",
+      status: "",
+      SwitchOnValueHolder: true,
+      disabled: false
     };
-
+  }
+  componentDidMount() {
     //this.props.navigation.state.params.Email
 
     const { TextInputFirstName } = "";
@@ -67,10 +75,69 @@ export default class ProfileScreen extends React.Component {
           TextEmail: responseJson.email,
           TextPassword: "",
           TextPasswordConfirm: "",
-          TextInputPhoneNumber: responseJson.phoneNumber
+          TextInputPhoneNumber: responseJson.phoneNumber,
+          status: responseJson.status
         });
 
+        if (responseJson.status == "Rider") {
+          this.setState({
+            SwitchOnValueHolder: true
+          });
+        } else {
+          this.setState({
+            SwitchOnValueHolder: false
+          });
+        }
+
         console.log(responseJson);
+      })
+
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  ShowAlert = value => {
+    //somehow need to merge with my function
+    this.setState({
+      SwitchOnValueHolder: value
+    });
+
+    if (value == true) {
+      //the switch is on
+      status = "Rider";
+      console.log("status: " + status);
+      this.setState({ disabled: false });
+      this.updateStatus(status);
+    } else {
+      status = "Driver";
+      console.log("status: " + status);
+      this.setState({ disabled: true }); //the switch is off
+      this.updateStatus(status);
+    }
+  };
+  //rider is true driver is false
+  updateStatus(status) {
+    this.setState({ status: status });
+    console.log("status: " + status);
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/status_update.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        TextEmail: this.state.TextEmail,
+        status: status
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          StatusText: responseJson.status
+        });
+
+        console.log("status: " + this.state.status);
       })
 
       .catch(error => {
@@ -350,6 +417,78 @@ export default class ProfileScreen extends React.Component {
                     { color: "black", fontFamily: "Quicksand" }
                   ]}
                 />
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 20,
+                    marginTop: 20
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      paddingHorizontal: 50,
+                      paddingTop: 0,
+                      borderRadius: 5,
+                      backgroundColor: "white"
+                    }}
+                  >
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row"
+                      }}
+                    >
+                      <Text
+                        style={{
+                          marginRight: 10,
+                          fontFamily: "Quicksand",
+                          fontWeight: "400",
+                          color: "black"
+                        }}
+                      >
+                        Driver
+                      </Text>
+                      <Switch
+                        onValueChange={value => this.ShowAlert(value)}
+                        activeText={""}
+                        inActiveText={""}
+                        disabled={false}
+                        circleSize={30}
+                        barHeight={30}
+                        circleBorderWidth={3}
+                        backgroundActive={"darkred"}
+                        backgroundInactive={"#003399"}
+                        circleActiveColor={"#cc0000"}
+                        circleInActiveColor={"#1a75ff"}
+                        style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
+                        value={this.state.SwitchOnValueHolder}
+                      />
+                      <Text
+                        style={{
+                          marginLeft: 10,
+                          fontFamily: "Quicksand",
+                          fontWeight: "400",
+                          color: "black"
+                        }}
+                      >
+                        Rider
+                      </Text>
+                    </View>
+                  </View>
+                </View>
               </View>
 
               <Button
