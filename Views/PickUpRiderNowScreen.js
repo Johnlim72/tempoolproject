@@ -307,6 +307,7 @@ export default class PickUpRiderNowScreen extends React.Component {
   goToRideScreen() {
     this.updateRide("Accepted");
     this.props.navigation.navigate("AltViewDirections", {
+      ride_ID: this.state.ride_ID,
       driver_address: this.state.driver_address,
       rider_address: this.state.rider_address,
       rider_loc_lat: this.state.rider_loc_lat,

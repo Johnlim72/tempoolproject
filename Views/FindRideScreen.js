@@ -53,12 +53,21 @@ export default class FindRideScreen extends React.Component {
       idQueue: "",
       routeCoordinates: [],
       distanceTravelled: 0,
-      prevLatLng: {}
+      prevLatLng: {},
+      foundDriver: false,
+      completedRide: false,
+      currentLatitude: "",
+      currentLongitude: ""
     };
   }
 
   componentDidMount() {
     this.putIntoQueue();
+    this.checkIfAccepted = setInterval(() => {
+      if (this.state.acceptedRide == true) {
+        this.checkForCoordinates();
+      }
+    }, 5000);
   }
 
   putIntoQueue() {
@@ -225,7 +234,8 @@ export default class FindRideScreen extends React.Component {
         driver_address: this.state.list1.rows[minUser].addressText,
         driver_latitude: this.state.list1.rows[minUser].latitude,
         driver_longitude: this.state.list1.rows[minUser].longitude,
-        driverScheduleID: this.state.list1.rows[minUser].idDriver
+        driverScheduleID: this.state.list1.rows[minUser].idDriver,
+        foundDriver: true
       });
       console.log("driverID: " + this.state.driverID);
       this.insertRideToServer();
@@ -284,7 +294,7 @@ export default class FindRideScreen extends React.Component {
                   status = "Error";
                 }
 
-                if (this.state.status === "Accepted") {
+                if (responseJson.status === "Accepted") {
                   console.log("status: " + responseJson.status);
                   this.setState({
                     loader: false,
@@ -295,6 +305,25 @@ export default class FindRideScreen extends React.Component {
                   });
 
                   clearInterval(this.timerCheckAccepted);
+                } else if (responseJson.status === "Declined") {
+                  console.log("status: " + responseJson.status);
+                  this.setState({
+                    loader: true,
+                    foundDriver: false,
+                    acceptedRide: false
+                  });
+                  clearInterval(this.timerCheckAccepted);
+                  Alert.alert(
+                    "Driver declined",
+                    "Looking for new driver",
+                    [
+                      {
+                        text: "Ok",
+                        onPress: () => this.putIntoQueue()
+                      }
+                    ],
+                    { cancelable: false }
+                  );
                 }
               })
               .catch(error => {
@@ -360,6 +389,44 @@ export default class FindRideScreen extends React.Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  checkForCoordinates() {
+    this.timerGetCoordinates = setInterval(() => {
+      fetch("http://cis-linux2.temple.edu/~tuf41055/php/getCoordinates.php", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ride_ID: this.state.rideID
+        })
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          //Then open Profile activity and send user email to profile activity.
+          console.log("responseJson: ", responseJson);
+          const { routeCoordinates, distanceTravelled } = this.state;
+
+          const newLatLngs = {
+            latitude: parseFloat(responseJson.currLatitude),
+            longitude: parseFloat(responseJson.currLongitude)
+          };
+
+          this.setState({
+            routeCoordinates: routeCoordinates.concat(newLatLngs),
+            distanceTravelled:
+              distanceTravelled + this.calcDistance(newLatLngs),
+            prevLatLng: newLatLngs
+          });
+
+          console.log(this.state.routeCoordinates);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, 10000);
+  }
+
   renderDriver() {
     const coordinates = [
       {
@@ -373,29 +440,6 @@ export default class FindRideScreen extends React.Component {
     ];
 
     if (this.state.acceptedRide == true) {
-      navigator.geolocation.getCurrentPosition(
-        position => {},
-        error => alert(error.message),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-      );
-      this.watchID = navigator.geolocation.watchPosition(position => {
-        const { routeCoordinates, distanceTravelled } = this.state;
-        const newLatLngs = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-        const positionLatLngs = pick(position.coords, [
-          "latitude",
-          "longitude"
-        ]);
-        this.setState({
-          routeCoordinates: routeCoordinates.concat(positionLatLngs),
-          distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
-          prevLatLng: newLatLngs
-        });
-
-        console.log(this.state.routeCoordinates);
-      });
       return (
         <View style={styles1.container}>
           <MapView
@@ -410,7 +454,6 @@ export default class FindRideScreen extends React.Component {
             showsUserLocation={true}
             followUserLocation={true}
           >
-
             <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
             <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
             <MapViewDirections
@@ -506,6 +549,35 @@ export default class FindRideScreen extends React.Component {
                 Looking for Driver...
               </Text>
               <ActivityIndicator size="large" color="white" />
+              {this.state.foundDriver ? (
+                <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontSize: 30,
+                    paddingTop: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 50
+                  }}
+                >
+                  Found Driver
+                </Text>
+              ) : null}
+              {this.state.foundDriver ? (
+                <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontSize: 30,
+                    paddingTop: 10,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  Waiting for Driver..
+                </Text>
+              ) : null}
             </View>
           ) : (
             <View
