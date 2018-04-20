@@ -197,7 +197,10 @@ export default class DriverLookingScreen extends React.Component {
 
   updateRide(acceptedOrPotential) {
     this.setState({ acceptedOrPotential: acceptedOrPotential });
-    console.log("acceptedOrPotential: " + acceptedOrPotential);
+
+    console.log(
+      "acceptedOrPotentialllll: " + acceptedOrPotential + ", " + this.state.ride_ID
+    );
     fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
       method: "POST",
       headers: {
@@ -275,7 +278,9 @@ export default class DriverLookingScreen extends React.Component {
 
   goToRideScreen() {
     this.updateRide("Accepted");
+    console.log("ride_ID: " + this.state.ride_ID);
     this.props.navigation.navigate("AltViewDirections", {
+      ride_ID: this.state.ride_ID,
       driver_address: this.state.driver_address,
       rider_address: this.state.rider_address,
       rider_loc_lat: this.state.rider_loc_lat,

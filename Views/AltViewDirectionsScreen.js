@@ -29,6 +29,7 @@ export default class AltViewDirectionsScreen extends React.Component {
       distance: "",
       rider_address: this.props.navigation.state.params.rider_address,
       driver_address: this.props.navigation.state.params.driver_address,
+      ride_ID: this.props.navigation.state.params.ride_ID,
       routeCoordinates: [],
       distanceTravelled: 0,
       prevLatLng: {}
@@ -54,8 +55,43 @@ export default class AltViewDirectionsScreen extends React.Component {
         prevLatLng: newLatLngs
       });
 
-      console.log(this.state.routeCoordinates);
+      console.log(
+        "positionLatLngs: " +
+          positionLatLngs +
+          ", positionLatLngs.latitude: " +
+          positionLatLngs.latitude +
+          ", positionLatLngs.longitude: " +
+          positionLatLngs.longitude +
+          ", ride_ID : " +
+          this.props.navigation.state.params.ride_ID
+      );
+      this.updateCoordinates(positionLatLngs);
     });
+  }
+
+  updateCoordinates(positionLatLngs) {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateCoordinates.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.ride_ID,
+        currentLatitude: positionLatLngs.latitude,
+        currentLongitude: positionLatLngs.longitude
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Updated Coordinates") {
+          console.log("Updated Coordinates");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   calcDistance(newLatLng) {
