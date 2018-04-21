@@ -52,7 +52,25 @@ export default class AltViewDirectionsScreen extends React.Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
-      position => {},
+      position => {
+        const { routeCoordinates, distanceTravelled } = this.state;
+        const newLatLngs = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        const positionLatLngs = pick(position.coords, [
+          "latitude",
+          "longitude"
+        ]);
+
+        this.setState({
+          routeCoordinates: routeCoordinates.concat(positionLatLngs),
+          distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
+          prevLatLng: newLatLngs
+        });
+
+        this.updateCoordinates(positionLatLngs);
+      },
       error => alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
