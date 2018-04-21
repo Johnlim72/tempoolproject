@@ -11,6 +11,7 @@ import {
 import { StackNavigator } from "react-navigation"; // Version can be specified in package.json
 import haversine from "haversine";
 
+import Button from "apsl-react-native-button";
 import pick from "lodash/pick";
 import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
@@ -32,7 +33,20 @@ export default class AltViewDirectionsScreen extends React.Component {
       ride_ID: this.props.navigation.state.params.ride_ID,
       routeCoordinates: [],
       distanceTravelled: 0,
-      prevLatLng: {}
+      prevLatLng: {},
+      rider_coordinates: {
+        latitude: parseFloat(this.props.navigation.state.params.rider_loc_lat),
+        longitude: parseFloat(this.props.navigation.state.params.rider_loc_long)
+      },
+      driver_coordinates: {
+        latitude: parseFloat(
+          this.props.navigation.state.params.driver_latitude
+        ),
+        longitude: parseFloat(
+          this.props.navigation.state.params.driver_longitude
+        )
+      },
+      pickedUpRider: false
     };
   }
 
@@ -123,12 +137,8 @@ export default class AltViewDirectionsScreen extends React.Component {
       <View style={styles1.container}>
         <MapView
           region={{
-            latitude: parseFloat(
-              this.props.navigation.state.params.rider_loc_lat
-            ),
-            longitude: parseFloat(
-              this.props.navigation.state.params.rider_loc_long
-            ),
+            latitude: parseFloat(this.state.rider_coordinates.latitude),
+            longitude: parseFloat(this.state.rider_coordinates.longitude),
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA
           }}
@@ -137,11 +147,17 @@ export default class AltViewDirectionsScreen extends React.Component {
           showsUserLocation={true}
           followUserLocation={true}
         >
-          <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
-          <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
+          <MapView.Marker
+            coordinate={this.state.rider_coordinates}
+            pinColor="darkred"
+          />
+          <MapView.Marker
+            coordinate={this.state.driver_coordinates}
+            pinColor="blue"
+          />
           <MapViewDirections
-            origin={coordinates[0]}
-            destination={coordinates[1]}
+            origin={this.state.rider_coordinates}
+            destination={this.state.driver_coordinates}
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={3}
             strokeColor="yellow"
@@ -167,34 +183,105 @@ export default class AltViewDirectionsScreen extends React.Component {
               {this.props.navigation.state.params.TextRiderPhoneNumber}
             </Text>
           </View>
-          <View style={styles1.topBarGroup}>
-            <Text style={styles1.topBarHeader}>E-mail</Text>
-            <Text style={styles1.topBarContent}>
-              {this.props.navigation.state.params.TextRiderEmail}
-            </Text>
-          </View>
+          {this.state.pickedUpRider ? (
+            <View style={styles1.topBarGroup}>
+              <Button
+                style={{
+                  backgroundColor: "green",
+                  borderColor: "green",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() => console.log("completed ride")}
+              >
+                Complete Ride
+              </Button>
+            </View>
+          ) : (
+            <View style={styles1.topBarGroup}>
+              <Button
+                style={{
+                  backgroundColor: "#ff6666",
+                  borderColor: "#ff6666",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.setState({
+                    driver_coordinates: {
+                      latitude: 39.980326,
+                      longitude: -75.15704
+                    },
+                    pickedUpRider: true
+                  })
+                }
+              >
+                Picked Up Rider
+              </Button>
+            </View>
+          )}
         </View>
-        <View style={styles1.bottomBar}>
-          <View style={styles1.bottomBarGroup}>
-            <Text style={styles1.bottomBarHeader}>Driver Address</Text>
-            <Text style={styles1.bottomBarContent2}>
-              {this.state.driver_address}
-            </Text>
+        {this.state.pickedUpRider ? (
+          <View style={styles1.bottomBar}>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>Rider Address</Text>
+              <Text style={styles1.bottomBarContent2}>
+                {this.state.rider_address}
+              </Text>
+            </View>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>To</Text>
+              <Text style={styles1.bottomBarContent3}>
+                {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(
+                  2
+                )}{" "}
+                mi
+              </Text>
+            </View>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>Temple University</Text>
+              <Text style={styles1.bottomBarContent}>
+                1803 N. Broad St., Philadelphia, PA 19121, USA
+              </Text>
+            </View>
           </View>
-          <View style={styles1.bottomBarGroup}>
-            <Text style={styles1.bottomBarHeader}>To</Text>
-            <Text style={styles1.bottomBarContent3}>
-              {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(2)}{" "}
-              mi
-            </Text>
+        ) : (
+          <View style={styles1.bottomBar}>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>Driver Address</Text>
+              <Text style={styles1.bottomBarContent2}>
+                {this.state.driver_address}
+              </Text>
+            </View>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>To</Text>
+              <Text style={styles1.bottomBarContent3}>
+                {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(
+                  2
+                )}{" "}
+                mi
+              </Text>
+            </View>
+            <View style={styles1.bottomBarGroup}>
+              <Text style={styles1.bottomBarHeader}>Rider Address</Text>
+              <Text style={styles1.bottomBarContent}>
+                {this.state.rider_address}
+              </Text>
+            </View>
           </View>
-          <View style={styles1.bottomBarGroup}>
-            <Text style={styles1.bottomBarHeader}>Rider Address</Text>
-            <Text style={styles1.bottomBarContent}>
-              {this.state.rider_address}
-            </Text>
-          </View>
-        </View>
+        )}
       </View>
     );
   }
