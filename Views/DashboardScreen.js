@@ -2,6 +2,7 @@ import React from "react";
 import {
   AppRegistry,
   Alert,
+  ActivityIndicator,
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
@@ -82,13 +83,54 @@ export default class DashboardScreen extends React.Component {
           status: responseJson.status
         });
 
+        fetch("http://cis-linux2.temple.edu/~tuf41055/php/checkForQueue.php", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userID: responseJson.idUser
+          })
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            console.log("responseJson: ", responseJson);
+          })
+
+          .catch(error => {
+            console.error(error);
+          });
+
+        fetch(
+          "http://cis-linux2.temple.edu/~tuf41055/php/checkForStillLooking.php",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              userID: responseJson.idUser
+            })
+          }
+        )
+          .then(response => response.json())
+          .then(responseJson => {
+            console.log("responseJson: ", responseJson);
+          })
+
+          .catch(error => {
+            console.error(error);
+          });
+
         console.log("TextUserId: " + this.state.TextUserID);
       })
-
       .catch(error => {
         console.error(error);
       });
   }
+
   componentDidMount() {
     this.getUserAndNavToList();
   }
@@ -217,7 +259,7 @@ export default class DashboardScreen extends React.Component {
           </ImageBackground>
         </View>
       );
-    } else {
+    } else if (this.state.status == "Driver") {
       //driver render
       return (
         <View
@@ -382,6 +424,20 @@ export default class DashboardScreen extends React.Component {
                 Logout
               </Button>
             </View>
+          </ImageBackground>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ImageBackground
+            source={background}
+            style={styles.background}
+            resizeMode="cover"
+          >
+            <ActivityIndicator size="large" color="white" />
           </ImageBackground>
         </View>
       );
