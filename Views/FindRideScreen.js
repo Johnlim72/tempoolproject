@@ -57,17 +57,13 @@ export default class FindRideScreen extends React.Component {
       foundDriver: false,
       completedRide: false,
       currentLatitude: "",
-      currentLongitude: ""
+      currentLongitude: "",
+      coordinatesChecked: false
     };
   }
 
   componentDidMount() {
     this.putIntoQueue();
-    this.checkIfAccepted = setInterval(() => {
-      if (this.state.acceptedRide == true) {
-        this.checkForCoordinates();
-      }
-    }, 5000);
   }
 
   putIntoQueue() {
@@ -303,6 +299,12 @@ export default class FindRideScreen extends React.Component {
                     driverEmail: responseJson.driverEmail,
                     driverPhoneNumber: responseJson.driverPhoneNumber
                   });
+                  this.checkForCoordinates();
+                  // this.checkIfAccepted = setInterval(() => {
+                  //   if (this.state.acceptedRide == true) {
+                  //     this.checkForCoordinates();
+                  //   }
+                  // }, 2000);
 
                   clearInterval(this.timerCheckAccepted);
                 } else if (responseJson.status === "Declined") {
@@ -390,6 +392,41 @@ export default class FindRideScreen extends React.Component {
   }
 
   checkForCoordinates() {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/getCoordinates.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.rideID
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        console.log("responseJson: ", responseJson);
+        const { routeCoordinates, distanceTravelled } = this.state;
+
+        const newLatLngs = {
+          latitude: parseFloat(responseJson.currLatitude),
+          longitude: parseFloat(responseJson.currLongitude)
+        };
+
+        this.setState({
+          routeCoordinates: routeCoordinates.concat(newLatLngs),
+          distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
+          prevLatLng: newLatLngs,
+          currentLatitude: newLatLngs.latitude,
+          currentLongitude: newLatLngs.longitude,
+          coordinatesChecked: true
+        });
+
+        console.log(this.state.routeCoordinates);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     this.timerGetCoordinates = setInterval(() => {
       fetch("http://cis-linux2.temple.edu/~tuf41055/php/getCoordinates.php", {
         method: "POST",
@@ -418,7 +455,8 @@ export default class FindRideScreen extends React.Component {
               distanceTravelled + this.calcDistance(newLatLngs),
             prevLatLng: newLatLngs,
             currentLatitude: newLatLngs.latitude,
-            currentLongitude: newLatLngs.longitude
+            currentLongitude: newLatLngs.longitude,
+            coordinatesChecked: true
           });
 
           console.log(this.state.routeCoordinates);
@@ -441,7 +479,7 @@ export default class FindRideScreen extends React.Component {
       }
     ];
 
-    if (this.state.acceptedRide == true) {
+    if (this.state.coordinatesChecked == true) {
       return (
         <View style={styles1.container}>
           <MapView
