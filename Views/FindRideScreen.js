@@ -444,8 +444,8 @@ export default class FindRideScreen extends React.Component {
         <View style={styles1.container}>
           <MapView
             region={{
-              latitude: parseFloat(this.state.latitude),
-              longitude: parseFloat(this.state.longitude),
+              latitude: parseFloat(this.state.currentLatitude),
+              longitude: parseFloat(this.state.currentLongitude),
               latitudeDelta: LATITUDE_DELTA,
               longitudeDelta: LONGITUDE_DELTA
             }}
