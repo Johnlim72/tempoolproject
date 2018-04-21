@@ -234,7 +234,9 @@ export default class PickUpRiderNowScreen extends React.Component {
       },
       body: JSON.stringify({
         ride_ID: this.state.ride_ID,
-        acceptedOrPotential: acceptedOrPotential
+        acceptedOrPotential: acceptedOrPotential,
+        driver_latitude: this.state.driver_latitude,
+        driver_longitude: this.state.driver_longitude
       })
     })
       .then(response => response.json())

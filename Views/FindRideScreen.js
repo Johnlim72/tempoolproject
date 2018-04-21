@@ -416,7 +416,9 @@ export default class FindRideScreen extends React.Component {
             routeCoordinates: routeCoordinates.concat(newLatLngs),
             distanceTravelled:
               distanceTravelled + this.calcDistance(newLatLngs),
-            prevLatLng: newLatLngs
+            prevLatLng: newLatLngs,
+            currentLatitude: newLatLngs.latitude,
+            currentLongitude: newLatLngs.longitude
           });
 
           console.log(this.state.routeCoordinates);
