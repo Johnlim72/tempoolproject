@@ -111,7 +111,34 @@ export default class AltViewDirectionsScreen extends React.Component {
       body: JSON.stringify({
         ride_ID: this.state.ride_ID,
         currentLatitude: positionLatLngs.latitude,
-        currentLongitude: positionLatLngs.longitude
+        currentLongitude: positionLatLngs.longitude,
+        pickedUpRider: this.state.pickedUpRider
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Updated Coordinates") {
+          console.log("Updated Coordinates");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  updateCoordinatesPickedUpRider(positionLatLngs) {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateCoordinates.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.ride_ID,
+        currentLatitude: positionLatLngs.latitude,
+        currentLongitude: positionLatLngs.longitude,
+        pickedUpRider: true
       })
     })
       .then(response => response.json())
@@ -133,6 +160,18 @@ export default class AltViewDirectionsScreen extends React.Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  pickedUpRider() {
+    this.setState({
+      pickedUpRider: true,
+      driver_coordinates: {
+        latitude: 39.980326,
+        longitude: -75.15704
+      }
+    });
+    console.log("pickedUpRider: " + this.state.pickedUpRider);
+    this.updateCoordinatesPickedUpRider(this.state.driver_coordinates);
   }
 
   render() {
@@ -236,17 +275,7 @@ export default class AltViewDirectionsScreen extends React.Component {
                   fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
-                onPress={
-                  (() =>
-                    this.setState({
-                      driver_coordinates: {
-                        latitude: 39.980326,
-                        longitude: -75.15704
-                      },
-                      pickedUpRider: true
-                    }),
-                  this.updateCoordinates(this.state.driver_coordinates))
-                }
+                onPress={() => this.pickedUpRider()}
               >
                 Picked Up Rider
               </Button>

@@ -42,12 +42,12 @@ export default class FindRideScreen extends React.Component {
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
       driver_coordinates: {
-        latitude: "",
-        longitude: ""
+        latitude: parseFloat(this.props.navigation.state.params.TextLatitude),
+        longitude: parseFloat(this.props.navigation.state.params.TextLongitude)
       },
       rider_coordinates: {
-        latitude: this.props.navigation.state.params.TextLatitude,
-        longitude: this.props.navigation.state.params.TextLongitude
+        latitude: parseFloat(this.props.navigation.state.params.TextLatitude),
+        longitude: parseFloat(this.props.navigation.state.params.TextLongitude)
       },
       list1: [],
       loader: true,
@@ -70,7 +70,8 @@ export default class FindRideScreen extends React.Component {
       completedRide: false,
       currentLatitude: "",
       currentLongitude: "",
-      coordinatesChecked: false
+      coordinatesChecked: false,
+      pickedUpRider: false
     };
   }
 
@@ -473,9 +474,18 @@ export default class FindRideScreen extends React.Component {
             prevLatLng: newLatLngs,
             currentLatitude: newLatLngs.latitude,
             currentLongitude: newLatLngs.longitude,
-            coordinatesChecked: true
+            coordinatesChecked: true,
+            pickedUpRider: responseJson.pickedUpRider
           });
 
+          if (this.state.pickedUpRider == true) {
+            this.setState({
+              driver_coordinates: {
+                latitude: 39.980326,
+                longitude: -75.15704
+              }
+            });
+          }
           console.log(this.state.routeCoordinates);
         })
         .catch(error => {
@@ -512,7 +522,7 @@ export default class FindRideScreen extends React.Component {
             followUserLocation={true}
           >
             <MapView.Marker
-              coordinate={this.state.rider_coordinates}
+              coordinate={parseFloat(this.state.rider_coordinates)}
               pinColor="darkred"
             />
             <MapView.Marker
@@ -520,7 +530,7 @@ export default class FindRideScreen extends React.Component {
               pinColor="blue"
             />
             <MapViewDirections
-              origin={this.state.rider_coordinates}
+              origin={parseFloat(this.state.rider_coordinates)}
               destination={this.state.driver_coordinates}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={3}
