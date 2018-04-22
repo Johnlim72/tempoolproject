@@ -39,7 +39,8 @@ export default class ProfileScreen extends React.Component {
       theUser: "",
       status: "",
       SwitchOnValueHolder: true,
-      disabled: false
+      disabled: false,
+      userID: ""
     };
   }
   componentDidMount() {
@@ -76,7 +77,8 @@ export default class ProfileScreen extends React.Component {
           TextPassword: "",
           TextPasswordConfirm: "",
           TextInputPhoneNumber: responseJson.phoneNumber,
-          status: responseJson.status
+          status: responseJson.status,
+          userID: responseJson.idUser
         });
 
         if (responseJson.status == "Rider") {
@@ -198,7 +200,8 @@ export default class ProfileScreen extends React.Component {
                       text: "OK",
                       onPress: () =>
                         this.props.navigation.navigate("Dashboard", {
-                          TextEmail: this.state.TextEmail
+                          TextEmail: this.state.TextEmail,
+                          userID: this.state.userID
                         })
                     }
                   ],

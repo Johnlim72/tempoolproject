@@ -29,6 +29,10 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class FindRideScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false
+  };
+
   constructor(props) {
     super(props);
 
@@ -37,6 +41,14 @@ export default class FindRideScreen extends React.Component {
       longitude: this.props.navigation.state.params.TextLongitude,
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
+      driver_coordinates: {
+        latitude: "",
+        longitude: ""
+      },
+      rider_coordinates: {
+        latitude: this.props.navigation.state.params.TextLatitude,
+        longitude: this.props.navigation.state.params.TextLongitude
+      },
       list1: [],
       loader: true,
       driverID: null,
@@ -231,6 +243,10 @@ export default class FindRideScreen extends React.Component {
         driver_latitude: this.state.list1.rows[minUser].latitude,
         driver_longitude: this.state.list1.rows[minUser].longitude,
         driverScheduleID: this.state.list1.rows[minUser].idDriver,
+        driver_coordinates: {
+          latitude: this.state.list1.rows[minUser].latitude,
+          longitude: this.state.list1.rows[minUser].longitude
+        },
         foundDriver: true
       });
       console.log("driverID: " + this.state.driverID);
@@ -427,6 +443,7 @@ export default class FindRideScreen extends React.Component {
       .catch(error => {
         console.error(error);
       });
+
     this.timerGetCoordinates = setInterval(() => {
       fetch("http://cis-linux2.temple.edu/~tuf41055/php/getCoordinates.php", {
         method: "POST",
@@ -494,11 +511,17 @@ export default class FindRideScreen extends React.Component {
             showsUserLocation={true}
             followUserLocation={true}
           >
-            <MapView.Marker coordinate={coordinates[0]} pinColor="darkred" />
-            <MapView.Marker coordinate={coordinates[1]} pinColor="blue" />
+            <MapView.Marker
+              coordinate={this.state.rider_coordinates}
+              pinColor="darkred"
+            />
+            <MapView.Marker
+              coordinate={this.state.driver_coordinates}
+              pinColor="blue"
+            />
             <MapViewDirections
-              origin={coordinates[0]}
-              destination={coordinates[1]}
+              origin={this.state.rider_coordinates}
+              destination={this.state.driver_coordinates}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={3}
               strokeColor="yellow"
