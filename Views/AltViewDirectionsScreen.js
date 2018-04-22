@@ -236,14 +236,16 @@ export default class AltViewDirectionsScreen extends React.Component {
                   fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
-                onPress={() =>
-                  this.setState({
-                    driver_coordinates: {
-                      latitude: 39.980326,
-                      longitude: -75.15704
-                    },
-                    pickedUpRider: true
-                  })
+                onPress={
+                  (() =>
+                    this.setState({
+                      driver_coordinates: {
+                        latitude: 39.980326,
+                        longitude: -75.15704
+                      },
+                      pickedUpRider: true
+                    }),
+                  this.updateCoordinates(this.state.driver_coordinates))
                 }
               >
                 Picked Up Rider
