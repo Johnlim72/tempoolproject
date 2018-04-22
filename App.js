@@ -24,7 +24,6 @@ import UpdateLocationScreen from "./Views/UpdateLocationScreen";
 import ViewDirectionsScreen from "./Views/ViewDirectionsScreen";
 import ScheduleListScreen from "./Views/ScheduleListScreen";
 import RiderScheduleListScreen from "./Views/RiderScheduleListScreen";
-
 import UpdateRiderScheduleScreen from "./Views/UpdateRiderScheduleScreen";
 import UpdateRiderLocationScreen from "./Views/UpdateRiderLocationScreen";
 import ScheduleRiderScreen from "./Views/ScheduleRiderScreen";

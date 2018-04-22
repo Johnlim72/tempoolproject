@@ -28,7 +28,8 @@ const personIcon = require("./login1_person.png");
 
 export default class InitialScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    gesturesEnabled: false
   };
 
   constructor(props) {
