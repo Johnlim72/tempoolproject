@@ -508,6 +508,8 @@ export default class FindRideScreen extends React.Component {
               ],
               { cancelable: false }
             );
+
+            clearInterval(this.timerGetCoordinates);
           }
           console.log(this.state.routeCoordinates);
         })
