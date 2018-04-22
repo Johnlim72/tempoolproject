@@ -22,7 +22,7 @@ import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 const USERID = "userID";
 
@@ -193,6 +193,7 @@ export default class ScheduleRiderScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
+          blurRadius={3}
         >
           <View
             style={{
@@ -205,10 +206,13 @@ export default class ScheduleRiderScreen extends React.Component {
               style={{
                 color: "white",
                 fontFamily: "Quicksand",
-                fontSize: 30,
+                fontSize: 35,
                 paddingTop: 20,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                textShadowOffset: {width: 2, height: 2},
+                textShadowRadius: 4,
+                textShadowColor: '#000000'
               }}
             >
               Insert a Schedule

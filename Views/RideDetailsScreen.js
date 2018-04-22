@@ -17,7 +17,7 @@ import styles from "./style";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 export default class RideDetailsScreen extends React.Component {
   constructor(props) {

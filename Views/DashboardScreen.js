@@ -18,7 +18,7 @@ import { Switch } from "react-native-switch";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
@@ -147,6 +147,7 @@ export default class DashboardScreen extends React.Component {
             source={background}
             style={styles.background}
             resizeMode="cover"
+            blurRadius={3}
           >
             <View
               style={{
@@ -161,9 +162,12 @@ export default class DashboardScreen extends React.Component {
                 style={{
                   color: "white",
                   fontFamily: "Quicksand",
-                  fontSize: 30,
+                  fontSize: 40,
                   fontWeight: "400",
-                  paddingBottom: 10
+                  paddingBottom: 10,
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Dashboard
@@ -292,6 +296,7 @@ export default class DashboardScreen extends React.Component {
             source={background}
             style={styles.background}
             resizeMode="cover"
+            blurRadius={3}
           >
             <View
               style={{
@@ -307,8 +312,11 @@ export default class DashboardScreen extends React.Component {
                   color: "white",
                   fontFamily: "Quicksand",
                   fontWeight: "400",
-                  fontSize: 30,
-                  paddingBottom: 10
+                  fontSize: 40,
+                  paddingBottom: 10,
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Dashboard

@@ -22,7 +22,7 @@ const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
 const USERID = "userID";
 
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
@@ -143,6 +143,7 @@ export default class InitialScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
+          blurRadius={3}
         >
           <View style={{ flex: 1, padding: 10 }}>
             <View
@@ -159,7 +160,10 @@ export default class InitialScreen extends React.Component {
                   justifyContent: "center",
                   fontFamily: "Quicksand",
                   marginTop: 250,
-                  fontSize: 50
+                  fontSize: 70,
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Tempool

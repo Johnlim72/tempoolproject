@@ -21,7 +21,7 @@ import MapViewDirections from "react-native-maps-directions";
 import pick from "lodash/pick";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 const ASPECT_RATIO = width / height;
 const GOOGLE_MAPS_APIKEY = "AIzaSyCFwaPOiId1pFRm93-nbRBzF71UybpU9i8";
 
@@ -589,6 +589,7 @@ export default class FindRideScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
+          blurRadius={3}
         >
           {this.state.loader ? (
             <View
@@ -602,11 +603,14 @@ export default class FindRideScreen extends React.Component {
                 style={{
                   color: "white",
                   fontFamily: "Quicksand",
-                  fontSize: 30,
+                  fontSize: 35,
                   paddingTop: 20,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginBottom: 50
+                  marginBottom: 50,
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Looking for Driver...
@@ -617,11 +621,14 @@ export default class FindRideScreen extends React.Component {
                   style={{
                     color: "white",
                     fontFamily: "Quicksand",
-                    fontSize: 30,
+                    fontSize: 35,
                     paddingTop: 20,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: 50
+                    marginBottom: 50,
+                    textShadowOffset: {width: 2, height: 2},
+                    textShadowRadius: 4,
+                    textShadowColor: '#000000'
                   }}
                 >
                   Found Driver
@@ -632,10 +639,13 @@ export default class FindRideScreen extends React.Component {
                   style={{
                     color: "white",
                     fontFamily: "Quicksand",
-                    fontSize: 30,
+                    fontSize: 35,
                     paddingTop: 10,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    textShadowOffset: {width: 2, height: 2},
+                    textShadowRadius: 4,
+                    textShadowColor: '#000000'
                   }}
                 >
                   Waiting for Driver..

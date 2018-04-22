@@ -18,7 +18,7 @@ import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
@@ -159,104 +159,136 @@ export default class SignupScreen extends React.Component {
           source={background}
           style={[styles.background, { padding: 10 }]}
           resizeMode="cover"
+          blurRadius={3}
         >
-          <View style={[styles.inputWrap, { marginTop: 60 }]}>
-            <TextInput
-              placeholderTextColor="#b3b3b3"
-              placeholder="First Name"
-              onChangeText={TextInputFirstName =>
-                this.setState({ TextInputFirstName })
-              }
-              style={[
-                styles.input,
-                { color: "white", fontFamily: "Quicksand" }
-              ]}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholderTextColor="#b3b3b3"
-              placeholder="Last Name"
-              onChangeText={TextInputLastName =>
-                this.setState({ TextInputLastName })
-              }
-              style={[
-                styles.input,
-                { color: "white", fontFamily: "Quicksand" }
-              ]}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholder="TU E-mail"
-              placeholderTextColor="#b3b3b3"
-              onChangeText={TextEmail => this.setState({ TextEmail })}
-              style={[
-                styles.input,
-                { color: "white", fontFamily: "Quicksand" }
-              ]}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholderTextColor="#b3b3b3"
-              placeholder="Password"
-              onChangeText={TextPassword => this.setState({ TextPassword })}
-              style={[
-                styles.input,
-                { color: "white", fontFamily: "Quicksand" }
-              ]}
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholderTextColor="#b3b3b3"
-              placeholder="Confirm Password"
-              onChangeText={TextPasswordConfirm =>
-                this.setState({ TextPasswordConfirm })
-              }
-              style={[
-                styles.input,
-                { color: "white", fontFamily: "Quicksand" }
-              ]}
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholderTextColor="#b3b3b3"
-              placeholder="Phone Number"
-              onChangeText={TextInputPhoneNumber =>
-                this.setState({ TextInputPhoneNumber })
-              }
-              style={[
-                styles.input,
-                {
-                  color: "white",
-                  fontFamily: "Quicksand"
-                }
-              ]}
-            />
-          </View>
-          <Button
+          <View
             style={{
-              backgroundColor: "white",
-              borderColor: "white",
-              borderRadius: 22,
-              borderWidth: 2,
-              marginTop: 30
+              backgroundColor: "rgba(0,0,0,0.5)",
+              borderRadius: 10,
+              padding: 10,
+              margin: 10,
+              marginTop: 90
             }}
-            textStyle={{
-              fontSize: 18,
-              color: "darkred",
-              fontFamily: "Quicksand",
-              fontWeight: "400"
-            }}
-            onPress={this.InsertDataToServer.bind(this)}
           >
-            Sign Up
-          </Button>
+            <View style={[styles.inputWrap]}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="First Name"
+                onChangeText={TextInputFirstName =>
+                  this.setState({ TextInputFirstName })
+                }
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Last Name"
+                onChangeText={TextInputLastName =>
+                  this.setState({ TextInputLastName })
+                }
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholder="TU E-mail"
+                placeholderTextColor="#b3b3b3"
+                onChangeText={TextEmail => this.setState({ TextEmail })}
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Password"
+                onChangeText={TextPassword => this.setState({ TextPassword })}
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+                secureTextEntry
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Confirm Password"
+                onChangeText={TextPasswordConfirm =>
+                  this.setState({ TextPasswordConfirm })
+                }
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+                secureTextEntry
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                placeholderTextColor="#b3b3b3"
+                placeholder="Phone Number"
+                onChangeText={TextInputPhoneNumber =>
+                  this.setState({ TextInputPhoneNumber })
+                }
+                style={[
+                  styles.input,
+                  {
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold"
+                  }
+                ]}
+              />
+            </View>
+            <Button
+              style={{
+                backgroundColor: "white",
+                borderColor: "white",
+                borderRadius: 22,
+                borderWidth: 2,
+                marginTop: 30
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "darkred",
+                fontFamily: "Quicksand",
+                fontWeight: "400"
+              }}
+              onPress={this.InsertDataToServer.bind(this)}
+            >
+              Sign Up
+            </Button>
+          </View>
         </ImageBackground>
       </View>
     );
