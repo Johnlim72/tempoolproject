@@ -195,8 +195,8 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#e60000",
-                  borderColor: "#e60000",
+                  backgroundColor: "#b30000",
+                  borderColor: "#b30000",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
@@ -216,6 +216,28 @@ export default class DashboardScreen extends React.Component {
                 }
               >
                 Schedule a Ride
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#e60000",
+                  borderColor: "#e60000",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("RiderScheduleList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                Your Rider Schedules
               </Button>
               <Button
                 style={{
@@ -294,8 +316,8 @@ export default class DashboardScreen extends React.Component {
             <View style={{ flex: 5, marginTop: 10, padding: 10 }}>
               <Button
                 style={{
-                  backgroundColor: "#0000b3",
-                  borderColor: "#0000b3",
+                  backgroundColor: "#000066",
+                  borderColor: "#000066",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
@@ -318,8 +340,8 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#0000b3",
-                  borderColor: "#0000b3",
+                  backgroundColor: "#000099",
+                  borderColor: "#000099",
                   borderRadius: 22,
                   borderWidth: 2
                 }}
@@ -360,7 +382,7 @@ export default class DashboardScreen extends React.Component {
                   })
                 }
               >
-                Your Schedules
+                Your Driver Schedules
               </Button>
 
               <Button

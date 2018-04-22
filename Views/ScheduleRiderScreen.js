@@ -30,7 +30,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0022;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default class ScheduleScreen extends React.Component {
+export default class ScheduleRiderScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -60,7 +60,7 @@ export default class ScheduleScreen extends React.Component {
       let userID = await AsyncStorage.getItem(USERID);
       console.log("userID in gettoken: " + userID);
 
-      this.InsertDriverToServer();
+      this.InsertRiderToServer();
     } catch (error) {
       console.log("Something went wrong");
       Alert.alert("An Error occurred: " + error);
@@ -87,30 +87,18 @@ export default class ScheduleScreen extends React.Component {
       chosenDate: null,
       URL: ""
     };
-
-    if (this.state.Status == true) {
-      this.state.StatusText = "Rider";
-    } else {
-      this.state.StatusText = "Driver";
-    }
-
-    if (this.state.FindOrSchedule == "Find") {
-      this.state.FindOrScheduleText = "Find a Ride Now";
-    } else {
-      this.state.FindOrScheduleText = "Schedule a Ride For Later";
-    }
   }
 
-  InsertDriverToServer = () => {
+  InsertRiderToServer = () => {
     const { TextEmail } = this.state;
     const { TextAddress } = this.state;
     const { TextLatitude } = this.state;
     const { TextLongitude } = this.state;
     const { TextDate } = this.state;
 
-    console.log("insertdrivertoserver driver id: " + this.state.userID);
+    console.log("insertridertoserver rider id: " + this.state.userID);
 
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_driver_info.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_rider_info.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -118,17 +106,17 @@ export default class ScheduleScreen extends React.Component {
       },
       body: JSON.stringify({
         rideDateTime: this.state.chosenDate,
-        driver_address: TextAddress.toString(),
-        driver_latitude: TextLatitude.toString(),
-        driver_longitude: TextLongitude.toString(),
+        rider_address: TextAddress.toString(),
+        rider_latitude: TextLatitude.toString(),
+        rider_longitude: TextLongitude.toString(),
         userID: this.state.userID
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Driver successfully inserted.") {
-          this.props.navigation.navigate("ScheduleList", {
+        if (responseJson == "Rider successfully inserted.") {
+          this.props.navigation.navigate("RiderScheduleList", {
             TextEmail: this.props.navigation.state.params.TextEmail.toString(),
             TextUserID: this.state.userID
           });
@@ -147,7 +135,7 @@ export default class ScheduleScreen extends React.Component {
       TextEmail: this.props.navigation.state.params.TextEmail,
       Status: this.state.Status,
       FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-      driverNowOrLater: "Later"
+      findRideNow: false
     });
   };
 

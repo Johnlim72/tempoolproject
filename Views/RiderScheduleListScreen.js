@@ -21,7 +21,7 @@ import Button from "apsl-react-native-button";
 const { width, height } = Dimensions.get("window");
 const background = require("./login3_bg.jpg");
 
-export default class ScheduleListScreen extends React.Component {
+export default class RiderScheduleListScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +38,7 @@ export default class ScheduleListScreen extends React.Component {
 
   componentDidMount() {
     return fetch(
-      "http://cis-linux2.temple.edu/~tuf41055/php/getDriverSchedule.php",
+      "http://cis-linux2.temple.edu/~tuf41055/php/getRiderSchedule.php",
       {
         method: "POST",
         headers: {
@@ -186,20 +186,20 @@ export default class ScheduleListScreen extends React.Component {
   }
 
   updateSchedule(rowData) {
-    this.props.navigation.navigate("UpdateSchedule", {
+    this.props.navigation.navigate("UpdateRiderSchedule", {
       rowData: rowData
     });
   }
 
   deleteSchedule(rowData) {
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/deleteSchedule.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/deleteRiderSchedule.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        idDriver: rowData.idDriver
+        id: rowData.id
       })
     })
       .then(response => response.json())
@@ -213,7 +213,7 @@ export default class ScheduleListScreen extends React.Component {
               {
                 text: "OK",
                 onPress: () =>
-                  this.props.navigation.navigate("ScheduleList", {
+                  this.props.navigation.navigate("RiderScheduleList", {
                     TextUserID: this.state.TextUserID
                   })
               }
@@ -240,7 +240,7 @@ export default class ScheduleListScreen extends React.Component {
             justifyContent: "center"
           }}
         >
-          Your Driver Schedules
+          Your Rider Schedules
         </Text>
       </View>
     );
