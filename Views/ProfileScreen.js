@@ -8,6 +8,7 @@ import {
   Text,
   ImageBackground,
   Dimensions,
+  ScrollView,
   TextInput,
   AsyncStorage
 } from "react-native";
@@ -233,7 +234,9 @@ export default class ProfileScreen extends React.Component {
           flex: 1,
           backgroundColor: "darkred",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          width,
+          height
         }}
       >
         <ImageBackground
@@ -257,9 +260,9 @@ export default class ProfileScreen extends React.Component {
                 paddingTop: 20,
                 justifyContent: "center",
                 alignItems: "center",
-                textShadowOffset: {width: 2, height: 2},
+                textShadowOffset: { width: 2, height: 2 },
                 textShadowRadius: 4,
-                textShadowColor: '#000000'
+                textShadowColor: "#000000"
               }}
             >
               Profile
@@ -276,245 +279,251 @@ export default class ProfileScreen extends React.Component {
                 marginBottom: 30
               }}
             >
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                First Name
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="First Name"
-                  defaultValue={this.state.TextInputFirstName}
-                  onChangeText={TextInputFirstName =>
-                    this.setState({ TextInputFirstName })
-                  }
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                Last Name
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Last Name"
-                  defaultValue={this.state.TextInputLastName}
-                  onChangeText={TextInputLastName =>
-                    this.setState({ TextInputLastName })
-                  }
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                TU E-mail
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholder="TU E-mail"
-                  placeholderTextColor="#b3b3b3"
-                  defaultValue={this.state.TextEmail}
-                  editable={false}
-                  onChangeText={TextEmail => this.setState({ TextEmail })}
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                Password
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Password"
-                  defaultValue={this.state.TextPassword}
-                  onChangeText={TextPassword => this.setState({ TextPassword })}
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                  secureTextEntry
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                Confirm Password
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Confirm Password"
-                  defaultValue={this.state.TextPasswordConfirm}
-                  onChangeText={TextPasswordConfirm =>
-                    this.setState({ TextPasswordConfirm })
-                  }
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                  secureTextEntry
-                />
-              </View>
-              <Text
-                style={{
-                  color: "darkred",
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                  textDecorationLine: "underline",
-                  fontFamily: "Quicksand"
-                }}
-              >
-                Phone Number
-              </Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  placeholderTextColor="#b3b3b3"
-                  placeholder="Phone Number"
-                  defaultValue={this.state.TextInputPhoneNumber}
-                  onChangeText={TextInputPhoneNumber =>
-                    this.setState({ TextInputPhoneNumber })
-                  }
-                  style={[
-                    styles.input,
-                    { color: "black", fontFamily: "Quicksand" }
-                  ]}
-                />
-              </View>
+              <ScrollView>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  First Name
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholderTextColor="#b3b3b3"
+                    placeholder="First Name"
+                    defaultValue={this.state.TextInputFirstName}
+                    onChangeText={TextInputFirstName =>
+                      this.setState({ TextInputFirstName })
+                    }
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  Last Name
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholderTextColor="#b3b3b3"
+                    placeholder="Last Name"
+                    defaultValue={this.state.TextInputLastName}
+                    onChangeText={TextInputLastName =>
+                      this.setState({ TextInputLastName })
+                    }
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  TU E-mail
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholder="TU E-mail"
+                    placeholderTextColor="#b3b3b3"
+                    defaultValue={this.state.TextEmail}
+                    editable={false}
+                    onChangeText={TextEmail => this.setState({ TextEmail })}
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  Password
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholderTextColor="#b3b3b3"
+                    placeholder="Password"
+                    defaultValue={this.state.TextPassword}
+                    onChangeText={TextPassword =>
+                      this.setState({ TextPassword })
+                    }
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                    secureTextEntry
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  Confirm Password
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholderTextColor="#b3b3b3"
+                    placeholder="Confirm Password"
+                    defaultValue={this.state.TextPasswordConfirm}
+                    onChangeText={TextPasswordConfirm =>
+                      this.setState({ TextPasswordConfirm })
+                    }
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                    secureTextEntry
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "darkred",
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    textDecorationLine: "underline",
+                    fontFamily: "Quicksand"
+                  }}
+                >
+                  Phone Number
+                </Text>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    placeholderTextColor="#b3b3b3"
+                    placeholder="Phone Number"
+                    defaultValue={this.state.TextInputPhoneNumber}
+                    onChangeText={TextInputPhoneNumber =>
+                      this.setState({ TextInputPhoneNumber })
+                    }
+                    style={[
+                      styles.input,
+                      { color: "black", fontFamily: "Quicksand" }
+                    ]}
+                  />
+                </View>
 
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
                 <View
                   style={{
                     flex: 1,
-                    justifyContent: "center",
                     alignItems: "center",
-                    padding: 20,
-                    marginTop: 20
+                    justifyContent: "center"
                   }}
                 >
                   <View
                     style={{
                       flex: 1,
-                      paddingHorizontal: 50,
-                      paddingTop: 0,
-                      borderRadius: 5,
-                      backgroundColor: "white"
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 20,
+                      marginTop: 20
                     }}
                   >
                     <View
                       style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "row"
+                        flex: 1,
+                        paddingHorizontal: 50,
+                        paddingTop: 0,
+                        borderRadius: 5,
+                        backgroundColor: "white"
                       }}
                     >
-                      <Text
+                      <View
                         style={{
-                          marginRight: 10,
-                          fontFamily: "Quicksand",
-                          fontWeight: "400",
-                          color: "black"
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexDirection: "row"
                         }}
                       >
-                        Driver
-                      </Text>
-                      <Switch
-                        onValueChange={value => this.ShowAlert(value)}
-                        activeText={""}
-                        inActiveText={""}
-                        disabled={false}
-                        circleSize={30}
-                        barHeight={30}
-                        circleBorderWidth={3}
-                        backgroundActive={"darkred"}
-                        backgroundInactive={"#003399"}
-                        circleActiveColor={"#cc0000"}
-                        circleInActiveColor={"#1a75ff"}
-                        style={{ transform: [{ scaleX: 10 }, { scaleY: 0.8 }] }}
-                        value={this.state.SwitchOnValueHolder}
-                      />
-                      <Text
-                        style={{
-                          marginLeft: 10,
-                          fontFamily: "Quicksand",
-                          fontWeight: "400",
-                          color: "black"
-                        }}
-                      >
-                        Rider
-                      </Text>
+                        <Text
+                          style={{
+                            marginRight: 10,
+                            fontFamily: "Quicksand",
+                            fontWeight: "400",
+                            color: "black"
+                          }}
+                        >
+                          Driver
+                        </Text>
+                        <Switch
+                          onValueChange={value => this.ShowAlert(value)}
+                          activeText={""}
+                          inActiveText={""}
+                          disabled={false}
+                          circleSize={30}
+                          barHeight={30}
+                          circleBorderWidth={3}
+                          backgroundActive={"darkred"}
+                          backgroundInactive={"#003399"}
+                          circleActiveColor={"#cc0000"}
+                          circleInActiveColor={"#1a75ff"}
+                          style={{
+                            transform: [{ scaleX: 10 }, { scaleY: 0.8 }]
+                          }}
+                          value={this.state.SwitchOnValueHolder}
+                        />
+                        <Text
+                          style={{
+                            marginLeft: 10,
+                            fontFamily: "Quicksand",
+                            fontWeight: "400",
+                            color: "black"
+                          }}
+                        >
+                          Rider
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
 
-              <Button
-                style={{
-                  backgroundColor: "darkred",
-                  borderColor: "darkred",
-                  borderRadius: 22,
-                  borderWidth: 2
-                }}
-                textStyle={{
-                  fontSize: 18,
-                  color: "white",
-                  fontFamily: "Quicksand",
-                  fontWeight: "400"
-                }}
-                onPress={this.UpdateDataToServer}
-              >
-                Save
-              </Button>
+                <Button
+                  style={{
+                    backgroundColor: "darkred",
+                    borderColor: "darkred",
+                    borderRadius: 22,
+                    borderWidth: 2
+                  }}
+                  textStyle={{
+                    fontSize: 18,
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "400"
+                  }}
+                  onPress={this.UpdateDataToServer}
+                >
+                  Save
+                </Button>
+              </ScrollView>
             </View>
           </View>
         </ImageBackground>

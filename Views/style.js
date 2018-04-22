@@ -79,10 +79,6 @@ export default StyleSheet.create({
     height: null,
     flex: 1
   },
-  background: {
-    width,
-    height
-  },
   wrapper: {
     paddingVertical: 30
   },
