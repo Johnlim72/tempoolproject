@@ -30,7 +30,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0022;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default class ScheduleScreen extends React.Component {
+export default class UpdateRiderScheduleScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -60,7 +60,7 @@ export default class ScheduleScreen extends React.Component {
       let userID = await AsyncStorage.getItem(USERID);
       console.log("userID in gettoken: " + userID);
 
-      this.InsertDriverToServer();
+      this.Update();
     } catch (error) {
       console.log("Something went wrong");
       Alert.alert("An Error occurred: " + error);
@@ -71,67 +71,53 @@ export default class ScheduleScreen extends React.Component {
     super(props);
 
     this.state = {
-      TextEmail: this.props.navigation.state.params.TextEmail.toString(),
-      TextAddress: this.props.navigation.state.params.TextAddress.toString(),
-      TextLatitude: this.props.navigation.state.params.TextLatitude,
-      TextLongitude: this.props.navigation.state.params.TextLongitude,
-      TextDate: "03-25-2018",
-      Status: this.props.navigation.state.params.Status,
-      StatusText: "",
-      userID: this.props.navigation.state.params.userID,
-      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-      FindOrScheduleText: "",
-      dateText: "",
-      timeText: "",
+      rowData: this.props.navigation.state.params.rowData,
+      address: this.props.navigation.state.params.rowData.addressText,
+      TextDate: this.props.navigation.state.params.rowData.departureDateTime,
+      userID: this.props.navigation.state.params.rowData.userID,
+      id: this.props.navigation.state.params.rowData.id,
+      dateText: this.props.navigation.state.params.rowData.departureDateTime,
+      timeText: this.props.navigation.state.params.rowData.departureDateTime,
       dateSelected: false,
-      chosenDate: null,
+      chosenDate: this.props.navigation.state.params.rowData.departureDateTime,
       URL: ""
     };
-
-    if (this.state.Status == true) {
-      this.state.StatusText = "Rider";
-    } else {
-      this.state.StatusText = "Driver";
-    }
-
-    if (this.state.FindOrSchedule == "Find") {
-      this.state.FindOrScheduleText = "Find a Ride Now";
-    } else {
-      this.state.FindOrScheduleText = "Schedule a Ride For Later";
-    }
   }
 
-  InsertDriverToServer = () => {
-    const { TextEmail } = this.state;
-    const { TextAddress } = this.state;
-    const { TextLatitude } = this.state;
-    const { TextLongitude } = this.state;
-    const { TextDate } = this.state;
-
-    console.log("insertdrivertoserver driver id: " + this.state.userID);
-
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/submit_driver_info.php", {
+  Update = () => {
+    console.log("rowData", this.state.rowData);
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRiderSchedule.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        rideDateTime: this.state.chosenDate,
-        driver_address: TextAddress.toString(),
-        driver_latitude: TextLatitude.toString(),
-        driver_longitude: TextLongitude.toString(),
-        userID: this.state.userID
+        id: this.state.id,
+        addressText: this.state.address,
+        longitude: this.state.rowData.longitude,
+        latitude: this.state.rowData.latitude,
+        departureDateTime: this.state.chosenDate
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
-        if (responseJson == "Driver successfully inserted.") {
-          this.props.navigation.navigate("ScheduleList", {
-            TextEmail: this.props.navigation.state.params.TextEmail.toString(),
-            TextUserID: this.state.userID
-          });
+        if (responseJson == "Schedule successfully updated.") {
+          Alert.alert(
+            "Success!",
+            "Schedule updated.",
+            [
+              {
+                text: "OK",
+                onPress: () =>
+                  this.props.navigation.navigate("RiderScheduleList", {
+                    TextUserID: this.state.userID
+                  })
+              }
+            ],
+            { cancelable: false }
+          );
         }
       })
       .catch(error => {
@@ -140,14 +126,9 @@ export default class ScheduleScreen extends React.Component {
   };
 
   PickLocation = () => {
-    this.props.navigation.navigate("Location", {
-      TextAddress: this.state.TextAddress,
-      TextLatitude: this.state.TextLatitude,
-      TextLongitude: this.state.TextLongitude,
-      TextEmail: this.props.navigation.state.params.TextEmail,
-      Status: this.state.Status,
-      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-      driverNowOrLater: "Later"
+    this.props.navigation.navigate("UpdateRiderLocation", {
+      address: this.state.address,
+      rowData: this.state.rowData
     });
   };
 
@@ -188,6 +169,42 @@ export default class ScheduleScreen extends React.Component {
           </Text>
         </View>
       );
+    } else {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 50
+          }}
+        >
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand",
+              fontSize: 24,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            Date & Time:
+          </Text>
+          <Text
+            style={{
+              color: "darkred",
+              fontFamily: "Quicksand",
+              fontSize: 24,
+              paddingTop: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            {this.state.dateText}
+          </Text>
+        </View>
+      );
     }
   }
 
@@ -209,30 +226,10 @@ export default class ScheduleScreen extends React.Component {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontFamily: "Quicksand",
-                fontSize: 30,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              Insert a Schedule
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
               backgroundColor: "white",
               borderRadius: 10,
               padding: 10,
-              margin: 10,
+              margin: 20,
               flex: 5
             }}
           >
@@ -258,10 +255,9 @@ export default class ScheduleScreen extends React.Component {
               <TextInput
                 placeholderTextColor="#b3b3b3"
                 placeholder="Address: "
-                defaultValue={this.props.navigation.state.params.TextAddress}
+                defaultValue={this.state.rowData.addressText}
                 multiline={true}
                 editable={true}
-                onChangeText={TextAddress => this.setState({ TextAddress })}
                 style={[
                   styles.inputAddress,
                   { color: "black", fontFamily: "Quicksand" }
@@ -270,12 +266,8 @@ export default class ScheduleScreen extends React.Component {
             </View>
             <MapView
               region={{
-                latitude: parseFloat(
-                  this.props.navigation.state.params.TextLatitude
-                ),
-                longitude: parseFloat(
-                  this.props.navigation.state.params.TextLongitude
-                ),
+                latitude: parseFloat(this.state.rowData.latitude),
+                longitude: parseFloat(this.state.rowData.longitude),
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA
               }}
@@ -289,12 +281,8 @@ export default class ScheduleScreen extends React.Component {
             >
               <MapView.Marker
                 coordinate={{
-                  latitude: parseFloat(
-                    this.props.navigation.state.params.TextLatitude
-                  ),
-                  longitude: parseFloat(
-                    this.props.navigation.state.params.TextLongitude
-                  )
+                  latitude: parseFloat(this.state.rowData.latitude),
+                  longitude: parseFloat(this.state.rowData.longitude)
                 }}
               />
             </MapView>
@@ -313,7 +301,7 @@ export default class ScheduleScreen extends React.Component {
                   borderColor: "darkred",
                   borderRadius: 22,
                   borderWidth: 2,
-                  marginTop: 5
+                  marginTop: 30
                 }}
                 textStyle={{
                   fontSize: 18,
@@ -350,7 +338,7 @@ export default class ScheduleScreen extends React.Component {
               }}
               onPress={this.getToken.bind(this)}
             >
-              Insert Schedule
+              Update Schedule
             </Button>
           </View>
         </ImageBackground>

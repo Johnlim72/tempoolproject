@@ -23,6 +23,11 @@ import DriverScheduleScreen from "./Views/DriverScheduleScreen";
 import UpdateLocationScreen from "./Views/UpdateLocationScreen";
 import ViewDirectionsScreen from "./Views/ViewDirectionsScreen";
 import ScheduleListScreen from "./Views/ScheduleListScreen";
+import RiderScheduleListScreen from "./Views/RiderScheduleListScreen";
+
+import UpdateRiderScheduleScreen from "./Views/UpdateRiderScheduleScreen";
+import UpdateRiderLocationScreen from "./Views/UpdateRiderLocationScreen";
+import ScheduleRiderScreen from "./Views/ScheduleRiderScreen";
 import UpdateScheduleScreen from "./Views/UpdateScheduleScreen";
 import MapScreen from "./Views/MapScreen";
 import TrackScreen from "./Views/TrackScreen";
@@ -95,6 +100,18 @@ const RootStack = StackNavigator(
     },
     PickUpRiderNow: {
       screen: PickUpRiderNowScreen
+    },
+    ScheduleRider: {
+      screen: ScheduleRiderScreen
+    },
+    RiderScheduleList: {
+      screen: RiderScheduleListScreen
+    },
+    UpdateRiderLocation: {
+      screen: UpdateRiderLocationScreen
+    },
+    UpdateRiderSchedule: {
+      screen: UpdateRiderScheduleScreen
     }
   },
   {

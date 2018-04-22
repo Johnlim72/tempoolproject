@@ -3,7 +3,7 @@ import { View, Button, Alert, Image, Text, TextInput } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import styles from "./style";
 
-export default class LocationScreen extends React.Component {
+export default class UpdateRiderLocationScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -16,66 +16,17 @@ export default class LocationScreen extends React.Component {
     super(props);
 
     this.state = {
-      userID: this.props.navigation.state.params.userID,
-      TextEmail: this.props.navigation.state.params.TextEmail,
       TextAddress: "",
       TextLatitude: "",
       TextLongitude: "",
-      Status: this.props.navigation.state.params.Status,
-      findRideNow: this.props.navigation.state.params.findRideNow,
-      FindOrSchedule: this.props.navigation.state.params.FindOrSchedule
+      rowData: this.props.navigation.state.params.rowData
     };
   }
 
   SaveLocation = () => {
-    if (this.state.findRideNow) {
-      this.props.navigation.navigate("FindRide", {
-        TextAddress: this.state.TextAddress,
-        TextLatitude: this.state.TextLatitude,
-        TextLongitude: this.state.TextLongitude,
-        userID: this.props.navigation.state.params.userID,
-        TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-        userID: this.props.navigation.state.params.userID
-      });
-      console.log("Rider Find Now");
-    } else if (this.props.navigation.state.params.driverNowOrLater == "Later") {
-      this.props.navigation.navigate("Schedule", {
-        TextAddress: this.state.TextAddress,
-        TextLatitude: this.state.TextLatitude,
-        TextLongitude: this.state.TextLongitude,
-        TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-        userID: this.props.navigation.state.params.userID
-      });
-
-      console.log("Driver Schedule Later");
-    } else if (this.props.navigation.state.params.driverNowOrLater == "Now") {
-      this.props.navigation.navigate("PickUpRiderNow", {
-        TextAddress: this.state.TextAddress,
-        TextLatitude: this.state.TextLatitude,
-        TextLongitude: this.state.TextLongitude,
-        TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-        userID: this.props.navigation.state.params.userID
-      });
-
-      console.log("Driver Find Now");
-    } else if (this.state.findRideNow == false) {
-      this.props.navigation.navigate("ScheduleRider", {
-        TextAddress: this.state.TextAddress,
-        TextLatitude: this.state.TextLatitude,
-        TextLongitude: this.state.TextLongitude,
-        TextEmail: this.props.navigation.state.params.TextEmail,
-        Status: this.props.navigation.state.params.Status,
-        FindOrSchedule: this.props.navigation.state.params.FindOrSchedule,
-        userID: this.props.navigation.state.params.userID
-      });
-      console.log("Rider Schedule Later");
-    }
+    this.props.navigation.navigate("UpdateRiderSchedule", {
+      rowData: this.state.rowData
+    });
   };
 
   render() {
@@ -100,6 +51,12 @@ export default class LocationScreen extends React.Component {
           this.setState({
             TextAddress: details.formatted_address.toString()
           });
+
+          const rowData = this.state.rowData;
+          rowData.addressText = this.state.TextAddress;
+          rowData.latitude = this.state.TextLatitude;
+          rowData.longitude = this.state.TextLongitude;
+          this.forceUpdate();
         }}
         getDefaultValue={() => ""}
         query={{
