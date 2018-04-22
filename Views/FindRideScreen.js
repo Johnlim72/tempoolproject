@@ -479,7 +479,8 @@ export default class FindRideScreen extends React.Component {
             currentLatitude: newLatLngs.latitude,
             currentLongitude: newLatLngs.longitude,
             coordinatesChecked: true,
-            pickedUpRider: responseJson.pickedUpRider
+            pickedUpRider: responseJson.pickedUpRider,
+            completedRide: responseJson.completedRide
           });
 
           if (this.state.pickedUpRider == true) {
@@ -489,6 +490,24 @@ export default class FindRideScreen extends React.Component {
                 longitude: -75.15704
               }
             });
+          }
+
+          if (this.state.completedRide == true) {
+            Alert.alert(
+              "Completed!",
+              "Driver completed the ride, have a good day at campus!",
+              [
+                {
+                  text: "OK",
+                  onPress: () =>
+                    this.props.navigation.navigate("Dashboard", {
+                      TextEmail: this.props.navigation.state.params.TextEmail,
+                      userID: this.state.userID
+                    })
+                }
+              ],
+              { cancelable: false }
+            );
           }
           console.log(this.state.routeCoordinates);
         })
@@ -650,9 +669,9 @@ export default class FindRideScreen extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 50,
-                  textShadowOffset: {width: 2, height: 2},
+                  textShadowOffset: { width: 2, height: 2 },
                   textShadowRadius: 4,
-                  textShadowColor: '#000000'
+                  textShadowColor: "#000000"
                 }}
               >
                 Looking for Driver...
@@ -668,9 +687,9 @@ export default class FindRideScreen extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     marginBottom: 50,
-                    textShadowOffset: {width: 2, height: 2},
+                    textShadowOffset: { width: 2, height: 2 },
                     textShadowRadius: 4,
-                    textShadowColor: '#000000'
+                    textShadowColor: "#000000"
                   }}
                 >
                   Found Driver
@@ -685,9 +704,9 @@ export default class FindRideScreen extends React.Component {
                     paddingTop: 10,
                     justifyContent: "center",
                     alignItems: "center",
-                    textShadowOffset: {width: 2, height: 2},
+                    textShadowOffset: { width: 2, height: 2 },
                     textShadowRadius: 4,
-                    textShadowColor: '#000000'
+                    textShadowColor: "#000000"
                   }}
                 >
                   Waiting for Driver..

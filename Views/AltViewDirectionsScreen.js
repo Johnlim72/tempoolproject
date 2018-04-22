@@ -154,6 +154,30 @@ export default class AltViewDirectionsScreen extends React.Component {
       });
   }
 
+  updateCoordinatesCompletedRide() {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateCompleted.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.ride_ID,
+        completedRide: true
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Updated to Completed.") {
+          console.log("Updated to Completed.");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   calcDistance(newLatLng) {
     const { prevLatLng } = this.state;
     return haversine(prevLatLng, newLatLng) || 0;
@@ -172,11 +196,12 @@ export default class AltViewDirectionsScreen extends React.Component {
       }
     });
     console.log("pickedUpRider: " + this.state.pickedUpRider);
-    this.updateCoordinatesPickedUpRider(this.state.driver_coordinates);
+    this.updateCoordinatesPickedUpRider(this.state.rider_coordinates);
   }
 
   completeRide() {
     console.log("completed ride");
+    this.updateCoordinatesCompletedRide();
     Alert.alert(
       "Ride Completed",
       "Enjoy your day at campus!",
