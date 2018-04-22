@@ -3,6 +3,7 @@ import {
   AppRegistry,
   StyleSheet,
   View,
+  Alert,
   Text,
   Dimensions,
   StatusBar
