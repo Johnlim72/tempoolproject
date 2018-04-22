@@ -17,7 +17,7 @@ import geolib from "geolib";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 export default class DriverLookingScreen extends React.Component {
   constructor(props) {
@@ -408,6 +408,7 @@ export default class DriverLookingScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
+          blurRadius={3}
         >
           {this.state.loader ? (
             <View
@@ -425,7 +426,10 @@ export default class DriverLookingScreen extends React.Component {
                   paddingTop: 20,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginBottom: 50
+                  marginBottom: 50,
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Waiting for Request...
@@ -447,7 +451,10 @@ export default class DriverLookingScreen extends React.Component {
                   fontSize: 30,
                   paddingTop: 20,
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  textShadowOffset: {width: 2, height: 2},
+                  textShadowRadius: 4,
+                  textShadowColor: '#000000'
                 }}
               >
                 Found Rider

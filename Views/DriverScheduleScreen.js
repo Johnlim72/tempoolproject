@@ -18,7 +18,7 @@ import geolib from "geolib";
 import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {
@@ -204,6 +204,7 @@ export default class ScheduleScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
+          blurRadius={3}
         >
           <View
             style={{
