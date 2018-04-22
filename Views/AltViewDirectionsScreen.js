@@ -174,6 +174,25 @@ export default class AltViewDirectionsScreen extends React.Component {
     this.updateCoordinatesPickedUpRider(this.state.driver_coordinates);
   }
 
+  completeRide() {
+    console.log("completed ride");
+    Alert.alert(
+      "Ride Completed",
+      "Enjoy your day at campus!",
+      [
+        {
+          text: "Ok",
+          onPress: () =>
+            this.props.navigation.navigate("Dashboard", {
+              userID: this.props.navigation.state.params.userID,
+              TextEmail: this.props.navigation.state.params.TextEmail
+            })
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
   render() {
     const coordinates = [
       {
@@ -255,7 +274,7 @@ export default class AltViewDirectionsScreen extends React.Component {
                   fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
-                onPress={() => console.log("completed ride")}
+                onPress={() => this.completeRide()}
               >
                 Complete Ride
               </Button>

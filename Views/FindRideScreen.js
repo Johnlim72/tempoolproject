@@ -42,8 +42,12 @@ export default class FindRideScreen extends React.Component {
       latitude: this.props.navigation.state.params.TextLatitude,
       userID: this.props.navigation.state.params.userID,
       driver_coordinates: {
-        latitude: parseFloat(this.props.navigation.state.params.TextLatitude),
-        longitude: parseFloat(this.props.navigation.state.params.TextLongitude)
+        latitude: parseFloat(
+          this.props.navigation.state.params.TextLatitude + 1
+        ),
+        longitude: parseFloat(
+          this.props.navigation.state.params.TextLongitude + 1
+        )
       },
       rider_coordinates: {
         latitude: parseFloat(this.props.navigation.state.params.TextLatitude),
@@ -245,8 +249,8 @@ export default class FindRideScreen extends React.Component {
         driver_longitude: this.state.list1.rows[minUser].longitude,
         driverScheduleID: this.state.list1.rows[minUser].idDriver,
         driver_coordinates: {
-          latitude: this.state.list1.rows[minUser].latitude,
-          longitude: this.state.list1.rows[minUser].longitude
+          latitude: parseFloat(this.state.list1.rows[minUser].latitude),
+          longitude: parseFloat(this.state.list1.rows[minUser].longitude)
         },
         foundDriver: true
       });
@@ -522,7 +526,7 @@ export default class FindRideScreen extends React.Component {
             followUserLocation={true}
           >
             <MapView.Marker
-              coordinate={parseFloat(this.state.rider_coordinates)}
+              coordinate={this.state.rider_coordinates}
               pinColor="darkred"
             />
             <MapView.Marker
@@ -530,7 +534,7 @@ export default class FindRideScreen extends React.Component {
               pinColor="blue"
             />
             <MapViewDirections
-              origin={parseFloat(this.state.rider_coordinates)}
+              origin={this.state.rider_coordinates}
               destination={this.state.driver_coordinates}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={3}
@@ -560,27 +564,55 @@ export default class FindRideScreen extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={styles1.bottomBar}>
-            <View style={styles1.bottomBarGroup}>
-              <Text style={styles1.bottomBarHeader}>Driver Address</Text>
-              <Text style={styles1.bottomBarContent2}>
-                {this.state.driver_address}
-              </Text>
+          {this.state.pickedUpRider ? (
+            <View style={styles1.bottomBar}>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>Rider Address</Text>
+                <Text style={styles1.bottomBarContent2}>
+                  {this.state.address}
+                </Text>
+              </View>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>To</Text>
+                <Text style={styles1.bottomBarContent3}>
+                  {(
+                    parseFloat(this.state.distanceTravelled) * 0.621371
+                  ).toFixed(2)}{" "}
+                  mi
+                </Text>
+              </View>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>Temple University</Text>
+                <Text style={styles1.bottomBarContent}>
+                  1803 N. Broad St., Philadelphia, PA 19121, USA
+                </Text>
+              </View>
             </View>
-            <View style={styles1.bottomBarGroup}>
-              <Text style={styles1.bottomBarHeader}>To</Text>
-              <Text style={styles1.bottomBarContent3}>
-                {(parseFloat(this.state.distanceTravelled) * 0.621371).toFixed(
-                  2
-                )}{" "}
-                mi
-              </Text>
+          ) : (
+            <View style={styles1.bottomBar}>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>Driver Address</Text>
+                <Text style={styles1.bottomBarContent2}>
+                  {this.state.driver_address}
+                </Text>
+              </View>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>To</Text>
+                <Text style={styles1.bottomBarContent3}>
+                  {(
+                    parseFloat(this.state.distanceTravelled) * 0.621371
+                  ).toFixed(2)}{" "}
+                  mi
+                </Text>
+              </View>
+              <View style={styles1.bottomBarGroup}>
+                <Text style={styles1.bottomBarHeader}>Rider Address</Text>
+                <Text style={styles1.bottomBarContent}>
+                  {this.state.address}
+                </Text>
+              </View>
             </View>
-            <View style={styles1.bottomBarGroup}>
-              <Text style={styles1.bottomBarHeader}>Rider Address</Text>
-              <Text style={styles1.bottomBarContent}>{this.state.address}</Text>
-            </View>
-          </View>
+          )}
         </View>
       );
     }
