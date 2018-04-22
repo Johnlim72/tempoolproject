@@ -319,7 +319,9 @@ export default class PickUpRiderNowScreen extends React.Component {
       TextRiderFirstName: this.state.TextRiderFirstName,
       TextRiderLastName: this.state.TextRiderLastName,
       TextRiderEmail: this.state.TextRiderEmail,
-      TextRiderPhoneNumber: this.state.TextRiderPhoneNumber
+      TextRiderPhoneNumber: this.state.TextRiderPhoneNumber,
+      userID: this.state.userID,
+      TextEmail: this.state.driverEmail
     });
   }
 
@@ -456,9 +458,9 @@ export default class PickUpRiderNowScreen extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 50,
-                  textShadowOffset: {width: 2, height: 2},
+                  textShadowOffset: { width: 2, height: 2 },
                   textShadowRadius: 4,
-                  textShadowColor: '#000000'
+                  textShadowColor: "#000000"
                 }}
               >
                 Waiting for Request...
@@ -481,9 +483,9 @@ export default class PickUpRiderNowScreen extends React.Component {
                   paddingTop: 20,
                   justifyContent: "center",
                   alignItems: "center",
-                  textShadowOffset: {width: 2, height: 2},
+                  textShadowOffset: { width: 2, height: 2 },
                   textShadowRadius: 4,
-                  textShadowColor: '#000000'
+                  textShadowColor: "#000000"
                 }}
               >
                 Found Rider

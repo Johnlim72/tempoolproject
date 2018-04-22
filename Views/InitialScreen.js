@@ -27,6 +27,10 @@ const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
 export default class InitialScreen extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
   constructor(props) {
     super(props);
 
