@@ -22,7 +22,6 @@ const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
 export default class RideListScreen extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -46,6 +45,7 @@ export default class RideListScreen extends React.Component {
   }
 
   OpenDetailsActivity(idUsers) {
+    console.log("OpenDetailsActivity: " + idUsers.rowDriverID);
     this.props.navigation.navigate("RideDetails", {
       ListViewClickItemHolder: idUsers.rowDriverID,
       ListViewClickItemHolder2: idUsers.rowRiderID,

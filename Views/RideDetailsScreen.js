@@ -38,6 +38,11 @@ export default class RideDetailsScreen extends React.Component {
       driver_latitude: "",
       driver_longitude: ""
     };
+
+    console.log(
+      "ridedetails: " +
+        this.props.navigation.state.params.ListViewClickItemHolder
+    );
   }
 
   componentDidMount() {

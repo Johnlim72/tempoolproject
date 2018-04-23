@@ -226,7 +226,7 @@ export default class PickUpRiderNowScreen extends React.Component {
   updateRide(acceptedOrPotential) {
     this.setState({ acceptedOrPotential: acceptedOrPotential });
     console.log("acceptedOrPotential: " + acceptedOrPotential);
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRideFindNow.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
