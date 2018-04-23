@@ -126,6 +126,63 @@ export default class DashboardScreen extends React.Component {
           });
 
         console.log("TextUserId: " + this.state.TextUserID);
+
+        console.log(responseJson.status);
+
+        fetch(
+          "http://cis-linux2.temple.edu/~tuf41055/php/checkForMatchedRide.php",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              userID: this.state.TextUserID,
+              status: responseJson.status
+            })
+          }
+        )
+          .then(response => response.json())
+          .then(responseJson => {
+            if (responseJson == "Rider") {
+              Alert.alert(
+                "Matched a ride for you!",
+                "Press OK to see the ride!",
+                [
+                  {
+                    text: "OK",
+                    onPress: () =>
+                      this.props.navigation.navigate("RiderRideList", {
+                        TextEmail: this.state.TextEmail,
+                        TextUserID: this.state.userID
+                      })
+                  }
+                ],
+                { cancelable: false }
+              );
+            } else if (responseJson == "Driver") {
+              Alert.alert(
+                "Matched a ride for you!",
+                "Press OK to see the ride!",
+                [
+                  {
+                    text: "OK",
+                    onPress: () =>
+                      this.props.navigation.navigate("RideList", {
+                        TextEmail: this.state.TextEmail,
+                        TextUserID: this.state.userID
+                      })
+                  }
+                ],
+                { cancelable: false }
+              );
+            }
+          })
+
+          .catch(error => {
+            console.error(error);
+          });
       })
       .catch(error => {
         console.error(error);
@@ -165,9 +222,9 @@ export default class DashboardScreen extends React.Component {
                   fontSize: 40,
                   fontWeight: "400",
                   paddingBottom: 10,
-                  textShadowOffset: {width: 2, height: 2},
+                  textShadowOffset: { width: 2, height: 2 },
                   textShadowRadius: 4,
-                  textShadowColor: '#000000'
+                  textShadowColor: "#000000"
                 }}
               >
                 Dashboard
@@ -244,6 +301,29 @@ export default class DashboardScreen extends React.Component {
               >
                 Your Rider Schedules
               </Button>
+
+              <Button
+                style={{
+                  backgroundColor: "#4d4dff",
+                  borderColor: "#4d4dff",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("RiderRideList", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                List of Rides
+              </Button>
               <Button
                 style={{
                   backgroundColor: "#ff6666",
@@ -314,9 +394,9 @@ export default class DashboardScreen extends React.Component {
                   fontWeight: "400",
                   fontSize: 40,
                   paddingBottom: 10,
-                  textShadowOffset: {width: 2, height: 2},
+                  textShadowOffset: { width: 2, height: 2 },
                   textShadowRadius: 4,
-                  textShadowColor: '#000000'
+                  textShadowColor: "#000000"
                 }}
               >
                 Dashboard
