@@ -21,8 +21,7 @@ import Button from "apsl-react-native-button";
 const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
-export default class RideListScreen extends React.Component {
-
+export default class RiderRideListScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -41,12 +40,17 @@ export default class RideListScreen extends React.Component {
     };
 
     console.log(
-      "constructor: " + this.state.TextUserID + " " + this.state.TextEmail
+      "constructor: " +
+        this.state.TextUserID +
+        " " +
+        this.state.TextEmail +
+        " " +
+        this.state.typeOfRides
     );
   }
 
   OpenDetailsActivity(idUsers) {
-    this.props.navigation.navigate("RideDetails", {
+    this.props.navigation.navigate("RiderRideDetails", {
       ListViewClickItemHolder: idUsers.rowDriverID,
       ListViewClickItemHolder2: idUsers.rowRiderID,
       ListViewClickItemHolder3: idUsers.rowRideID,
@@ -55,18 +59,21 @@ export default class RideListScreen extends React.Component {
   }
 
   componentDidMount() {
-    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        //idUser: this.state.TextUserID
-        idUser: this.props.navigation.state.params.TextUserID,
-        typeOfRides: this.state.typeOfRides
-      })
-    })
+    return fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/listOfRiderRides.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          //idUser: this.state.TextUserID
+          idUser: this.props.navigation.state.params.TextUserID,
+          typeOfRides: this.state.typeOfRides
+        })
+      }
+    )
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);

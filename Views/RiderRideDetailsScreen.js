@@ -19,7 +19,7 @@ import Button from "apsl-react-native-button";
 const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
-export default class RideDetailsScreen extends React.Component {
+export default class RiderRideDetailsScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -105,7 +105,7 @@ export default class RideDetailsScreen extends React.Component {
   updateRide(acceptedOrPotential) {
     this.setState({ acceptedOrPotential: acceptedOrPotential });
     console.log("acceptedOrPotential: " + acceptedOrPotential);
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRide.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateRiderRide.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -120,7 +120,7 @@ export default class RideDetailsScreen extends React.Component {
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
         if (
-          responseJson == "Ride DriverAccepted." ||
+          responseJson == "Ride RiderAccepted." ||
           responseJson == "Ride Accepted."
         ) {
           Alert.alert(

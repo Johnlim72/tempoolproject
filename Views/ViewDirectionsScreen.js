@@ -26,6 +26,13 @@ export default class ViewDirectionsScreen extends React.Component {
       rider_address: this.props.navigation.state.params.rider_address,
       driver_address: this.props.navigation.state.params.driver_address
     };
+
+    console.log(
+      "rider_address: " +
+        this.state.rider_address +
+        ", " +
+        this.state.driver_address
+    );
   }
 
   calcDistance() {

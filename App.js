@@ -34,6 +34,8 @@ import StartLookingScreen from "./Views/StartLookingScreen";
 import DriverLookingScreen from "./Views/DriverLookingScreen";
 import AltViewDirectionsScreen from "./Views/AltViewDirectionsScreen";
 import PickUpRiderNowScreen from "./Views/PickUpRiderNowScreen";
+import RiderRideListScreen from "./Views/RiderRideListScreen";
+import RiderRideDetailsScreen from "./Views/RiderRideDetailsScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -111,6 +113,12 @@ const RootStack = StackNavigator(
     },
     UpdateRiderSchedule: {
       screen: UpdateRiderScheduleScreen
+    },
+    RiderRideList: {
+      screen: RiderRideListScreen
+    },
+    RiderRideDetails: {
+      screen: RiderRideDetailsScreen
     }
   },
   {
