@@ -118,7 +118,9 @@ export default class RideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         ride_ID: this.state.rideID,
-        acceptedOrPotential: acceptedOrPotential
+        acceptedOrPotential: acceptedOrPotential,
+        driver_latitude: this.state.driver_latitude,
+        driver_longitude: this.state.driver_longitude
       })
     })
       .then(response => response.json())
@@ -337,7 +339,7 @@ export default class RideDetailsScreen extends React.Component {
                 fontWeight: "400"
               }}
               onPress={() =>
-                this.props.navigation.navigate("AltViewDirections", {
+                this.props.navigation.navigate("AltViewDirectionsMatched", {
                   TextEmail: this.props.navigation.state.params.TextEmail,
                   userID: this.props.navigation.state.params
                     .ListViewClickItemHolder,

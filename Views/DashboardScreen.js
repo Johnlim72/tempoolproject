@@ -304,8 +304,8 @@ export default class DashboardScreen extends React.Component {
 
               <Button
                 style={{
-                  backgroundColor: "#4d4dff",
-                  borderColor: "#4d4dff",
+                  backgroundColor: "#ff3333",
+                  borderColor: "#ff3333",
                   borderRadius: 22,
                   borderWidth: 2
                 }}

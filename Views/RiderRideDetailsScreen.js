@@ -317,41 +317,6 @@ export default class RiderRideDetailsScreen extends React.Component {
             >
               View Directions
             </Button>
-            <Button
-              style={{
-                backgroundColor: "green",
-                borderColor: "green",
-                borderRadius: 22,
-                borderWidth: 2,
-                marginTop: 10
-              }}
-              textStyle={{
-                fontSize: 18,
-                color: "white",
-                fontFamily: "Quicksand",
-                fontWeight: "400"
-              }}
-              onPress={() =>
-                this.props.navigation.navigate("AltViewDirections", {
-                  TextEmail: this.props.navigation.state.params.TextEmail,
-                  userID: this.props.navigation.state.params
-                    .ListViewClickItemHolder,
-                  ride_ID: this.state.rideID,
-                  rider_loc_lat: this.state.rider_loc_lat,
-                  rider_loc_long: this.state.rider_loc_long,
-                  rider_address: this.state.TextRiderAddress,
-                  driver_address: this.state.driver_address,
-                  driver_longitude: this.state.driver_longitude,
-                  driver_latitude: this.state.driver_latitude,
-                  TextRiderFirstName: this.state.TextRiderFirstName,
-                  TextRiderLastName: this.state.TextRiderLastName,
-                  TextRiderEmail: this.state.TextRiderEmail,
-                  TextRiderPhoneNumber: this.state.TextRiderPhoneNumber
-                })
-              }
-            >
-              Start Ride Now
-            </Button>
           </View>
         </View>
       );

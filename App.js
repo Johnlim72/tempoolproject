@@ -33,6 +33,7 @@ import TrackScreen from "./Views/TrackScreen";
 import StartLookingScreen from "./Views/StartLookingScreen";
 import DriverLookingScreen from "./Views/DriverLookingScreen";
 import AltViewDirectionsScreen from "./Views/AltViewDirectionsScreen";
+import AltViewDirectionsMatchedScreen from "./Views/AltViewDirectionsMatchedScreen";
 import PickUpRiderNowScreen from "./Views/PickUpRiderNowScreen";
 import RiderRideListScreen from "./Views/RiderRideListScreen";
 import RiderRideDetailsScreen from "./Views/RiderRideDetailsScreen";
@@ -119,6 +120,9 @@ const RootStack = StackNavigator(
     },
     RiderRideDetails: {
       screen: RiderRideDetailsScreen
+    },
+    AltViewDirectionsMatched: {
+      screen: AltViewDirectionsMatchedScreen
     }
   },
   {
