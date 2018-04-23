@@ -47,7 +47,13 @@ export default class AltViewDirectionsScreen extends React.Component {
           this.props.navigation.state.params.driver_longitude
         )
       },
-      pickedUpRider: false
+      pickedUpRider: false,
+      currentLatitude: parseFloat(
+        this.props.navigation.state.params.driver_latitude
+      ),
+      currentLongitude: parseFloat(
+        this.props.navigation.state.params.driver_longitude
+      )
     };
   }
 
@@ -67,7 +73,9 @@ export default class AltViewDirectionsScreen extends React.Component {
         this.setState({
           routeCoordinates: routeCoordinates.concat(positionLatLngs),
           distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
-          prevLatLng: newLatLngs
+          prevLatLng: newLatLngs,
+          currentLatitude: positionLatLngs.latitude,
+          currentLongitude: positionLatLngs.longitude
         });
 
         this.updateCoordinates(positionLatLngs);
@@ -239,8 +247,8 @@ export default class AltViewDirectionsScreen extends React.Component {
       <View style={styles1.container}>
         <MapView
           region={{
-            latitude: parseFloat(this.state.rider_coordinates.latitude),
-            longitude: parseFloat(this.state.rider_coordinates.longitude),
+            latitude: parseFloat(this.state.currentLatitude),
+            longitude: parseFloat(this.state.currentLongitude),
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA
           }}
