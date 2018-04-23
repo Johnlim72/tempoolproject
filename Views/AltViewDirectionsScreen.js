@@ -93,7 +93,9 @@ export default class AltViewDirectionsScreen extends React.Component {
       this.setState({
         routeCoordinates: routeCoordinates.concat(positionLatLngs),
         distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
-        prevLatLng: newLatLngs
+        prevLatLng: newLatLngs,
+        currentLatitude: positionLatLngs.latitude,
+        currentLongitude: positionLatLngs.longitude
       });
 
       console.log(

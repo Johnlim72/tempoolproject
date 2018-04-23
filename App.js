@@ -37,6 +37,8 @@ import AltViewDirectionsMatchedScreen from "./Views/AltViewDirectionsMatchedScre
 import PickUpRiderNowScreen from "./Views/PickUpRiderNowScreen";
 import RiderRideListScreen from "./Views/RiderRideListScreen";
 import RiderRideDetailsScreen from "./Views/RiderRideDetailsScreen";
+import MyDriverScreen from "./Views/MyDriverScreen";
+import ViewMatchedDriverScreen from "./Views/ViewMatchedDriverScreen";
 import styles from "./Views/style";
 
 const ACCESS_TOKEN = "accessToken";
@@ -123,6 +125,12 @@ const RootStack = StackNavigator(
     },
     AltViewDirectionsMatched: {
       screen: AltViewDirectionsMatchedScreen
+    },
+    MyDriver: {
+      screen: MyDriverScreen
+    },
+    ViewMatchedDriver: {
+      screen: ViewMatchedDriverScreen
     }
   },
   {
