@@ -338,6 +338,28 @@ export default class DashboardScreen extends React.Component {
                   fontWeight: "400"
                 }}
                 onPress={() =>
+                  this.props.navigation.navigate("MyDriver", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.state.TextUserID
+                  })
+                }
+              >
+                My Driver's Status
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#ff6666",
+                  borderColor: "#ff6666",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
                   this.props.navigation.navigate("Profile", {
                     TextEmail: this.props.navigation.state.params.TextEmail
                   })

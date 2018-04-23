@@ -58,6 +58,7 @@ export default class AltViewDirectionsMatchedScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.startRide();
     navigator.geolocation.getCurrentPosition(
       position => {
         const { routeCoordinates, distanceTravelled } = this.state;
@@ -108,6 +109,29 @@ export default class AltViewDirectionsMatchedScreen extends React.Component {
       );
       this.updateCoordinates(positionLatLngs);
     });
+  }
+
+  startRide() {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/startMatchedRide.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ride_ID: this.state.ride_ID
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Then open Profile activity and send user email to profile activity.
+        if (responseJson == "Started Ride") {
+          console.log("Started Ride");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   updateCoordinates(positionLatLngs) {
@@ -177,17 +201,20 @@ export default class AltViewDirectionsMatchedScreen extends React.Component {
   }
 
   updateCoordinatesCompletedRide() {
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/updateCompleted.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ride_ID: this.state.ride_ID,
-        completedRide: true
-      })
-    })
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/updateCompletedMatched.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ride_ID: this.state.ride_ID,
+          completedRide: true
+        })
+      }
+    )
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
