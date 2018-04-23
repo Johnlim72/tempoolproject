@@ -311,6 +311,8 @@ export default class FindRideScreen extends React.Component {
           )}
         </View>
       );
+    } else {
+      return null;
     }
   }
 }
