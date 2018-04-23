@@ -88,6 +88,7 @@ export default class FindRideScreen extends React.Component {
           rider_loc_lat: responseJson.rider_loc_lat,
           rider_loc_long: responseJson.rider_loc_long,
           rider_datetime: responseJson.rider_datetime,
+          riderID: responseJson.riderID,
           acceptedOrPotential: responseJson.acceptedOrPotential,
           driverID: responseJson.driverID,
           driver_address: responseJson.driver_address,
@@ -100,6 +101,40 @@ export default class FindRideScreen extends React.Component {
           completedRide: responseJson.completedRide,
           startedRide: responseJson.startedRide
         });
+
+        Alert.alert(
+          "Driver has started ride!",
+          "Click OK to view ride",
+          [
+            {
+              text: "OK",
+              onPress: () =>
+                this.props.navigation.navigate("ViewMatchedDriver", {
+                  userID: this.props.navigation.state.params.TextUserID,
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  ride_ID: responseJson.ride_ID,
+                  rider_address: responseJson.rider_address,
+                  rider_loc_lat: responseJson.rider_loc_lat,
+                  rider_loc_long: responseJson.rider_loc_long,
+                  rider_datetime: responseJson.rider_datetime,
+                  riderID: responseJson.riderID,
+                  acceptedOrPotential: responseJson.acceptedOrPotential,
+                  driverID: responseJson.driverID,
+                  driver_address: responseJson.driver_address,
+                  driver_latitude: responseJson.driver_latitude,
+                  driver_longitude: responseJson.driver_longitude,
+                  completed: responseJson.completed,
+                  currLatitude: responseJson.currLatitude,
+                  currLongitude: responseJson.currLongitude,
+                  pickedUpRider: responseJson.pickedUpRider,
+                  completedRide: responseJson.completedRide,
+                  startedRide: responseJson.startedRide
+                })
+            }
+          ],
+          { cancelable: false }
+        );
+        console.log("ride_id from getRide(): " + responseJson.ride_ID);
       })
       .catch(error => {
         Alert.alert("Error: " + error.toString());
@@ -123,37 +158,7 @@ export default class FindRideScreen extends React.Component {
           if (responseJson == "Started") {
             this.setState({ startedRide: true });
             this.getRide();
-            Alert.alert(
-              "Driver has started ride!",
-              "Click OK to view ride",
-              [
-                {
-                  text: "OK",
-                  onPress: () =>
-                    this.props.navigation.navigate("ViewMatchedDriver", {
-                      userID: this.props.navigation.state.params.userID,
-                      TextEmail: this.props.navigation.state.params.TextEmail,
-                      ride_ID: this.state.ride_ID,
-                      rider_address: this.state.rider_address,
-                      rider_loc_lat: this.state.rider_loc_lat,
-                      rider_loc_long: this.state.rider_loc_long,
-                      rider_datetime: this.state.rider_datetime,
-                      acceptedOrPotential: this.state.acceptedOrPotential,
-                      driverID: this.state.driverID,
-                      driver_address: this.state.driver_address,
-                      driver_latitude: this.state.driver_latitude,
-                      driver_longitude: this.state.driver_longitude,
-                      completed: this.state.completed,
-                      currLatitude: this.state.currLatitude,
-                      currLongitude: this.state.currLongitude,
-                      pickedUpRider: this.state.pickedUpRider,
-                      completedRide: this.state.completedRide,
-                      startedRide: this.state.startedRide
-                    })
-                }
-              ],
-              { cancelable: false }
-            );
+
             clearInterval(this.timer);
           } else {
             Alert.alert(
