@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  ScrollView,
   ImageBackground,
   ListView,
   Dimensions,
@@ -173,134 +174,47 @@ export default class RideDetailsScreen extends React.Component {
   render() {
     if (this.props.navigation.state.params.typeOfRides == "Potential") {
       return (
-        <View style={styles.MainContainer}>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text
-              style={[
-                styles.textViewContainer,
-                {
-                  marginBottom: 20,
-                  fontSize: 30,
-                  fontFamily: "Quicksand"
-                }
-              ]}
-            >
-              {"Ride Details"}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Name"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderFirstName +
-                " " +
-                this.state.TextRiderLastName}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Email"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderEmail}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderDateTime}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Address"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderAddress}
-            </Text>
-          </View>
+        <ScrollView>
+          <View style={styles.MainContainer}>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <Text
+                style={[
+                  styles.textViewContainer,
+                  {
+                    marginBottom: 20,
+                    fontSize: 30,
+                    fontFamily: "Quicksand"
+                  }
+                ]}
+              >
+                {"Ride Details"}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Name"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderFirstName +
+                  " " +
+                  this.state.TextRiderLastName}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Email"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderEmail}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderDateTime}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Address"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderAddress}
+              </Text>
+            </View>
 
-          <Button
-            style={{
-              backgroundColor: "darkred",
-              borderColor: "darkred",
-              borderRadius: 22,
-              borderWidth: 2
-            }}
-            textStyle={{
-              fontSize: 18,
-              color: "white",
-              fontFamily: "Quicksand",
-              fontWeight: "400"
-            }}
-            onPress={
-              () => this.updateRide("DriverAccepted")
-              // () =>
-              // this.props.navigation.navigate("RideList", {
-              //   TextEmail: this.props.navigation.state.params.TextEmail,
-              //   TextUserID: this.props.navigation.state.params
-              //     .ListViewClickItemHolder
-              // }),
-            }
-          >
-            Accept
-          </Button>
-
-          <Button
-            style={{
-              backgroundColor: "darkred",
-              borderColor: "darkred",
-              borderRadius: 22,
-              borderWidth: 2
-            }}
-            textStyle={{
-              fontSize: 18,
-              color: "white",
-              fontFamily: "Quicksand",
-              fontWeight: "400"
-            }}
-            onPress={
-              () => this.updateRide("Declined")
-              // () =>
-              // this.props.navigation.navigate("RideList", {
-              //   TextEmail: this.props.navigation.state.params.TextEmail,
-              //   TextUserID: this.props.navigation.state.params
-              //     .ListViewClickItemHolder
-              // })
-            }
-          >
-            Decline
-          </Button>
-        </View>
-      );
-    } else if (this.props.navigation.state.params.typeOfRides == "Accepted") {
-      return (
-        <View style={styles.MainContainer}>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text
-              style={[
-                styles.textViewContainer,
-                {
-                  marginBottom: 20,
-                  fontSize: 30,
-                  fontFamily: "Quicksand"
-                }
-              ]}
-            >
-              {"Ride Details"}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Name"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderFirstName +
-                " " +
-                this.state.TextRiderLastName}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Email"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderEmail}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderDateTime}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Address"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderAddress}
-            </Text>
             <Button
               style={{
                 backgroundColor: "darkred",
                 borderColor: "darkred",
                 borderRadius: 22,
-                borderWidth: 2,
-                marginTop: 30
+                borderWidth: 2
               }}
               textStyle={{
                 fontSize: 18,
@@ -308,29 +222,25 @@ export default class RideDetailsScreen extends React.Component {
                 fontFamily: "Quicksand",
                 fontWeight: "400"
               }}
-              onPress={() =>
-                this.props.navigation.navigate("ViewDirections", {
-                  TextEmail: this.props.navigation.state.params.TextEmail,
-                  TextUserID: this.props.navigation.state.params
-                    .ListViewClickItemHolder,
-                  rider_loc_lat: this.state.rider_loc_lat,
-                  rider_loc_long: this.state.rider_loc_long,
-                  rider_address: this.state.TextRiderAddress,
-                  driver_address: this.state.driver_address,
-                  driver_longitude: this.state.driver_longitude,
-                  driver_latitude: this.state.driver_latitude
-                })
+              onPress={
+                () => this.updateRide("DriverAccepted")
+                // () =>
+                // this.props.navigation.navigate("RideList", {
+                //   TextEmail: this.props.navigation.state.params.TextEmail,
+                //   TextUserID: this.props.navigation.state.params
+                //     .ListViewClickItemHolder
+                // }),
               }
             >
-              View Directions
+              Accept
             </Button>
+
             <Button
               style={{
-                backgroundColor: "green",
-                borderColor: "green",
+                backgroundColor: "darkred",
+                borderColor: "darkred",
                 borderRadius: 22,
-                borderWidth: 2,
-                marginTop: 10
+                borderWidth: 2
               }}
               textStyle={{
                 fontSize: 18,
@@ -338,66 +248,163 @@ export default class RideDetailsScreen extends React.Component {
                 fontFamily: "Quicksand",
                 fontWeight: "400"
               }}
-              onPress={() =>
-                this.props.navigation.navigate("AltViewDirectionsMatched", {
-                  TextEmail: this.props.navigation.state.params.TextEmail,
-                  userID: this.props.navigation.state.params
-                    .ListViewClickItemHolder,
-                  ride_ID: this.state.rideID,
-                  rider_loc_lat: this.state.rider_loc_lat,
-                  rider_loc_long: this.state.rider_loc_long,
-                  rider_address: this.state.TextRiderAddress,
-                  driver_address: this.state.driver_address,
-                  driver_longitude: this.state.driver_longitude,
-                  driver_latitude: this.state.driver_latitude,
-                  TextRiderFirstName: this.state.TextRiderFirstName,
-                  TextRiderLastName: this.state.TextRiderLastName,
-                  TextRiderEmail: this.state.TextRiderEmail,
-                  TextRiderPhoneNumber: this.state.TextRiderPhoneNumber
-                })
+              onPress={
+                () => this.updateRide("Declined")
+                // () =>
+                // this.props.navigation.navigate("RideList", {
+                //   TextEmail: this.props.navigation.state.params.TextEmail,
+                //   TextUserID: this.props.navigation.state.params
+                //     .ListViewClickItemHolder
+                // })
               }
             >
-              Start Ride Now
+              Decline
             </Button>
           </View>
-        </View>
+        </ScrollView>
+      );
+    } else if (this.props.navigation.state.params.typeOfRides == "Accepted") {
+      return (
+        <ScrollView>
+          <View style={styles.MainContainer}>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <Text
+                style={[
+                  styles.textViewContainer,
+                  {
+                    marginBottom: 20,
+                    fontSize: 30,
+                    fontFamily: "Quicksand"
+                  }
+                ]}
+              >
+                {"Ride Details"}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Name"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderFirstName +
+                  " " +
+                  this.state.TextRiderLastName}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Email"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderEmail}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderDateTime}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Address"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderAddress}
+              </Text>
+              <Button
+                style={{
+                  backgroundColor: "darkred",
+                  borderColor: "darkred",
+                  borderRadius: 22,
+                  borderWidth: 2,
+                  marginTop: 30
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("ViewDirections", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    TextUserID: this.props.navigation.state.params
+                      .ListViewClickItemHolder,
+                    rider_loc_lat: this.state.rider_loc_lat,
+                    rider_loc_long: this.state.rider_loc_long,
+                    rider_address: this.state.TextRiderAddress,
+                    driver_address: this.state.driver_address,
+                    driver_longitude: this.state.driver_longitude,
+                    driver_latitude: this.state.driver_latitude
+                  })
+                }
+              >
+                View Directions
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "green",
+                  borderColor: "green",
+                  borderRadius: 22,
+                  borderWidth: 2,
+                  marginTop: 10
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("AltViewDirectionsMatched", {
+                    TextEmail: this.props.navigation.state.params.TextEmail,
+                    userID: this.props.navigation.state.params
+                      .ListViewClickItemHolder,
+                    ride_ID: this.state.rideID,
+                    rider_loc_lat: this.state.rider_loc_lat,
+                    rider_loc_long: this.state.rider_loc_long,
+                    rider_address: this.state.TextRiderAddress,
+                    driver_address: this.state.driver_address,
+                    driver_longitude: this.state.driver_longitude,
+                    driver_latitude: this.state.driver_latitude,
+                    TextRiderFirstName: this.state.TextRiderFirstName,
+                    TextRiderLastName: this.state.TextRiderLastName,
+                    TextRiderEmail: this.state.TextRiderEmail,
+                    TextRiderPhoneNumber: this.state.TextRiderPhoneNumber
+                  })
+                }
+              >
+                Start Ride Now
+              </Button>
+            </View>
+          </View>
+        </ScrollView>
       );
     } else if (this.props.navigation.state.params.typeOfRides == "Past") {
       return (
-        <View style={styles.MainContainer}>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text
-              style={[
-                styles.textViewContainer,
-                {
-                  marginBottom: 20,
-                  fontSize: 30,
-                  fontFamily: "Quicksand"
-                }
-              ]}
-            >
-              {"Ride Details"}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Name"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderFirstName +
-                " " +
-                this.state.TextRiderLastName}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Email"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderEmail}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderDateTime}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Address"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderAddress}
-            </Text>
+        <ScrollView>
+          <View style={styles.MainContainer}>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <Text
+                style={[
+                  styles.textViewContainer,
+                  {
+                    marginBottom: 20,
+                    fontSize: 30,
+                    fontFamily: "Quicksand"
+                  }
+                ]}
+              >
+                {"Ride Details"}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Name"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderFirstName +
+                  " " +
+                  this.state.TextRiderLastName}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Email"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderEmail}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderDateTime}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Address"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderAddress}
+              </Text>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       );
     }
   }

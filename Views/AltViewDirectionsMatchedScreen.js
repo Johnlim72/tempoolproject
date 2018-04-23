@@ -103,6 +103,14 @@ export default class AltViewDirectionsMatchedScreen extends React.Component {
   }
 
   updateCoordinates(positionLatLngs) {
+    console.log(
+      "states: " +
+        this.state.ride_ID +
+        ", " +
+        this.state.currentLatitude +
+        ", " +
+        this.state.currentLongitude
+    );
     fetch(
       "http://cis-linux2.temple.edu/~tuf41055/php/updateCoordinatesMatched.php",
       {
