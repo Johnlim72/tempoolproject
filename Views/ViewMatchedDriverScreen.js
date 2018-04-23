@@ -28,7 +28,7 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyCFwaPOiId1pFRm93-nbRBzF71UybpU9i8";
 const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default class FindRideScreen extends React.Component {
+export default class ViewMatchedDriverScreen extends React.Component {
   static navigationOptions = {
     gesturesEnabled: false
   };
@@ -57,8 +57,8 @@ export default class FindRideScreen extends React.Component {
       completedRide: this.props.navigation.state.params.completedRide,
       startedRide: this.props.navigation.state.params.startedRide,
       routeCoordinates: [],
-      distanceTravelled: "",
-      prevLatLng: "",
+      distanceTravelled: 0,
+      prevLatLng: {},
       currentLatitude: "",
       currentLongitude: "",
       coordinatesChecked: false,
@@ -73,13 +73,20 @@ export default class FindRideScreen extends React.Component {
       rider_coordinates: {
         latitude: parseFloat(this.props.navigation.state.params.rider_loc_lat),
         longitude: parseFloat(this.props.navigation.state.params.rider_loc_long)
-      }
+      },
+      emailDriver: "",
+      firstNameDriver: "",
+      lastNameDriver: "",
+      phoneNumberDriver: ""
     };
 
-    console.log("ViewMatchedDriverScreen: " + this.state.userID);
+
+    console.log("ViewMatchedDriverScreen: " + this.state.driver_latitude);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.checkForCoordinates();
+  }
 
   calcDistance(newLatLng) {
     const { prevLatLng } = this.state;
@@ -87,7 +94,7 @@ export default class FindRideScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval(this.timerGetCoordinates);
 
     navigator.geolocation.clearWatch(this.watchID);
   }
@@ -102,7 +109,7 @@ export default class FindRideScreen extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          ride_ID: this.state.rideID
+          ride_ID: this.state.ride_ID
         })
       }
     )
@@ -142,7 +149,7 @@ export default class FindRideScreen extends React.Component {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            ride_ID: this.state.rideID
+            ride_ID: this.state.ride_ID
           })
         }
       )
@@ -202,7 +209,7 @@ export default class FindRideScreen extends React.Component {
         .catch(error => {
           console.error(error);
         });
-    }, 10000);
+    }, 2000);
   }
 
   render() {
@@ -245,18 +252,20 @@ export default class FindRideScreen extends React.Component {
           <View style={styles1.topBar}>
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>Driver Name</Text>
-              <Text style={styles1.topBarContent}>{this.state.driverName}</Text>
+              <Text style={styles1.topBarContent}>
+                {this.state.firstNameDriver + " " + this.state.lastNameDriver}
+              </Text>
             </View>
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>Phone Number</Text>
               <Text style={styles1.topBarContent}>
-                {this.state.driverPhoneNumber}
+                {this.state.phoneNumberDriver}
               </Text>
             </View>
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>E-mail</Text>
               <Text style={styles1.topBarContent}>
-                {this.state.driverEmail}
+                {this.state.emailDriver}
               </Text>
             </View>
           </View>
@@ -265,7 +274,7 @@ export default class FindRideScreen extends React.Component {
               <View style={styles1.bottomBarGroup}>
                 <Text style={styles1.bottomBarHeader}>Rider Address</Text>
                 <Text style={styles1.bottomBarContent2}>
-                  {this.state.address}
+                  {this.state.rider_address}
                 </Text>
               </View>
               <View style={styles1.bottomBarGroup}>
