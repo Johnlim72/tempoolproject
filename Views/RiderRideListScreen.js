@@ -188,7 +188,7 @@ export default class RiderRideListScreen extends React.Component {
       });
     }
 
-    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRides.php", {
+    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRiderRides.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
