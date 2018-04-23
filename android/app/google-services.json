@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "860901651741",
+    "firebase_url": "https://tempool-16f34.firebaseio.com",
+    "project_id": "tempool-16f34",
+    "storage_bucket": "tempool-16f34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860901651741:android:44f3e41fff5e0e1e",
+        "android_client_info": {
+          "package_name": "com.tempoolproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860901651741-gh88ibm0b88rlmdgkl4ad3gvpt789vdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZwre-w7gjTsNraBx10Y0XN2ktJyMQEuw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

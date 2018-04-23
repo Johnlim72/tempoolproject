@@ -18,7 +18,7 @@ import geolib from "geolib";
 import styles from "./style";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {

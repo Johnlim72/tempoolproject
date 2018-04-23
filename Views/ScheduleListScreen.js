@@ -19,7 +19,7 @@ import styles from "./style";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 
 export default class ScheduleListScreen extends React.Component {
   constructor(props) {

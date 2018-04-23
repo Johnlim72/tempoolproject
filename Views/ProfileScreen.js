@@ -18,7 +18,7 @@ import { Switch } from "react-native-switch";
 import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 
 const USERID = "userID";
 

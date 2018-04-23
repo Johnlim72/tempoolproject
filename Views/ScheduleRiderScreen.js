@@ -22,7 +22,7 @@ import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 
 const USERID = "userID";
 

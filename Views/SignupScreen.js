@@ -18,7 +18,7 @@ import Button from "apsl-react-native-button";
 
 const { width, height } = Dimensions.get("window");
 
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 

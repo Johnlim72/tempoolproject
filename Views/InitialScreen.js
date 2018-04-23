@@ -22,7 +22,7 @@ const ACCESS_TOKEN = "accessToken";
 const EMAIL = "email";
 const USERID = "userID";
 
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 

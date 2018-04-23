@@ -21,7 +21,7 @@ import MapViewDirections from "react-native-maps-directions";
 import pick from "lodash/pick";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./dark.jpg");
+const background = require("./dark.png");
 const ASPECT_RATIO = width / height;
 const GOOGLE_MAPS_APIKEY = "AIzaSyCFwaPOiId1pFRm93-nbRBzF71UybpU9i8";
 
