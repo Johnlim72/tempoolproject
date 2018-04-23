@@ -93,7 +93,7 @@ export default class AltViewDirectionsMatchedScreen extends React.Component {
         distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
         prevLatLng: newLatLngs,
         currentLatitude: positionLatLngs.latitude,
-        currentLongitude: positinLatLngs.longitude
+        currentLongitude: positionLatLngs.longitude
       });
 
       console.log(
