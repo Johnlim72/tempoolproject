@@ -53,7 +53,11 @@ export default class FindRideScreen extends React.Component {
       currLongitude: "",
       pickedUpRider: "",
       completedRide: "",
-      startedRide: ""
+      startedRide: "",
+      driverEmail: "",
+      driverFirstName: "",
+      driverLastName: "",
+      driverPhoneNumber: ""
     };
   }
 
@@ -99,7 +103,11 @@ export default class FindRideScreen extends React.Component {
           currLongitude: responseJson.currLongitude,
           pickedUpRider: responseJson.pickedUpRider,
           completedRide: responseJson.completedRide,
-          startedRide: responseJson.startedRide
+          startedRide: responseJson.startedRide,
+          driverEmail: responseJson.driverEmail,
+          driverFirstName: responseJson.driverFirstName,
+          driverLastName: responseJson.driverLastName,
+          driverPhoneNumber: responseJson.driverPhoneNumber
         });
 
         Alert.alert(
@@ -128,7 +136,11 @@ export default class FindRideScreen extends React.Component {
                   currLongitude: responseJson.currLongitude,
                   pickedUpRider: responseJson.pickedUpRider,
                   completedRide: responseJson.completedRide,
-                  startedRide: responseJson.startedRide
+                  startedRide: responseJson.startedRide,
+                  driverEmail: responseJson.driverEmail,
+                  driverFirstName: responseJson.driverFirstName,
+                  driverLastName: responseJson.driverLastName,
+                  driverPhoneNumber: responseJson.driverPhoneNumber
                 })
             }
           ],

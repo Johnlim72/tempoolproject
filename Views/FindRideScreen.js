@@ -2,9 +2,9 @@ import React from "react";
 import {
   AppRegistry,
   ActivityIndicator,
+  Image,
   Alert,
   StyleSheet,
-  Button,
   ImageBackground,
   Dimensions,
   View,
@@ -20,6 +20,8 @@ import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import pick from "lodash/pick";
 
+import Button from "apsl-react-native-button";
+
 const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 const ASPECT_RATIO = width / height;
@@ -30,7 +32,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class FindRideScreen extends React.Component {
   static navigationOptions = {
-    gesturesEnabled: false
+    gesturesEnabled: false,
+    header: null
   };
 
   constructor(props) {
@@ -170,7 +173,7 @@ export default class FindRideScreen extends React.Component {
           });
           this.findShortDriver();
         } else {
-          Alert.alert("No drivers leaving soon");
+          Alert.alert("No drivers leaving soon, please try again later.");
           fetch(
             "http://cis-linux2.temple.edu/~tuf41055/php/updateQueueToServed.php",
             {

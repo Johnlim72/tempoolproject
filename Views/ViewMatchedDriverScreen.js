@@ -74,12 +74,11 @@ export default class ViewMatchedDriverScreen extends React.Component {
         latitude: parseFloat(this.props.navigation.state.params.rider_loc_lat),
         longitude: parseFloat(this.props.navigation.state.params.rider_loc_long)
       },
-      emailDriver: "",
-      firstNameDriver: "",
-      lastNameDriver: "",
-      phoneNumberDriver: ""
+      driverEmail: this.props.navigation.state.params.driverEmail,
+      driverFirstName: this.props.navigation.state.params.driverFirstName,
+      driverLastName: this.props.navigation.state.params.driverLastName,
+      driverPhoneNumber: this.props.navigation.state.params.driverPhoneNumber
     };
-
 
     console.log("ViewMatchedDriverScreen: " + this.state.driver_latitude);
   }
@@ -253,23 +252,23 @@ export default class ViewMatchedDriverScreen extends React.Component {
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>Driver Name</Text>
               <Text style={styles1.topBarContent}>
-                {this.state.firstNameDriver + " " + this.state.lastNameDriver}
+                {this.state.driverFirstName + " " + this.state.driverLastName}
               </Text>
             </View>
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>Phone Number</Text>
               <Text style={styles1.topBarContent}>
-                {this.state.phoneNumberDriver}
+                {this.state.driverPhoneNumber}
               </Text>
             </View>
             <View style={styles1.topBarGroup}>
               <Text style={styles1.topBarHeader}>E-mail</Text>
               <Text style={styles1.topBarContent}>
-                {this.state.emailDriver}
+                {this.state.driverEmail}
               </Text>
             </View>
           </View>
-          {this.state.pickedUpRider ? (
+          {this.props.navigation.state.params.pickedUpRider ? (
             <View style={styles1.bottomBar}>
               <View style={styles1.bottomBarGroup}>
                 <Text style={styles1.bottomBarHeader}>Rider Address</Text>

@@ -42,7 +42,7 @@ export default class RiderRideDetailsScreen extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/getRiderForList.php", {
+    fetch("http://cis-linux2.temple.edu/~tuf41055/php/getDriverForList.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -50,7 +50,7 @@ export default class RiderRideDetailsScreen extends React.Component {
       },
       body: JSON.stringify({
         // Getting the id.
-        riderID: this.props.navigation.state.params.ListViewClickItemHolder2
+        driverID: this.props.navigation.state.params.ListViewClickItemHolder
       })
     })
       .then(response => response.json())

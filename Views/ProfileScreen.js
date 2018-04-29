@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
   ImageBackground,
   Dimensions,
   ScrollView,
@@ -24,7 +25,8 @@ const USERID = "userID";
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    gesturesEnabled: false
   };
 
   constructor(props) {
@@ -247,27 +249,41 @@ export default class ProfileScreen extends React.Component {
         >
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              margin: 10
+              flex: 0.1,
+              margin: 10,
+              marginTop: 20,
+              marginBottom: 0
             }}
           >
-            <Text
+            <Button
               style={{
+                borderColor: "black",
+                borderRadius: 22,
+                borderWidth: 2,
+                width: "10%"
+              }}
+              textStyle={{
+                fontSize: 18,
                 color: "white",
                 fontFamily: "Quicksand",
-                fontSize: 35,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center",
-                textShadowOffset: { width: 2, height: 2 },
-                textShadowRadius: 4,
-                textShadowColor: "#000000"
+                fontWeight: "400"
               }}
+              onPress={() =>
+                this.props.navigation.navigate("Dashboard", {
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  Status: this.state.SwitchOnValueHolder,
+                  userID: this.state.userID,
+                  findRideNow: false
+                })
+              }
             >
-              Profile
-            </Text>
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require("./home.png")}
+              />
+            </Button>
           </View>
+
           <View style={{ flex: 1 }}>
             <View
               style={{

@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
   Picker,
   ImageBackground,
   ListView,
@@ -22,6 +23,10 @@ const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
 export default class RiderScheduleListScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false,
+    header: null
+  };
   constructor(props) {
     super(props);
 
@@ -192,16 +197,19 @@ export default class RiderScheduleListScreen extends React.Component {
   }
 
   deleteSchedule(rowData) {
-    fetch("http://cis-linux2.temple.edu/~tuf41055/php/deleteRiderSchedule.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: rowData.id
-      })
-    })
+    fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/deleteRiderSchedule.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: rowData.id
+        })
+      }
+    )
       .then(response => response.json())
       .then(responseJson => {
         //Then open Profile activity and send user email to profile activity.
@@ -214,7 +222,8 @@ export default class RiderScheduleListScreen extends React.Component {
                 text: "OK",
                 onPress: () =>
                   this.props.navigation.navigate("RiderScheduleList", {
-                    TextUserID: this.state.TextUserID
+                    TextUserID: this.state.TextUserID,
+                    TextEmail: this.props.navigation.state.params.TextEmail
                   })
               }
             ],
@@ -229,19 +238,41 @@ export default class RiderScheduleListScreen extends React.Component {
 
   renderHeader = () => {
     var header = (
-      <View style={styles1.header_footer_style}>
-        <Text
+      <View
+        style={{
+          flex: 0.1,
+          margin: 10,
+          marginTop: 20,
+          marginBottom: 0
+        }}
+      >
+        <Button
           style={{
-            fontFamily: "Quicksand",
-            fontSize: 24,
-            fontWeight: "400",
-            color: "navy",
-            alignItems: "center",
-            justifyContent: "center"
+            borderColor: "black",
+            borderRadius: 22,
+            borderWidth: 2,
+            width: "10%"
           }}
+          textStyle={{
+            fontSize: 18,
+            color: "white",
+            fontFamily: "Quicksand",
+            fontWeight: "400"
+          }}
+          onPress={() =>
+            this.props.navigation.navigate("Dashboard", {
+              TextEmail: this.props.navigation.state.params.TextEmail,
+              Status: this.state.SwitchOnValueHolder,
+              userID: this.state.TextUserID,
+              findRideNow: false
+            })
+          }
         >
-          Your Rider Schedules
-        </Text>
+          <Image
+            style={{ width: 20, height: 20 }}
+            source={require("./home.png")}
+          />
+        </Button>
       </View>
     );
 

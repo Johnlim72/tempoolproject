@@ -24,6 +24,11 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class AltViewDirectionsMatchedScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false,
+    header: null
+  };
+
   constructor(props) {
     super(props);
 

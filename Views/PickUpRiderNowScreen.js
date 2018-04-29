@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  Image,
   View,
   Text,
   TextInput,
@@ -20,6 +21,11 @@ const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
 export default class PickUpRiderNowScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false,
+    header: null
+  };
+
   constructor(props) {
     super(props);
 
@@ -441,6 +447,42 @@ export default class PickUpRiderNowScreen extends React.Component {
           resizeMode="cover"
           blurRadius={3}
         >
+          <View
+            style={{
+              flex: 0.1,
+              margin: 10,
+              marginTop: 20,
+              marginBottom: 0
+            }}
+          >
+            <Button
+              style={{
+                borderColor: "black",
+                borderRadius: 22,
+                borderWidth: 2,
+                width: "10%"
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand",
+                fontWeight: "400"
+              }}
+              onPress={() =>
+                this.props.navigation.navigate("Dashboard", {
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  Status: this.state.SwitchOnValueHolder,
+                  userID: this.state.userID,
+                  findRideNow: false
+                })
+              }
+            >
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require("./home.png")}
+              />
+            </Button>
+          </View>
           {this.state.loader ? (
             <View
               style={{

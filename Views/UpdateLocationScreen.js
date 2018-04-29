@@ -4,10 +4,6 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import styles from "./style";
 
 export default class UpdateLocationScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
-
   state = {
     loader: false
   };
