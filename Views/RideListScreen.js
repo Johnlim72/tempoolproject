@@ -8,6 +8,7 @@ import {
   Text,
   Picker,
   ImageBackground,
+  Image,
   ListView,
   Dimensions,
   ActivityIndicator,
@@ -22,6 +23,11 @@ const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
 export default class RideListScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false,
+    header: null
+  };
+
   constructor(props) {
     super(props);
 
@@ -244,7 +250,37 @@ export default class RideListScreen extends React.Component {
   renderHeader = () => {
     var header = (
       <View style={styles1.header_footer_style}>
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View style={{ width: "10%", marginHorizontal: 5 }}>
+          <Button
+            style={{
+              borderColor: "black",
+              borderRadius: 22,
+              borderWidth: 2,
+              width: "100%"
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand",
+              fontWeight: "400"
+            }}
+            onPress={() =>
+              this.props.navigation.navigate("Dashboard", {
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                Status: this.state.SwitchOnValueHolder,
+                userID: this.state.TextUserID,
+                findRideNow: false
+              })
+            }
+          >
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("./home.png")}
+            />
+          </Button>
+        </View>
+
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorPotential,
@@ -264,7 +300,7 @@ export default class RideListScreen extends React.Component {
           </Button>
         </View>
 
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorAccepted,
@@ -283,7 +319,7 @@ export default class RideListScreen extends React.Component {
             Accepted
           </Button>
         </View>
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorPast,

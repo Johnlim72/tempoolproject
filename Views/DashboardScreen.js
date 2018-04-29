@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   View,
+  Image,
   Text,
   TextInput,
   AsyncStorage
@@ -26,8 +27,7 @@ const USERID = "userID";
 
 export default class DashboardScreen extends React.Component {
   static navigationOptions = {
-    header: null,
-    gesturesEnabled: false
+    header: null
   };
 
   constructor(props) {
@@ -157,9 +157,12 @@ export default class DashboardScreen extends React.Component {
                         TextEmail: this.state.TextEmail,
                         TextUserID: this.state.userID
                       })
+                  },
+                  {
+                    text: "Cancel"
                   }
                 ],
-                { cancelable: false }
+                { cancelable: true }
               );
             } else if (responseJson == "Driver") {
               Alert.alert(
@@ -173,9 +176,12 @@ export default class DashboardScreen extends React.Component {
                         TextEmail: this.state.TextEmail,
                         TextUserID: this.state.userID
                       })
+                  },
+                  {
+                    text: "Cancel"
                   }
                 ],
-                { cancelable: false }
+                { cancelable: true }
               );
             }
           })
@@ -211,8 +217,7 @@ export default class DashboardScreen extends React.Component {
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                padding: 20,
-                marginTop: 20
+                padding: 10
               }}
             >
               <Text
@@ -348,8 +353,8 @@ export default class DashboardScreen extends React.Component {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#ff6666",
-                  borderColor: "#ff6666",
+                  backgroundColor: "#ff9999",
+                  borderColor: "#ff9999",
                   borderRadius: 22,
                   borderWidth: 2
                 }}

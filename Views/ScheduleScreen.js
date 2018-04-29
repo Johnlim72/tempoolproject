@@ -2,6 +2,7 @@ import React from "react";
 import {
   AppRegistry,
   Alert,
+  Image,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -32,6 +33,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {
+    gesturesEnabled: false,
     header: null
   };
 
@@ -209,27 +211,41 @@ export default class ScheduleScreen extends React.Component {
         >
           <View
             style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
+              flex: 0.5,
+              margin: 10,
+              marginTop: 20,
+              marginBottom: 0
             }}
           >
-            <Text
+            <Button
               style={{
+                borderColor: "black",
+                borderRadius: 22,
+                borderWidth: 2,
+                width: "10%"
+              }}
+              textStyle={{
+                fontSize: 18,
                 color: "white",
                 fontFamily: "Quicksand",
-                fontSize: 30,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center",
-                textShadowOffset: {width: 2, height: 2},
-                textShadowRadius: 4,
-                textShadowColor: '#000000'
+                fontWeight: "400"
               }}
+              onPress={() =>
+                this.props.navigation.navigate("Dashboard", {
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  Status: this.state.SwitchOnValueHolder,
+                  userID: this.state.userID,
+                  findRideNow: false
+                })
+              }
             >
-              Insert a Schedule
-            </Text>
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require("./home.png")}
+              />
+            </Button>
           </View>
+
           <View
             style={{
               flex: 1,

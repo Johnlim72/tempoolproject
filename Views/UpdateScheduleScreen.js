@@ -22,7 +22,7 @@ import MapView, { Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 const { width, height } = Dimensions.get("window");
-const background = require("./login3_bg.jpg");
+const background = require("./dark.jpg");
 
 const USERID = "userID";
 
@@ -31,9 +31,6 @@ const LATITUDE_DELTA = 0.0022;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class UpdateScheduleScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
 
   state = {
     isDateTimePickerVisible: false,

@@ -4,6 +4,7 @@ import {
   Alert,
   StyleSheet,
   View,
+  Image,
   TouchableOpacity,
   Text,
   ImageBackground,
@@ -32,7 +33,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class ScheduleRiderScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    gesturesEnabled: false
   };
 
   state = {
@@ -197,26 +199,39 @@ export default class ScheduleRiderScreen extends React.Component {
         >
           <View
             style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
+              flex: 0.5,
+              margin: 10,
+              marginTop: 20,
+              marginBottom: 0
             }}
           >
-            <Text
+            <Button
               style={{
+                borderColor: "black",
+                borderRadius: 22,
+                borderWidth: 2,
+                width: "10%"
+              }}
+              textStyle={{
+                fontSize: 18,
                 color: "white",
                 fontFamily: "Quicksand",
-                fontSize: 35,
-                paddingTop: 20,
-                justifyContent: "center",
-                alignItems: "center",
-                textShadowOffset: {width: 2, height: 2},
-                textShadowRadius: 4,
-                textShadowColor: '#000000'
+                fontWeight: "400"
               }}
+              onPress={() =>
+                this.props.navigation.navigate("Dashboard", {
+                  TextEmail: this.props.navigation.state.params.TextEmail,
+                  Status: this.state.SwitchOnValueHolder,
+                  userID: this.state.userID,
+                  findRideNow: false
+                })
+              }
             >
-              Insert a Schedule
-            </Text>
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require("./home.png")}
+              />
+            </Button>
           </View>
           <View
             style={{
@@ -225,6 +240,7 @@ export default class ScheduleRiderScreen extends React.Component {
               borderRadius: 10,
               padding: 10,
               margin: 10,
+              marginTop: 0,
               flex: 5
             }}
           >

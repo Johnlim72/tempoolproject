@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   Picker,
+  Image,
   ImageBackground,
   ListView,
   Dimensions,
@@ -22,6 +23,10 @@ const { width, height } = Dimensions.get("window");
 const background = require("./dark.jpg");
 
 export default class RiderRideListScreen extends React.Component {
+  static navigationOptions = {
+    gesturesEnabled: false,
+    header: null
+  };
   constructor(props) {
     super(props);
 
@@ -188,18 +193,21 @@ export default class RiderRideListScreen extends React.Component {
       });
     }
 
-    return fetch("http://cis-linux2.temple.edu/~tuf41055/php/listOfRiderRides.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        //idUser: this.state.TextUserID
-        idUser: this.props.navigation.state.params.TextUserID,
-        typeOfRides: typeOfRides
-      })
-    })
+    return fetch(
+      "http://cis-linux2.temple.edu/~tuf41055/php/listOfRiderRides.php",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          //idUser: this.state.TextUserID
+          idUser: this.props.navigation.state.params.TextUserID,
+          typeOfRides: typeOfRides
+        })
+      }
+    )
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
@@ -251,7 +259,42 @@ export default class RiderRideListScreen extends React.Component {
   renderHeader = () => {
     var header = (
       <View style={styles1.header_footer_style}>
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View
+          style={{
+            width: "10%",
+            marginHorizontal: 5
+          }}
+        >
+          <Button
+            style={{
+              borderColor: "black",
+              borderRadius: 22,
+              borderWidth: 2,
+              width: "100%"
+            }}
+            textStyle={{
+              fontSize: 18,
+              color: "white",
+              fontFamily: "Quicksand",
+              fontWeight: "400"
+            }}
+            onPress={() =>
+              this.props.navigation.navigate("Dashboard", {
+                TextEmail: this.props.navigation.state.params.TextEmail,
+                Status: this.state.SwitchOnValueHolder,
+                userID: this.state.TextUserID,
+                findRideNow: false
+              })
+            }
+          >
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("./home.png")}
+            />
+          </Button>
+        </View>
+
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorPotential,
@@ -271,7 +314,7 @@ export default class RiderRideListScreen extends React.Component {
           </Button>
         </View>
 
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorAccepted,
@@ -290,7 +333,7 @@ export default class RiderRideListScreen extends React.Component {
             Accepted
           </Button>
         </View>
-        <View style={{ width: "30%", marginHorizontal: 5 }}>
+        <View style={{ width: "26%", marginHorizontal: 5 }}>
           <Button
             style={{
               backgroundColor: this.state.colorPast,
