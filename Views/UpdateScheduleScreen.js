@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Dimensions,
   TextInput,
+  ScrollView,
   AsyncStorage
 } from "react-native";
 
@@ -31,7 +32,6 @@ const LATITUDE_DELTA = 0.0022;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class UpdateScheduleScreen extends React.Component {
-
   state = {
     isDateTimePickerVisible: false,
     chosenDate: null,
@@ -210,6 +210,7 @@ export default class UpdateScheduleScreen extends React.Component {
       <View
         style={{
           flex: 1,
+          paddingVertical: 20,
           backgroundColor: "darkred",
           justifyContent: "center",
           alignItems: "center"
@@ -220,76 +221,15 @@ export default class UpdateScheduleScreen extends React.Component {
           style={styles.background}
           resizeMode="cover"
         >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "white",
-              borderRadius: 10,
-              padding: 10,
-              margin: 20,
-              flex: 5
-            }}
-          >
-            <Button
-              style={{
-                backgroundColor: "darkred",
-                borderColor: "darkred",
-                borderRadius: 22,
-                borderWidth: 2
-              }}
-              textStyle={{
-                fontSize: 18,
-                color: "white",
-                fontFamily: "Quicksand",
-                fontWeight: "400"
-              }}
-              onPress={this.PickLocation}
-            >
-              Pick different location
-            </Button>
-
-            <View style={styles.inputWrapAddress}>
-              <TextInput
-                placeholderTextColor="#b3b3b3"
-                placeholder="Address: "
-                defaultValue={this.state.rowData.addressText}
-                multiline={true}
-                editable={true}
-                style={[
-                  styles.inputAddress,
-                  { color: "black", fontFamily: "Quicksand" }
-                ]}
-              />
-            </View>
-            <MapView
-              region={{
-                latitude: parseFloat(this.state.rowData.latitude),
-                longitude: parseFloat(this.state.rowData.longitude),
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA
-              }}
-              mapType="hybrid"
-              showsUserLocation={true}
-              followUserLocation={true}
-              style={{
-                width: width * 0.9,
-                height: height / 4
-              }}
-            >
-              <MapView.Marker
-                coordinate={{
-                  latitude: parseFloat(this.state.rowData.latitude),
-                  longitude: parseFloat(this.state.rowData.longitude)
-                }}
-              />
-            </MapView>
-
+          <ScrollView style={{ paddingVertical: 20, marginBottom: 30 }}>
             <View
               style={{
                 flex: 1,
-                borderTopWidth: 1,
-                borderTopColor: "black",
-                marginTop: 5
+                backgroundColor: "white",
+                borderRadius: 10,
+                padding: 10,
+                margin: 20,
+                flex: 5
               }}
             >
               <Button
@@ -297,8 +237,7 @@ export default class UpdateScheduleScreen extends React.Component {
                   backgroundColor: "darkred",
                   borderColor: "darkred",
                   borderRadius: 22,
-                  borderWidth: 2,
-                  marginTop: 30
+                  borderWidth: 2
                 }}
                 textStyle={{
                   fontSize: 18,
@@ -306,38 +245,102 @@ export default class UpdateScheduleScreen extends React.Component {
                   fontFamily: "Quicksand",
                   fontWeight: "400"
                 }}
-                onPress={this._showDateTimePicker}
+                onPress={this.PickLocation}
               >
-                Click to choose date
+                Pick different location
               </Button>
-              <DateTimePicker
-                isVisible={this.state.isDateTimePickerVisible}
-                onConfirm={this._handleDatePicked}
-                onCancel={this._hideDateTimePicker}
-                mode="datetime"
-              />
+
+              <View style={styles.inputWrapAddress}>
+                <TextInput
+                  placeholderTextColor="#b3b3b3"
+                  placeholder="Address: "
+                  defaultValue={this.state.rowData.addressText}
+                  multiline={true}
+                  editable={true}
+                  style={[
+                    styles.inputAddress,
+                    { color: "black", fontFamily: "Quicksand" }
+                  ]}
+                />
+              </View>
+              <MapView
+                region={{
+                  latitude: parseFloat(this.state.rowData.latitude),
+                  longitude: parseFloat(this.state.rowData.longitude),
+                  latitudeDelta: LATITUDE_DELTA,
+                  longitudeDelta: LONGITUDE_DELTA
+                }}
+                mapType="hybrid"
+                showsUserLocation={true}
+                followUserLocation={true}
+                style={{
+                  width: width * 0.9,
+                  height: height / 4
+                }}
+              >
+                <MapView.Marker
+                  coordinate={{
+                    latitude: parseFloat(this.state.rowData.latitude),
+                    longitude: parseFloat(this.state.rowData.longitude)
+                  }}
+                />
+              </MapView>
+
+              <View
+                style={{
+                  flex: 1,
+                  borderTopWidth: 1,
+                  borderTopColor: "black",
+                  marginTop: 5
+                }}
+              >
+                <Button
+                  style={{
+                    backgroundColor: "darkred",
+                    borderColor: "darkred",
+                    borderRadius: 22,
+                    borderWidth: 2,
+                    marginTop: 30
+                  }}
+                  textStyle={{
+                    fontSize: 18,
+                    color: "white",
+                    fontFamily: "Quicksand",
+                    fontWeight: "400"
+                  }}
+                  onPress={this._showDateTimePicker}
+                >
+                  Click to choose date
+                </Button>
+                <DateTimePicker
+                  isVisible={this.state.isDateTimePickerVisible}
+                  onConfirm={this._handleDatePicked}
+                  onCancel={this._hideDateTimePicker}
+                  mode="datetime"
+                />
+              </View>
+
+              {this.isDateSelected()}
+
+              <Button
+                style={{
+                  backgroundColor: "green",
+                  borderColor: "green",
+                  borderRadius: 22,
+                  borderWidth: 2
+                }}
+                textStyle={{
+                  fontSize: 18,
+                  color: "white",
+                  fontFamily: "Quicksand",
+                  fontWeight: "400"
+                }}
+                onPress={this.getToken.bind(this)}
+              >
+                Update Schedule
+              </Button>
             </View>
-
-            {this.isDateSelected()}
-
-            <Button
-              style={{
-                backgroundColor: "green",
-                borderColor: "green",
-                borderRadius: 22,
-                borderWidth: 2
-              }}
-              textStyle={{
-                fontSize: 18,
-                color: "white",
-                fontFamily: "Quicksand",
-                fontWeight: "400"
-              }}
-              onPress={this.getToken.bind(this)}
-            >
-              Update Schedule
-            </Button>
-          </View>
+          </ScrollView>
         </ImageBackground>
       </View>
     );

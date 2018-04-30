@@ -159,7 +159,7 @@ export default class SignupScreen extends React.Component {
           source={background}
           style={[styles.background, { padding: 10 }]}
           resizeMode="cover"
-          blurRadius={3}
+          blurRadius={0.5}
         >
           <View
             style={{

@@ -195,7 +195,7 @@ export default class ScheduleRiderScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
-          blurRadius={3}
+          blurRadius={0.5}
         >
           <View
             style={{
