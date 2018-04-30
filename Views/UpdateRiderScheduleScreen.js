@@ -224,7 +224,7 @@ export default class UpdateRiderScheduleScreen extends React.Component {
           style={styles.background}
           resizeMode="cover"
         >
-          <ScrollView style={{ paddingVertical: 20, marginBottom: 30 }}>
+          <ScrollView style={{ paddingVertical: 20, marginBottom: 30 }} >
             <View
               style={{
                 flex: 1,

@@ -131,7 +131,7 @@ export default class RiderRideDetailsScreen extends React.Component {
               {
                 text: "OK",
                 onPress: () =>
-                  this.props.navigation.navigate("RideList", {
+                  this.props.navigation.navigate("RiderRideList", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     TextUserID: this.props.navigation.state.params
                       .ListViewClickItemHolder
@@ -148,7 +148,7 @@ export default class RiderRideDetailsScreen extends React.Component {
               {
                 text: "OK",
                 onPress: () =>
-                  this.props.navigation.navigate("RideList", {
+                  this.props.navigation.navigate("RideRideList", {
                     TextEmail: this.props.navigation.state.params.TextEmail,
                     TextUserID: this.props.navigation.state.params
                       .ListViewClickItemHolder

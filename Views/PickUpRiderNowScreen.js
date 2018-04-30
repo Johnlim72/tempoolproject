@@ -5,6 +5,7 @@ import {
   Alert,
   StyleSheet,
   ImageBackground,
+  ScrollView,
   Dimensions,
   Image,
   View,
@@ -334,100 +335,102 @@ export default class PickUpRiderNowScreen extends React.Component {
   renderRide() {
     if (this.state.riderRequested == true) {
       return (
-        <View>
+        <ScrollView>
           <View>
-            <Text
-              style={[
-                styles.textViewContainer,
-                {
-                  marginBottom: 20,
-                  fontSize: 30,
-                  fontFamily: "Quicksand"
-                }
-              ]}
-            >
-              {"Ride Details"}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Name"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderFirstName +
-                " " +
-                this.state.TextRiderLastName}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Email"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.TextRiderEmail}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.rider_datetime}
-            </Text>
-            <Text style={styles.textViewContainer2}>{"Address"}</Text>
-            <Text style={styles.textViewContainer}>
-              {this.state.rider_address}
-            </Text>
-          </View>
-
-          <Button
-            style={{
-              backgroundColor: "green",
-              borderColor: "green",
-              borderRadius: 22,
-              borderWidth: 2,
-              marginTop: 20
-            }}
-            textStyle={{
-              fontSize: 18,
-              color: "white",
-              fontFamily: "Quicksand",
-              fontWeight: "400"
-            }}
-            onPress={() =>
-              Alert.alert(
-                "Warning",
-                "Pressing 'OK' will accept and start your ride now",
-                [
+            <View>
+              <Text
+                style={[
+                  styles.textViewContainer,
                   {
-                    text: "OK",
-                    onPress: () => this.goToRideScreen()
-                  },
-                  {
-                    text: "Cancel"
+                    marginBottom: 20,
+                    fontSize: 30,
+                    fontFamily: "Quicksand"
                   }
-                ],
-                { cancelable: false }
-              )
-            }
-          >
-            Start Ride Now
-          </Button>
+                ]}
+              >
+                {"Ride Details"}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Name"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderFirstName +
+                  " " +
+                  this.state.TextRiderLastName}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Email"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.TextRiderEmail}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Pickup Time"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.rider_datetime}
+              </Text>
+              <Text style={styles.textViewContainer2}>{"Address"}</Text>
+              <Text style={styles.textViewContainer}>
+                {this.state.rider_address}
+              </Text>
+            </View>
 
-          <Button
-            style={{
-              backgroundColor: "darkred",
-              borderColor: "darkred",
-              borderRadius: 22,
-              borderWidth: 2
-            }}
-            textStyle={{
-              fontSize: 18,
-              color: "white",
-              fontFamily: "Quicksand",
-              fontWeight: "400"
-            }}
-            onPress={
-              () => this.updateRide("Declined")
-              // () =>
-              // this.props.navigation.navigate("RideList", {
-              //   TextEmail: this.props.navigation.state.params.TextEmail,
-              //   TextUserID: this.props.navigation.state.params
-              //     .ListViewClickItemHolder
-              // })
-            }
-          >
-            Decline
-          </Button>
-        </View>
+            <Button
+              style={{
+                backgroundColor: "green",
+                borderColor: "green",
+                borderRadius: 22,
+                borderWidth: 2,
+                marginTop: 20
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand",
+                fontWeight: "400"
+              }}
+              onPress={() =>
+                Alert.alert(
+                  "Warning",
+                  "Pressing 'OK' will accept and start your ride now",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => this.goToRideScreen()
+                    },
+                    {
+                      text: "Cancel"
+                    }
+                  ],
+                  { cancelable: false }
+                )
+              }
+            >
+              Start Ride Now
+            </Button>
+
+            <Button
+              style={{
+                backgroundColor: "darkred",
+                borderColor: "darkred",
+                borderRadius: 22,
+                borderWidth: 2
+              }}
+              textStyle={{
+                fontSize: 18,
+                color: "white",
+                fontFamily: "Quicksand",
+                fontWeight: "400"
+              }}
+              onPress={
+                () => this.updateRide("Declined")
+                // () =>
+                // this.props.navigation.navigate("RideList", {
+                //   TextEmail: this.props.navigation.state.params.TextEmail,
+                //   TextUserID: this.props.navigation.state.params
+                //     .ListViewClickItemHolder
+                // })
+              }
+            >
+              Decline
+            </Button>
+          </View>
+        </ScrollView>
       );
     }
   }
