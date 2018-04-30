@@ -210,7 +210,7 @@ export default class DashboardScreen extends React.Component {
             source={background}
             style={styles.background}
             resizeMode="cover"
-            blurRadius={3}
+            blurRadius={0.5}
           >
             <View
               style={{
@@ -403,7 +403,7 @@ export default class DashboardScreen extends React.Component {
             source={background}
             style={styles.background}
             resizeMode="cover"
-            blurRadius={3}
+            blurRadius={0.5}
           >
             <View
               style={{

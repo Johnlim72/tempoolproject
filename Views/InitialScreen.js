@@ -143,7 +143,7 @@ export default class InitialScreen extends React.Component {
           source={background}
           style={styles.background}
           resizeMode="cover"
-          blurRadius={3}
+          blurRadius={0.5}
         >
           <View style={{ flex: 1, padding: 10 }}>
             <View
@@ -209,7 +209,7 @@ export default class InitialScreen extends React.Component {
                 />
               </View>
             </View>
-            <View style={[styles.container, { marginBottom: 25 }]}>
+            <View style={[styles.container, { marginBottom: 40 }]}>
               <View
                 style={{
                   alignItems: "center",
