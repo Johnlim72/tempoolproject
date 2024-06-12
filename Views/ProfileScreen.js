@@ -34,11 +34,15 @@ export default class ProfileScreen extends React.Component {
       TextPasswordConfirm: ""
     };
 
+    //this.props.navigation.state.params.Email
+
     const { TextInputFirstName } = "";
     const { TextInputLastName } = "";
     const { TextInputEmail } = "";
     const { TextPassword } = "";
     const { TextInputPhoneNumber } = "";
+
+    //Alert.alert("Email: " + this.props.navigation.state.params.Email);
 
     fetch("http://cis-linux2.temple.edu/~tuf70921/php/prepopulate.php", {
       method: "POST",
@@ -250,7 +254,7 @@ export default class ProfileScreen extends React.Component {
                   onChangeText={TextInputEmail =>
                     this.setState({ TextInputEmail })
                   }
-                  style={[styles.input, { color: "#a6a6a6" }]}
+                  style={[styles.input, { color: "black" }]}
                 />
               </View>
               <Text
@@ -320,7 +324,7 @@ export default class ProfileScreen extends React.Component {
               >
                 <View
                   style={{
-                    backgroundColor: "darkred",
+                    backgroundColor: "white",
                     borderRadius: 10,
                     height: 60,
                     marginTop: 10,
@@ -332,7 +336,7 @@ export default class ProfileScreen extends React.Component {
                   <Button
                     title="Save"
                     onPress={this.UpdateDataToServer}
-                    color="darkred"
+                    color="black"
                   />
                 </View>
               </TouchableOpacity>

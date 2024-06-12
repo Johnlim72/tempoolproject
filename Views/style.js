@@ -23,7 +23,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     ...Platform.select({
         ios: {
-          backgroundColor: 'darkred',
+          backgroundColor: 'white',
         },
         android: {
           backgroundColor: 'darkred',
@@ -34,7 +34,6 @@ export default StyleSheet.create({
     borderColor: "#fff",
     padding: 20
   },
-
 
   textInput: {
     //
@@ -79,6 +78,13 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#CCC"
   },
+  inputWrapAddress: {
+    flexDirection: "row",
+    marginBottom: 10,
+    height: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: "#CCC"
+  },
   iconWrap: {
     paddingHorizontal: 7,
     alignItems: "center",
@@ -93,11 +99,17 @@ export default StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 10
   },
+  inputAddress: {
+    flex: 1,
+    fontSize: 18,
+    paddingHorizontal: 10,
+    height: 80
+  },
   button: {
     backgroundColor: "white",
     ...Platform.select({
         ios: {
-          backgroundColor: 'darkred',
+          backgroundColor: 'white',
         },
         android: {
           backgroundColor: 'darkred',
@@ -106,7 +118,9 @@ export default StyleSheet.create({
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30
+    marginTop: 30,
+    borderRadius: 10,
+    marginHorizontal: 5
   },
   buttonText: {
     color: "#FFF",
@@ -131,6 +145,11 @@ export default StyleSheet.create({
   },
   signupLinkText: {
     color: "#FFF",
+    marginLeft: 5
+  },
+  signUpButton: {
+    backgroundColor: "white",
+    borderRadius: 5,
     marginLeft: 5
   }
 });
